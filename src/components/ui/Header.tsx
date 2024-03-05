@@ -11,7 +11,7 @@ import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 
-import { signOut } from "lib/api/auth"
+import { signOut } from "models/user/auth"
 
 import { AuthContext } from "App"
 

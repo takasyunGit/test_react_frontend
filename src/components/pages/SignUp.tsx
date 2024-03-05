@@ -16,9 +16,9 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import { AuthContext } from "App"
-import AlertMessage from "components/utils/AlertMessage"
-import { signUp } from "lib/api/auth"
-import { SignUpParams } from "interfaces/index"
+import AlertMessage from "components/ui/AlertMessage"
+import { signUp } from "models/user/auth"
+import { SignUpParams } from "models/user/type"
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate()

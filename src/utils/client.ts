@@ -1,6 +1,6 @@
 import applyCaseMiddleware from "axios-case-converter"
 import axios from "axios"
-import { API_BASEURL } from 'components/utils/constants'
+import { API_BASEURL } from 'utils/constants'
 
 const options = {
   ignoreHeaders: true

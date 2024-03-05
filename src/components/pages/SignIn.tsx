@@ -12,9 +12,9 @@ import Box from "@mui/material/Box"
 import Link from '@mui/material/Link'
 
 import { AuthContext } from "App"
-import AlertMessage from "components/utils/AlertMessage"
-import { signIn } from "lib/api/auth"
-import { SignInParams } from "interfaces/index"
+import AlertMessage from "components/ui/AlertMessage"
+import { signIn } from "models/user/auth"
+import { SignInParams } from "models/user/type"
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate()

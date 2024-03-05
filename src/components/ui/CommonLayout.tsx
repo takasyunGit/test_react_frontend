@@ -3,7 +3,7 @@ import React from "react"
 import { Container, Grid } from "@mui/material"
 import { styled } from "@mui/material/styles"
 
-import Header from "components/layouts/Header"
+import Header from "components/ui/Header"
 
 const DivContainer = styled(Container)({
   marginTop: "3rem",
