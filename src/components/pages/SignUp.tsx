@@ -15,7 +15,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-import { AuthContext } from "App"
+import { AuthUserContext } from "App"
 import AlertMessage from "components/ui/AlertMessage"
 import { signUp } from "models/user/auth"
 import { SignUpParams } from "models/user/type"
@@ -23,7 +23,7 @@ import { SignUpParams } from "models/user/type"
 const SignUp: React.FC = () => {
   const navigate = useNavigate()
 
-  const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
+  const { setIsSignedIn, setCurrentUser } = useContext(AuthUserContext)
   const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")

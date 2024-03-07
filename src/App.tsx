@@ -1,17 +1,11 @@
 import React, {useState, useEffect, createContext} from "react"
-import { BrowserRouter, Routes, Route, Navigate} from "react-router-dom"
-
-import CommonLayout from "components/ui/CommonLayout"
-import Home from "components/pages/Home"
-import SignUp from "components/pages/SignUp"
-import SignIn from "components/pages/SignIn"
-import Page404 from "components/pages/Page404"
+import { Navigate } from "react-router-dom"
 import Router from "router/Router"
 
 import { getCurrentUser } from "models/user/auth"
 import { User } from "models/user/type"
 
-export const AuthContext = createContext({} as {
+export const AuthUserContext = createContext({} as {
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
   isSignedIn: boolean
@@ -28,12 +22,12 @@ const App: React.FC = () => {
   const handleGetCurrentUser = async() => {
     try{
       const res = await getCurrentUser()
-      console.log(res)
+
       if (res?.data.isLogin === true) {
         setIsSignedIn(true)
         setCurrentUser(res?.data.data)
 
-        console.log(res?.data.data)
+        console.log("Sign in")
       } else {
         console.log("no user")
       }
@@ -58,13 +52,9 @@ const App: React.FC = () => {
   }
 
   return(
-    <BrowserRouter>
-      <AuthContext.Provider value={{ loading, setLoading, isSignedIn, setIsSignedIn, currentUser, setCurrentUser }}>
-        <CommonLayout>
-          <Router />
-        </CommonLayout>
-      </AuthContext.Provider>
-    </BrowserRouter>
+    <AuthUserContext.Provider value={{ loading, setLoading, isSignedIn, setIsSignedIn, currentUser, setCurrentUser }}>
+      <Router />
+    </AuthUserContext.Provider>
   )
 }
 

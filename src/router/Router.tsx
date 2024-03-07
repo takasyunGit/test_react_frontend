@@ -5,10 +5,10 @@ import Home from "components/pages/Home"
 import SignUp from "components/pages/SignUp"
 import SignIn from "components/pages/SignIn"
 import Page404 from "components/pages/Page404"
-import { AuthContext } from "App"
+import { AuthUserContext } from "App"
 
 export const Router = () => {
-  const { loading, isSignedIn } = useContext(AuthContext)
+  const { loading, isSignedIn } = useContext(AuthUserContext)
 
   const Private = ({children}: {children: React.ReactElement}) => {
     if (!loading) {

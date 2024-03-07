@@ -13,10 +13,10 @@ import MenuIcon from "@mui/icons-material/Menu"
 
 import { signOut } from "models/user/auth"
 
-import { AuthContext } from "App"
+import { AuthUserContext } from "App"
 
 const Header: React.FC = () => {
-  const { loading, isSignedIn, setIsSignedIn} = useContext(AuthContext)
+  const { loading, isSignedIn, setIsSignedIn} = useContext(AuthUserContext)
   const navigate = useNavigate()
 
   const handleSignOut = async(e: React.MouseEvent<HTMLButtonElement>) => {

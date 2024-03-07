@@ -1,8 +1,8 @@
 import React, { useContext } from "react"
-import { AuthContext } from "App"
+import { AuthUserContext } from "App"
 
 const Home: React.FC = () => {
-  const { isSignedIn, currentUser } = useContext(AuthContext)
+  const { isSignedIn, currentUser } = useContext(AuthUserContext)
 
   return (
     <>
