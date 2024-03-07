@@ -6,6 +6,7 @@ import SignUp from "components/pages/SignUp"
 import SignIn from "components/pages/SignIn"
 import Page404 from "components/pages/Page404"
 import { AuthUserContext } from "components/models/user/AuthUserProvider"
+import { AuthRouteGuard } from "components/ui/AuthRouteGuard"
 
 export const Router = () => {
   const { loading, isSignedIn } = useContext(AuthUserContext)
@@ -26,7 +27,7 @@ export const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<CommonLayout />} >
-          <Route index element={<Home />} />
+          <Route index element={<AuthRouteGuard component={<Home />} redirect="signin" />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path='*' element={<Page404 />} />

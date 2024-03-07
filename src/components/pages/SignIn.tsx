@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react"
-import { useNavigate, Link as RouterLink} from "react-router-dom"
+import { useNavigate, Link as RouterLink, useLocation} from "react-router-dom"
 import Cookies from "js-cookie"
 
 import { Typography } from "@mui/material"
@@ -16,12 +16,19 @@ import AlertMessage from "components/ui/AlertMessage"
 import { signIn } from "models/user/auth"
 import { SignInParams } from "models/user/type"
 
+type CustomLocation = {
+  state: { from: { pathname: string } }
+};
+
 const SignIn: React.FC = () => {
   const navigate = useNavigate()
   const { setIsSignedIn, setCurrentUser } = useContext(AuthUserContext)
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
+  const fromLocation: CustomLocation = useLocation() as CustomLocation
+  // ログイン前にアクセスしようとしていたページ
+  const fromPathName: string = fromLocation.state?.from?.pathname
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -41,9 +48,8 @@ const SignIn: React.FC = () => {
 
         setIsSignedIn(true)
         setCurrentUser(res.data.data)
-
+        if (fromPathName) { return navigate(fromPathName, { replace: true }) }
         navigate("/")
-        console.log("Signed in successfully!")
       } else {
         setAlertMessageOpen(true)
       }
