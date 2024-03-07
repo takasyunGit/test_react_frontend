@@ -1,18 +1,38 @@
-import React from 'react'
-import { Routes, Route } from "react-router-dom";
+import React, {useContext} from "react"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import CommonLayout from "components/ui/CommonLayout"
 import Home from "components/pages/Home"
 import SignUp from "components/pages/SignUp"
 import SignIn from "components/pages/SignIn"
 import Page404 from "components/pages/Page404"
+import { AuthContext } from "App"
 
 export const Router = () => {
+  const { loading, isSignedIn } = useContext(AuthContext)
+
+  const Private = ({children}: {children: React.ReactElement}) => {
+    if (!loading) {
+      if (isSignedIn) {
+        return children
+      } else {
+        return <Navigate to="/signin" />
+      }
+    } else {
+      return <></>
+    }
+  }
+
   return(
-    <Routes>
-      <Route path="/" element={<Home/>} />
-      <Route path="/signup" element={<SignUp/>} />
-      <Route path="/signin" element={<SignIn/>} />
-      <Route path='/*' element={<Page404/>} />
-    </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<CommonLayout />} >
+          <Route index element={<Home />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path='*' element={<Page404 />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 export default Router;

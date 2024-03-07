@@ -1,4 +1,5 @@
 import React from "react"
+import { Outlet } from "react-router-dom"
 
 import { Container, Grid } from "@mui/material"
 import { styled } from "@mui/material/styles"
@@ -14,7 +15,7 @@ interface CommonLayoutProps {
   children: React.ReactElement
 }
 
-const CommonLayout = ({ children }: CommonLayoutProps) => {
+const CommonLayout = () => {
   return(
     <>
       <header>
@@ -24,7 +25,7 @@ const CommonLayout = ({ children }: CommonLayoutProps) => {
         <DivContainer>
           <Grid container sx={{"justify-content": "center"}}>
             <Grid item>
-              {children}
+              <Outlet />
             </Grid>
           </Grid>
         </DivContainer>
