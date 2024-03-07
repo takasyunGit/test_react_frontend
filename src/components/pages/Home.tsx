@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { AuthUserContext } from "App"
+import { AuthUserContext } from "components/models/user/AuthUserProvider"
 
 const Home: React.FC = () => {
   const { isSignedIn, currentUser } = useContext(AuthUserContext)

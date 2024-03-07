@@ -15,7 +15,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-import { AuthUserContext } from "App"
+import { AuthUserContext } from "components/models/user/AuthUserProvider"
 import AlertMessage from "components/ui/AlertMessage"
 import { signUp } from "models/user/auth"
 import { SignUpParams } from "models/user/type"

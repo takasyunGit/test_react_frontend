@@ -5,7 +5,7 @@ import Home from "components/pages/Home"
 import SignUp from "components/pages/SignUp"
 import SignIn from "components/pages/SignIn"
 import Page404 from "components/pages/Page404"
-import { AuthUserContext } from "App"
+import { AuthUserContext } from "components/models/user/AuthUserProvider"
 
 export const Router = () => {
   const { loading, isSignedIn } = useContext(AuthUserContext)

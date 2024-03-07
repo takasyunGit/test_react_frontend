@@ -11,7 +11,7 @@ import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
 import Link from '@mui/material/Link'
 
-import { AuthUserContext } from "App"
+import { AuthUserContext } from "components/models/user/AuthUserProvider"
 import AlertMessage from "components/ui/AlertMessage"
 import { signIn } from "models/user/auth"
 import { SignInParams } from "models/user/type"
