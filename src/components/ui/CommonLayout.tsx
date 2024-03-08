@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom"
 import { Container, Grid } from "@mui/material"
 import { styled } from "@mui/material/styles"
 
-import Header from "components/ui/Header"
+import UserHeader from "components/models/user/UserHeader"
 
 const DivContainer = styled(Container)({
   marginTop: "3rem",

@@ -12,7 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu"
 import { signOut } from "models/user/auth"
 import { AuthUserContext } from "components/models/user/AuthUserProvider"
 
-const Header: React.FC = () => {
+const UserHeader: React.FC = () => {
   const { loading, isSignedIn, setIsSignedIn} = useContext(AuthUserContext)
   const navigate = useNavigate()
 
@@ -107,4 +107,4 @@ const Header: React.FC = () => {
   )
 }
 
-export default Header
+export default UserHeader
