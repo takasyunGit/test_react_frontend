@@ -1,17 +1,17 @@
 // ログイン関係
-export interface SignUpParams {
+export type SignUpParams = {
   name: string
   email: string
   password: string
   passwordConfirmation: string
 }
-export interface SignInParams {
+export type SignInParams = {
   email: string
   password: string
 }
 
 // ユーザー
-export interface User {
+export type User = {
   id: number
   uid: string
   provider: string
