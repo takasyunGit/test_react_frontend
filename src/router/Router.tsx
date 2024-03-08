@@ -9,20 +9,6 @@ import { AuthUserContext } from "components/models/user/AuthUserProvider"
 import { AuthRouteGuard } from "components/ui/AuthRouteGuard"
 
 export const Router = () => {
-  const { loading, isSignedIn } = useContext(AuthUserContext)
-
-  const Private = ({children}: {children: React.ReactElement}) => {
-    if (!loading) {
-      if (isSignedIn) {
-        return children
-      } else {
-        return <Navigate to="/signin" />
-      }
-    } else {
-      return <></>
-    }
-  }
-
   return(
     <BrowserRouter>
       <Routes>
