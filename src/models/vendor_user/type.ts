@@ -17,10 +17,10 @@ export type VendorUser = {
 
 // 認証関係
 export type AuthVendorUserContextType = {
-  loading: boolean
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
-  isSignedIn: boolean
-  setIsSignedIn: React.Dispatch<React.SetStateAction<boolean>>
+  loadingVendor: boolean
+  setLoadingVendor: React.Dispatch<React.SetStateAction<boolean>>
+  isSignedInVendor: boolean
+  setIsSignedInVendor: React.Dispatch<React.SetStateAction<boolean>>
   currentVendorUser: VendorUser | undefined
   setCurrentVendorUser: React.Dispatch<React.SetStateAction<VendorUser | undefined>>
 }

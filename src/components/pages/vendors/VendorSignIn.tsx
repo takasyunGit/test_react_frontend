@@ -22,7 +22,7 @@ type CustomLocation = {
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate()
-  const { setIsSignedIn, setCurrentVendorUser } = useContext(AuthVendorUserContext)
+  const { setIsSignedInVendor, setCurrentVendorUser } = useContext(AuthVendorUserContext)
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
@@ -46,7 +46,7 @@ const SignIn: React.FC = () => {
         Cookies.set("_client_v", res.headers["client"])
         Cookies.set("_uid_v", res.headers["uid"])
 
-        setIsSignedIn(true)
+        setIsSignedInVendor(true)
         setCurrentVendorUser(res.data.data)
         if (fromPathName) { return navigate(fromPathName, { replace: true }) }
         navigate("/vendor")

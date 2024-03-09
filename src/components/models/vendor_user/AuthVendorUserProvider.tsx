@@ -9,8 +9,8 @@ export const AuthVendorUserContext = createContext({} as AuthVendorUserContextTy
 type Props = { children: React.ReactNode }
 
 export const AuthVendorUserProvider: React.FC<Props> = (props) =>{
-  const [loading, setLoading] = useState<boolean>(true)
-  const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
+  const [loadingVendor, setLoadingVendor] = useState<boolean>(true)
+  const [isSignedInVendor, setIsSignedInVendor] = useState<boolean>(false)
   const [currentVendorUser, setCurrentVendorUser] = useState<VendorUser | undefined>()
 
   const handleGetCurrentVendorUser = async() => {
@@ -18,7 +18,7 @@ export const AuthVendorUserProvider: React.FC<Props> = (props) =>{
       const res = await getCurrentVendorUser()
 
       if (res?.data.isLogin === true) {
-        setIsSignedIn(true)
+        setIsSignedInVendor(true)
         setCurrentVendorUser(res?.data.data)
 
         console.log("Vendor sign in")
@@ -28,13 +28,13 @@ export const AuthVendorUserProvider: React.FC<Props> = (props) =>{
     } catch(err) {
       console.log(err)
     }
-    setLoading(false)
+    setLoadingVendor(false)
   }
 
   useEffect(() => {handleGetCurrentVendorUser()}, [setCurrentVendorUser])
 
   return (
-    <AuthVendorUserContext.Provider value={{ loading, setLoading, isSignedIn, setIsSignedIn, currentVendorUser, setCurrentVendorUser }}>
+    <AuthVendorUserContext.Provider value={{ loadingVendor, setLoadingVendor, isSignedInVendor, setIsSignedInVendor, currentVendorUser, setCurrentVendorUser }}>
       {props.children}
     </AuthVendorUserContext.Provider>
   )

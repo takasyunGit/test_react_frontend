@@ -2,12 +2,12 @@ import React, { useContext } from "react"
 import { AuthVendorUserContext } from "components/models/vendor_user/AuthVendorUserProvider"
 
 const Home: React.FC = () => {
-  const { isSignedIn, currentVendorUser } = useContext(AuthVendorUserContext)
+  const { isSignedInVendor, currentVendorUser } = useContext(AuthVendorUserContext)
 
   return (
     <>
       {
-        isSignedIn && currentVendorUser ? (
+        isSignedInVendor && currentVendorUser ? (
           <>
             <h1>Vendor</h1>
             <h2>Email: {currentVendorUser?.email}</h2>

@@ -13,7 +13,7 @@ import { signOut } from "models/vendor_user/auth"
 import { AuthVendorUserContext } from "components/models/vendor_user/AuthVendorUserProvider"
 
 const VendorHeader: React.FC = () => {
-  const { loading, isSignedIn, setIsSignedIn} = useContext(AuthVendorUserContext)
+  const { loadingVendor, isSignedInVendor, setIsSignedInVendor } = useContext(AuthVendorUserContext)
   const navigate = useNavigate()
 
   const handleSignOut = async(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -25,7 +25,7 @@ const VendorHeader: React.FC = () => {
         Cookies.remove("_client_v")
         Cookies.remove("_uid_v")
 
-        setIsSignedIn(false)
+        setIsSignedInVendor(false)
         navigate("/vendor/signin")
         console.log("Succeeded in sign out")
       } else {
@@ -37,8 +37,8 @@ const VendorHeader: React.FC = () => {
   }
 
   const AuthButton = () => {
-    if (!loading) {
-      if (isSignedIn) {
+    if (!loadingVendor) {
+      if (isSignedInVendor) {
         return (
           <>
             <Button
