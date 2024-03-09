@@ -8,7 +8,6 @@ import VendorHome from "components/pages/vendors/VendorHome"
 import VendorSignIn from "components/pages/vendors/VendorSignIn"
 
 import Page404 from "components/pages/Page404"
-import { AuthUserContext } from "components/models/user/AuthUserProvider"
 import { AuthRouteGuard } from "components/ui/AuthRouteGuard"
 
 export const Router = () => {
