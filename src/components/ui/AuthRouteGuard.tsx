@@ -2,16 +2,25 @@ import React, { useContext } from "react"
 import { Navigate, useLocation } from "react-router-dom";
 
 import { AuthUserContext } from "components/models/user/AuthUserProvider"
+import { AuthVendorUserContext } from "components/models/vendor_user/AuthVendorUserProvider"
 
 type Props = {
   component: React.ReactNode;
   redirect: string,
+  signInType: "User" | "Vendor"
 }
 
 export const AuthRouteGuard: React.FC<Props> = (props) => {
-  const { loading, isSignedIn, currentUser } = useContext(AuthUserContext)
+  let { loading, isSignedIn, currentUser } = useContext(AuthUserContext)
+  const { loadingVendor, isSignedInVendor, currentVendorUser } = useContext(AuthVendorUserContext)
   const location = useLocation()
   let allowRoute = false;
+
+  if (props.signInType === "Vendor") {
+    loading = loadingVendor
+    isSignedIn = isSignedInVendor
+    currentUser = currentVendorUser
+  }
 
   if (currentUser && isSignedIn) { allowRoute = true }
 

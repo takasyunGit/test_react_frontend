@@ -15,10 +15,11 @@ export const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<CommonLayout />} >
-          <Route index element={<AuthRouteGuard component={<Home />} redirect="signin" />} />
+          <Route index element={<AuthRouteGuard component={<Home />} redirect="signin" signInType="User" />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/vendor">
+            <Route index element={<AuthRouteGuard component={<VendorHome />} redirect="/vendor/signin" signInType="Vendor" />} />
             <Route index element={<VendorHome />} />
             <Route path="signin" element={<VendorSignIn />} />
           </Route>
