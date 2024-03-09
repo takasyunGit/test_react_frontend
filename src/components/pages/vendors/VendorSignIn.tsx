@@ -11,112 +11,113 @@ import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
 import Link from '@mui/material/Link'
 
-import { AuthUserContext } from "components/models/user/AuthUserProvider"
+import { AuthVendorUserContext } from "components/models/vendor_user/AuthVendorUserProvider"
 import AlertMessage from "components/ui/AlertMessage"
-import { signIn } from "models/user/auth"
-import { SignInParams } from "models/user/type"
+import { signIn } from "models/vendor_user/auth"
+import { SignInParams } from "models/vendor_user/type"
 
 type CustomLocation = {
   state: { from: { pathname: string } }
 };
 
 const SignIn: React.FC = () => {
-  // const navigate = useNavigate()
-  // const { setIsSignedIn, setCurrentUser } = useContext(AuthUserContext)
-  // const [email, setEmail] = useState<string>("")
-  // const [password, setPassword] = useState<string>("")
-  // const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
-  // const fromLocation: CustomLocation = useLocation() as CustomLocation
-  // // ログイン前にアクセスしようとしていたページ
-  // const fromPathName: string = fromLocation.state?.from?.pathname
+  const navigate = useNavigate()
+  const { setIsSignedIn, setCurrentVendorUser } = useContext(AuthVendorUserContext)
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
+  const fromLocation: CustomLocation = useLocation() as CustomLocation
+  // ログイン前にアクセスしようとしていたページ
+  const fromPathName: string = fromLocation.state?.from?.pathname
 
-  // const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   e.preventDefault()
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
 
-  //   const params: SignInParams = {
-  //     email: email,
-  //     password: password
-  //   }
+    const params: SignInParams = {
+      email: email,
+      password: password
+    }
 
-  //   try{
-  //     const res = await signIn(params)
+    try{
+      const res = await signIn(params)
 
-  //     if (res.status === 200) {
-  //       Cookies.set("_access_token", res.headers["access-token"])
-  //       Cookies.set("_client", res.headers["client"])
-  //       Cookies.set("_uid", res.headers["uid"])
+      if (res.status === 200) {
+        Cookies.set("_access_token_v", res.headers["access-token"])
+        Cookies.set("_client_v", res.headers["client"])
+        Cookies.set("_uid_v", res.headers["uid"])
 
-  //       setIsSignedIn(true)
-  //       setCurrentUser(res.data.data)
-  //       if (fromPathName) { return navigate(fromPathName, { replace: true }) }
-  //       navigate("/")
-  //     } else {
-  //       setAlertMessageOpen(true)
-  //     }
-  //   } catch(err) {
-  //     console.log(err)
-  //     setAlertMessageOpen(true)
-  //   }
-  // }
+        setIsSignedIn(true)
+        setCurrentVendorUser(res.data.data)
+        if (fromPathName) { return navigate(fromPathName, { replace: true }) }
+        navigate("/vendor")
+      } else {
+        setAlertMessageOpen(true)
+      }
+    } catch(err) {
+      console.log(err)
+      setAlertMessageOpen(true)
+    }
+  }
 
-  // return (
-  //   <>
-  //     <form noValidate autoComplete="off">
-  //       <Card sx={{
-  //         padding: (theme) => theme.spacing(2),
-  //         maxWidth: 400
-  //       }}>
-  //         <CardHeader sx={{textAlign: "center"}} title="Sign In" />
-  //         <CardContent>
-  //           <TextField
-  //             variant="outlined"
-  //             required
-  //             fullWidth
-  //             label="Email"
-  //             value={email}
-  //             margin="dense"
-  //             onChange={event=> setEmail(event.target.value)}
-  //           />
-  //           <TextField
-  //             variant="outlined"
-  //             required
-  //             fullWidth
-  //             label="Password"
-  //             value={password}
-  //             margin="dense"
-  //             onChange={event=> setPassword(event.target.value)}
-  //           />
-  //           <Button
-  //             variant="contained"
-  //             size="large"
-  //             color="primary"
-  //             disabled={!email || !password ? true : false}
-  //             sx={{
-  //               marginTop: (theme) => theme.spacing(2),
-  //               flexGrow: 1,
-  //               textTransform: "none"
-  //             }}
-  //             onClick={handleSubmit}
-  //           >
-  //             Submit
-  //           </Button>
-  //           <Box textAlign="center" sx={{marginTop: "2rem"}}>
-  //             <Typography variant="body2">
-  //               Don't have an account? &nbsp;
-  //               <Link component={RouterLink} to="/signup" sx={{textDecoration: "none"}}>Sign up</Link>
-  //             </Typography>
-  //           </Box>
-  //         </CardContent>
-  //       </Card>
-  //     </form>
-  //     <AlertMessage
-  //       open={alertMessageOpen}
-  //       setOpen={setAlertMessageOpen}
-  //       severity="error"
-  //       message="Invalid emai or password"
-  //     ></AlertMessage>
-  //   </>
-  // )
+  return (
+    <>
+      <h1>Vendor</h1>
+      <form noValidate autoComplete="off">
+        <Card sx={{
+          padding: (theme) => theme.spacing(2),
+          maxWidth: 400
+        }}>
+          <CardHeader sx={{textAlign: "center"}} title="Sign In" />
+          <CardContent>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              label="Email"
+              value={email}
+              margin="dense"
+              onChange={event=> setEmail(event.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              label="Password"
+              value={password}
+              margin="dense"
+              onChange={event=> setPassword(event.target.value)}
+            />
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              disabled={!email || !password ? true : false}
+              sx={{
+                marginTop: (theme) => theme.spacing(2),
+                flexGrow: 1,
+                textTransform: "none"
+              }}
+              onClick={handleSubmit}
+            >
+              Submit
+            </Button>
+            <Box textAlign="center" sx={{marginTop: "2rem"}}>
+              <Typography variant="body2">
+                Don't have an account? &nbsp;
+                <Link component={RouterLink} to="/signup" sx={{textDecoration: "none"}}>Sign up</Link>
+              </Typography>
+            </Box>
+          </CardContent>
+        </Card>
+      </form>
+      <AlertMessage
+        open={alertMessageOpen}
+        setOpen={setAlertMessageOpen}
+        severity="error"
+        message="Invalid emai or password"
+      ></AlertMessage>
+    </>
+  )
 }
 
 export default SignIn

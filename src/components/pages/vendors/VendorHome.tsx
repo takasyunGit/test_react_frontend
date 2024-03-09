@@ -1,20 +1,20 @@
 import React, { useContext } from "react"
-import { AuthUserContext } from "components/models/user/AuthUserProvider"
+import { AuthVendorUserContext } from "components/models/vendor_user/AuthVendorUserProvider"
 
 const Home: React.FC = () => {
-  // const { isSignedIn, currentUser } = useContext(AuthUserContext)
+  const { isSignedIn, currentVendorUser } = useContext(AuthVendorUserContext)
 
   return (
     <>
       {
-        isSignedIn && currentUser ? (
+        isSignedIn && currentVendorUser ? (
           <>
-            <h1>Signed in successfully!</h1>
-            <h2>Email: {currentUser?.email}</h2>
-            <h2>Name: {currentUser?.name}</h2>
+            <h1>Vendor</h1>
+            <h2>Email: {currentVendorUser?.email}</h2>
+            <h2>Name: {currentVendorUser?.name}</h2>
           </>
         ) : (
-          <h1>Not signed in</h1>
+          <h1>Vendor not signed in</h1>
         )
       }
     </>
