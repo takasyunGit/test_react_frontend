@@ -3,15 +3,15 @@ import Cookies from "js-cookie"
 import { SignUpParams, SignInParams } from "models/user/type"
 
 export const signUp = (params: SignUpParams) => {
-  return client.post("auth", params)
+  return client.post("user", params)
 }
 
 export const signIn = (params: SignInParams) => {
-  return client.post("auth/sign_in", params)
+  return client.post("user/sign_in", params)
 }
 
 export const signOut = () => {
-  return client.delete("auth/sign_out", {headers: {
+  return client.delete("user/sign_out", {headers: {
     "access-token": Cookies.get("_access_token"),
     "client": Cookies.get("_client"),
     "uid": Cookies.get("_uid")
@@ -21,7 +21,7 @@ export const signOut = () => {
 export const getCurrentUser = () => {
   if (!Cookies.get("_access_token") || !Cookies.get("_client") || !Cookies.get("_uid")) return
 
-  return client.get("/auth/sessions", { headers: {
+  return client.get("/user/sessions", { headers: {
     "access-token": Cookies.get("_access_token"),
     "client": Cookies.get("_client"),
     "uid": Cookies.get("_uid")
