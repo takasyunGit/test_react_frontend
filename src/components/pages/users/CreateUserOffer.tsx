@@ -6,39 +6,36 @@ import CardContent from "@mui/material/CardContent"
 import CardHeader from "@mui/material/CardHeader"
 import Button from "@mui/material/Button"
 import Link from '@mui/material/Link'
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import TextField from "@mui/material/TextField"
 
-import { RequiredTextField, OptionalTextField, AmountForm } from "components/ui/TextField"
+import { RequiredTextField, OptionalTextField, AmountForm, SelectForm } from "components/ui/TextField"
 import { AuthUserContext } from "components/models/user/AuthUserProvider"
 import AlertMessage from "components/ui/AlertMessage"
 import { CreateUserOfferParams } from "models/user_offer/type"
 import { createUserOffer } from "models/user_offer/request"
-import { PrefectureCode, UserOfferRequestTypeCode } from "utils/type"
+import { PrefectureCode, UserOfferRequestTypeCode, NumberCodeListType } from "utils/type"
+import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST } from "utils/constants"
 
 const CreateUserOffer: React.FC = () => {
   const { isSignedIn, currentUser } = useContext(AuthUserContext)
-  const [prefecture, setPrefecture] = useState<PrefectureCode>(1)
-  const [address, setAddress] = useState<string>("")
-  const [budget, setBudget] = useState<string>("")
-  const [remark, setRemark] = useState<string>("")
-  const [requestType, setRequestType] = useState<UserOfferRequestTypeCode>(1)
+  const [prefecture, setPrefecture] = useState<PrefectureCode | ''>('')
+  const [address, setAddress] = useState<string>('')
+  const [budget, setBudget] = useState<string>('')
+  const [remark, setRemark] = useState<string>('')
+  const [requestType, setRequestType] = useState<UserOfferRequestTypeCode | ''>('')
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    // const params: CreateUserOfferParams = {
-    //   prefecture: prefecture,
-    //   address: address,
-    //   budget: budget,
-    //   remark: remark,
-    //   type: requestType
-    // }
     const params: CreateUserOfferParams = {
-      prefecture: 1,
-      address: "住所",
-      budget: "1234",
-      remark: "remark",
-      request_type: 1
+      prefecture: prefecture as PrefectureCode,
+      address: address,
+      budget: budget,
+      remark: remark,
+      request_type: requestType as UserOfferRequestTypeCode
     }
 
     try{
@@ -66,6 +63,13 @@ const CreateUserOffer: React.FC = () => {
         }}>
           <CardHeader sx={{textAlign: "center"}} title="Create user offer" />
           <CardContent>
+            <SelectForm
+              label="Prefecture"
+              width="35%"
+              value={prefecture as PrefectureCode}
+              list={PREFECTURES_NAME_LIST}
+              onChange={e=> setPrefecture(e as PrefectureCode)}
+            />
             <RequiredTextField
               label="Address"
               value={address}
@@ -82,6 +86,15 @@ const CreateUserOffer: React.FC = () => {
               value={remark}
               onChange={e=> setRemark(e)}
             />
+            <div>
+              <SelectForm
+                label="Request type"
+                width="40%"
+                value={requestType as UserOfferRequestTypeCode}
+                list={USER_OFFER_REQUEST_TYPE_LIST}
+                onChange={e=> setRequestType(e as UserOfferRequestTypeCode)}
+              />
+            </div>
             <Button
               variant="contained"
               size="large"
