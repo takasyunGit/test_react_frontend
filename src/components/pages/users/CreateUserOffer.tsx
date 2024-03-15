@@ -19,6 +19,8 @@ const CreateUserOffer: React.FC = () => {
   const [budget, setBudget] = useState<string>('')
   const [remark, setRemark] = useState<string>('')
   const [requestType, setRequestType] = useState<UserOfferRequestTypeCode | ''>('')
+  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
+  const [alertMessage, setAlertMessage] = useState<string | string[]>([""])
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,11 +42,13 @@ const CreateUserOffer: React.FC = () => {
 
         navigate("/")
       } else {
-        // setAlertMessageOpen(true)
+        setAlertMessage("An unexpected error has occurred")
+        setAlertMessageOpen(true)
       }
     } catch(err) {
       console.log(err)
-      // setAlertMessageOpen(true)
+      setAlertMessage("An unexpected error has occurred")
+      setAlertMessageOpen(true)
     }
   }
 
@@ -107,12 +111,12 @@ const CreateUserOffer: React.FC = () => {
           </CardContent>
         </Card>
       </form>
-      {/* <AlertMessage
+      <AlertMessage
         open={alertMessageOpen}
         setOpen={setAlertMessageOpen}
         severity="error"
         message="Invalid emai or password"
-      ></AlertMessage> */}
+      ></AlertMessage>
     </>
   )
 }
