@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
+import Axios from 'axios'
 import { useNavigate } from "react-router-dom"
 
 import Card from "@mui/material/Card"
@@ -10,7 +11,7 @@ import { OptionalTextField, AmountForm, SelectForm } from "components/ui/TextFie
 import AlertMessage from "components/ui/AlertMessage"
 import { CreateUserOfferParams } from "models/user_offer/type"
 import { createUserOffer } from "models/user_offer/request"
-import { PrefectureCode, UserOfferRequestTypeCode, NumberCodeListType } from "utils/type"
+import { PrefectureCode, UserOfferRequestTypeCode } from "utils/type"
 import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST } from "utils/constants"
 
 const CreateUserOffer: React.FC = () => {
@@ -39,14 +40,22 @@ const CreateUserOffer: React.FC = () => {
       if (!res) { return navigate("/signup") }
 
       if (res && res.status === 200) {
-
         navigate("/")
       } else {
         setAlertMessage("An unexpected error has occurred")
         setAlertMessageOpen(true)
       }
-    } catch(err) {
-      console.log(err)
+    } catch(e) {
+      if (Axios.isAxiosError(e) && e.response && e.response.status === 422) {
+        setAlertMessage(e.response.data.errors.fullMessages)
+        setAlertMessageOpen(true)
+        return
+      }
+      if (Axios.isAxiosError(e) && e.response && e.response.status === 401) {
+        navigate("/signin")
+        return
+      }
+      console.log(e)
       setAlertMessage("An unexpected error has occurred")
       setAlertMessageOpen(true)
     }
@@ -115,7 +124,7 @@ const CreateUserOffer: React.FC = () => {
         open={alertMessageOpen}
         setOpen={setAlertMessageOpen}
         severity="error"
-        message="Invalid emai or password"
+        message={alertMessage}
       ></AlertMessage>
     </>
   )
