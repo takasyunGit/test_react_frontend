@@ -5,13 +5,8 @@ import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardHeader from "@mui/material/CardHeader"
 import Button from "@mui/material/Button"
-import Link from '@mui/material/Link'
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import TextField from "@mui/material/TextField"
 
-import { RequiredTextField, OptionalTextField, AmountForm, SelectForm } from "components/ui/TextField"
-import { AuthUserContext } from "components/models/user/AuthUserProvider"
+import { OptionalTextField, AmountForm, SelectForm } from "components/ui/TextField"
 import AlertMessage from "components/ui/AlertMessage"
 import { CreateUserOfferParams } from "models/user_offer/type"
 import { createUserOffer } from "models/user_offer/request"
@@ -19,7 +14,6 @@ import { PrefectureCode, UserOfferRequestTypeCode, NumberCodeListType } from "ut
 import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST } from "utils/constants"
 
 const CreateUserOffer: React.FC = () => {
-  const { isSignedIn, currentUser } = useContext(AuthUserContext)
   const [prefecture, setPrefecture] = useState<PrefectureCode | ''>('')
   const [address, setAddress] = useState<string>('')
   const [budget, setBudget] = useState<string>('')
