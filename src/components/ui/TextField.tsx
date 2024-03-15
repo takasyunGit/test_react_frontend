@@ -10,12 +10,13 @@ type ChildProps<T = string> = {
   value: T,
   required?: boolean
   type?: string
+  minRows?: string
   onChange: (targetValue: T) => void
   onBlur?: (targetValue: T) => void
 }
 
 export const RequiredTextField = (props: ChildProps) => {
-  const { label, value, required = true, type = "text", onChange, onBlur = () => {} } = props
+  const { label, value, required = true, type = "text", minRows = "", onChange, onBlur = () => {} } = props
 
   return (
     <TextField
@@ -23,6 +24,8 @@ export const RequiredTextField = (props: ChildProps) => {
       type={type}
       required={required}
       fullWidth
+      multiline
+      minRows={minRows}
       label={label}
       value={value}
       margin="dense"
@@ -38,6 +41,7 @@ export const OptionalTextField = (props: ChildProps) => {
       required={false}
       label={props.label}
       value={props.value}
+      minRows={props.minRows}
       onChange={e => props.onChange(e)}
     />
   )

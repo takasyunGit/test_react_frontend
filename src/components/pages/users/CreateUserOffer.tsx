@@ -33,7 +33,7 @@ const CreateUserOffer: React.FC = () => {
     const params: CreateUserOfferParams = {
       prefecture: prefecture as PrefectureCode,
       address: address,
-      budget: budget,
+      budget: budget.replace(/,/g, ''),
       remark: remark,
       request_type: requestType as UserOfferRequestTypeCode
     }
@@ -70,7 +70,7 @@ const CreateUserOffer: React.FC = () => {
               list={PREFECTURES_NAME_LIST}
               onChange={e=> setPrefecture(e as PrefectureCode)}
             />
-            <RequiredTextField
+            <OptionalTextField
               label="Address"
               value={address}
               onChange={e=> setAddress(e)}
@@ -83,6 +83,7 @@ const CreateUserOffer: React.FC = () => {
             />
             <OptionalTextField
               label="Remark"
+              minRows="3"
               value={remark}
               onChange={e=> setRemark(e)}
             />
@@ -99,7 +100,7 @@ const CreateUserOffer: React.FC = () => {
               variant="contained"
               size="large"
               color="primary"
-              // disabled={!email || !password ? true : false}
+              disabled={!prefecture || !budget  || !requestType ? true : false}
               sx={{
                 marginTop: (theme) => theme.spacing(2),
                 flexGrow: 1,
