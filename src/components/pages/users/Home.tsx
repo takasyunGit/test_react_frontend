@@ -12,7 +12,8 @@ const Home: React.FC = () => {
         isSignedIn && currentUser ? (
           <>
             <h1>Home</h1>
-            <Link component={RouterLink} to="/user_offer/new" sx={{textDecoration: "none"}}>Create User Offer</Link>
+            <div><Link component={RouterLink} to="/user_offer/new" sx={{textDecoration: "none"}}>Create User Offer</Link></div>
+            <div><Link component={RouterLink} to={"/user_offer/" + 1} sx={{textDecoration: "none"}}>Show User Offer 1</Link></div>
             <h2>Email: {currentUser?.email}</h2>
             <h2>Name: {currentUser?.name}</h2>
           </>
