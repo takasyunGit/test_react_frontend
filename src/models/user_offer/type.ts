@@ -4,7 +4,7 @@ export type CreateUserOfferParams = {
   address: string,
   budget: number,
   remark: string,
-  request_type: number
+  requestType: number
 }
 
 // ユーザーオファー
