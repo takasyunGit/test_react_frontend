@@ -2,13 +2,15 @@
 export type CreateUserOfferParams = {
   prefecture: number,
   address: string,
-  budget: string,
+  budget: number,
   remark: string,
   request_type: number
 }
 
 // ユーザーオファー
 export interface UserOffer extends CreateUserOfferParams {
-  created_at?: string,
-  updated_at?: string
+  id: number,
+  userId: number,
+  createdAt: string,
+  updatedAt: string
 }

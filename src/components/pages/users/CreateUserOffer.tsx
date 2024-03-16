@@ -30,7 +30,7 @@ const CreateUserOffer: React.FC = () => {
     const params: CreateUserOfferParams = {
       prefecture: prefecture as PrefectureCode,
       address: address,
-      budget: budget.replace(/,/g, ''),
+      budget: +budget.replace(/,/g, ''),
       remark: remark,
       request_type: requestType as UserOfferRequestTypeCode
     }
