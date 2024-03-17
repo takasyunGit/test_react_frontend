@@ -3,6 +3,7 @@ import Axios from 'axios'
 import { useNavigate, useLocation, useParams } from "react-router-dom"
 import { Card, CardContent, CardHeader, Typography } from "@mui/material"
 
+import { signedInCookiesSetter } from "utils/client"
 import { AuthUserContext } from "components/models/user/AuthUserProvider"
 import { getUserOffer } from "models/user_offer/request"
 import { UserOffer } from "models/user_offer/type"
@@ -22,6 +23,7 @@ const ShowUserOffer: React.FC = () => {
     try{
       const res = await getUserOffer(params.id as string)
       if (!res) { return navigate("/signup") }
+      signedInCookiesSetter(res)
 
       if (res && res.status === 200) {
         const object = res!.data.data

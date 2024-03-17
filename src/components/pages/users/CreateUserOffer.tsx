@@ -7,6 +7,7 @@ import CardContent from "@mui/material/CardContent"
 import CardHeader from "@mui/material/CardHeader"
 import Button from "@mui/material/Button"
 
+import { signedInCookiesSetter } from "utils/client"
 import { OptionalTextField, AmountForm, SelectForm } from "components/ui/TextField"
 import AlertMessage from "components/ui/AlertMessage"
 import { CreateUserOfferParams } from "models/user_offer/type"
@@ -38,6 +39,7 @@ const CreateUserOffer: React.FC = () => {
     try{
       const res = await createUserOffer(params)
       if (!res) { return navigate("/signup") }
+      signedInCookiesSetter(res)
 
       if (res && res.status === 200) {
         navigate("/")

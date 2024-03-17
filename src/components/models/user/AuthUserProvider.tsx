@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react"
 
+import { signedInCookiesSetter } from "utils/client"
 import { getCurrentUser } from "models/user/auth"
 import { User, AuthUserContextType } from "models/user/type"
 
@@ -17,6 +18,7 @@ export const AuthUserProvider: React.FC<Props> = (props) =>{
       const res = await getCurrentUser()
 
       if (res?.data.isLogin === true) {
+        signedInCookiesSetter(res)
         setIsSignedIn(true)
         setCurrentUser(res?.data.data)
 
