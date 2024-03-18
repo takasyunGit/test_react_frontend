@@ -15,6 +15,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
+import { signedInCookiesSetter } from "utils/client"
 import { AuthUserContext } from "components/models/user/AuthUserProvider"
 import AlertMessage from "components/ui/AlertMessage"
 import { signUp } from "models/user/auth"
@@ -45,10 +46,7 @@ const SignUp: React.FC = () => {
       const res = await signUp(Params)
 
       if (res.status === 200) {
-        Cookies.set("_access_token", res.headers["access-token"])
-        Cookies.set("_client", res.headers["client"])
-        Cookies.set("_uid", res.headers["uid"])
-
+        signedInCookiesSetter(res)
         setIsSignedIn(true)
         setCurrentUser(res.data.data)
 

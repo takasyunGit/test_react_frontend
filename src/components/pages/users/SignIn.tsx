@@ -11,6 +11,7 @@ import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
 import Link from '@mui/material/Link'
 
+import { signedInCookiesSetter } from "utils/client"
 import { AuthUserContext } from "components/models/user/AuthUserProvider"
 import AlertMessage from "components/ui/AlertMessage"
 import { signIn } from "models/user/auth"
@@ -42,10 +43,7 @@ const SignIn: React.FC = () => {
       const res = await signIn(params)
 
       if (res.status === 200) {
-        Cookies.set("_access_token", res.headers["access-token"])
-        Cookies.set("_client", res.headers["client"])
-        Cookies.set("_uid", res.headers["uid"])
-
+        signedInCookiesSetter(res)
         setIsSignedIn(true)
         setCurrentUser(res.data.data)
         if (fromPathName) { return navigate(fromPathName, { replace: true }) }
