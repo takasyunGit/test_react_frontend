@@ -53,7 +53,7 @@ const SignIn: React.FC = () => {
         setAlertMessageOpen(true)
       }
     } catch(e) {
-      detectAxiosErrors(e)
+      detectAxiosErrors(e, setAlertMessageOpen)
     }
   }
 

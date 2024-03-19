@@ -24,7 +24,6 @@ export const Router = () => {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/vendor">
             <Route index element={<AuthRouteGuard component={<VendorHome />} redirect="/vendor/signin" signInType="Vendor" />} />
-            <Route index element={<VendorHome />} />
             <Route path="signin" element={<VendorSignIn />} />
           </Route>
           <Route path='*' element={<Page404 />} />

@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-export const detectAxiosErrors = (e: any, setMessage?: Function, setMessageOpen?: Function) => {
+export const detectAxiosErrors = (e: any, setMessageOpen?: Function, setMessage?: Function) => {
   if (Axios.isAxiosError(e) && e.response && e.response.status === 404) {
     window.location.href = "/Page404"
     return
