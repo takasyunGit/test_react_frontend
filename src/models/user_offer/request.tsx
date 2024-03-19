@@ -21,3 +21,13 @@ export const getUserOffer = (params: string) => {
     "uid": Cookies.get("_uid")
   }})
 }
+
+export const getUserOfferList = () => {
+  if (!Cookies.get("_access_token") || !Cookies.get("_client") || !Cookies.get("_uid")) return
+
+  return client.get("user/user_offers/", { headers: {
+    "access-token": Cookies.get("_access_token"),
+    "client": Cookies.get("_client"),
+    "uid": Cookies.get("_uid")
+  }})
+}

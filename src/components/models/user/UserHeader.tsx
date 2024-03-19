@@ -13,7 +13,7 @@ import { signOut } from "models/user/auth"
 import { AuthUserContext } from "components/models/user/AuthUserProvider"
 
 const UserHeader: React.FC = () => {
-  const { loading, isSignedIn, setIsSignedIn} = useContext(AuthUserContext)
+  const { loading, isSignedIn, setIsSignedIn } = useContext(AuthUserContext)
   const navigate = useNavigate()
 
   const handleSignOut = async(e: React.MouseEvent<HTMLButtonElement>) => {
