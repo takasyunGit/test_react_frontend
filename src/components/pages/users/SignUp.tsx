@@ -20,6 +20,7 @@ import { AuthUserContext } from "components/models/user/AuthUserProvider"
 import AlertMessage from "components/ui/AlertMessage"
 import { signUp } from "models/user/auth"
 import { SignUpParams } from "models/user/type"
+import { detectAxiosErrors } from "utils/detectErrors"
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate()
@@ -56,15 +57,7 @@ const SignUp: React.FC = () => {
         setAlertMessageOpen(true)
       }
     } catch(e) {
-      if (Axios.isAxiosError(e)  && e.response && e.response.status === 422) {
-        console.log(e)
-        setAlertMessage(e.response.data.errors.fullMessages)
-        setAlertMessageOpen(true)
-      } else {
-        console.log(e)
-        setAlertMessage("An unexpected error has occurred")
-        setAlertMessageOpen(true)
-      }
+      detectAxiosErrors(e, setAlertMessage, setAlertMessageOpen)
     }
   }
 

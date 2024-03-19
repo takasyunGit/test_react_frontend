@@ -8,10 +8,10 @@ import { AuthUserContext } from "components/models/user/AuthUserProvider"
 import { getUserOffer } from "models/user_offer/request"
 import { UserOffer } from "models/user_offer/type"
 import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST } from "utils/constants"
+import { detectAxiosErrors } from "utils/detectErrors"
 
 const ShowUserOffer: React.FC = () => {
   const navigate = useNavigate()
-  const location = useLocation()
   const params = useParams()
   const { loading, setLoading, currentUser } = useContext(AuthUserContext)
   const [ offerLoading, setOfferLoading] = useState<boolean>(true)
@@ -35,15 +35,7 @@ const ShowUserOffer: React.FC = () => {
         navigate("/Page404")
       }
     } catch(e) {
-      if (Axios.isAxiosError(e) && e.response && e.response.status === 404) {
-        navigate("/Page404")
-        return
-      }
-      if (Axios.isAxiosError(e) && e.response && e.response.status === 401) {
-        navigate("/signin")
-        return
-      }
-      console.log(e)
+      detectAxiosErrors(e)
     }
     setOfferLoading(false)
   }

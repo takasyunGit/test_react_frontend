@@ -16,6 +16,7 @@ import { AuthUserContext } from "components/models/user/AuthUserProvider"
 import AlertMessage from "components/ui/AlertMessage"
 import { signIn } from "models/user/auth"
 import { SignInParams } from "models/user/type"
+import { detectAxiosErrors } from "utils/detectErrors"
 
 type CustomLocation = {
   state: { from: { pathname: string } }
@@ -51,9 +52,8 @@ const SignIn: React.FC = () => {
       } else {
         setAlertMessageOpen(true)
       }
-    } catch(err) {
-      console.log(err)
-      setAlertMessageOpen(true)
+    } catch(e) {
+      detectAxiosErrors(e)
     }
   }
 

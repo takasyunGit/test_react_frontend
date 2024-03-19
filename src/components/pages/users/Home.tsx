@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from "react"
-import Axios from 'axios'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
 import { Card, CardContent, Typography, Link, CircularProgress } from "@mui/material"
@@ -10,6 +9,7 @@ import { UserOffer } from "models/user_offer/type"
 import { getUserOfferList } from "models/user_offer/request"
 import { dateToYYYYMMDD } from "utils/formatConverter"
 import { USER_OFFER_REQUEST_TYPE_LIST } from "utils/constants"
+import { detectAxiosErrors } from "utils/detectErrors"
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
@@ -21,7 +21,7 @@ const Home: React.FC = () => {
     try{
       const res = await getUserOfferList()
 
-      if (!res) { return navigate("/signup") }
+      if (!res) { return navigate("/signin") }
       signedInCookiesSetter(res)
 
       if (res && res.status === 200) {
@@ -31,15 +31,7 @@ const Home: React.FC = () => {
         navigate("/Page404")
       }
     } catch(e) {
-      if (Axios.isAxiosError(e) && e.response && e.response.status === 404) {
-        navigate("/Page404")
-        return
-      }
-      if (Axios.isAxiosError(e) && e.response && e.response.status === 401) {
-        navigate("/signin")
-        return
-      }
-      console.log(e)
+      detectAxiosErrors(e)
     }
     setHomeLoading(false)
   }

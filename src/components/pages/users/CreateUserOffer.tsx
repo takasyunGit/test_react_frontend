@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import Axios from 'axios'
 import { useNavigate } from "react-router-dom"
 
 import Card from "@mui/material/Card"
@@ -14,6 +13,7 @@ import { CreateUserOfferParams } from "models/user_offer/type"
 import { createUserOffer } from "models/user_offer/request"
 import { PrefectureCode, UserOfferRequestTypeCode } from "utils/type"
 import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST } from "utils/constants"
+import { detectAxiosErrors } from "utils/detectErrors"
 
 const CreateUserOffer: React.FC = () => {
   const [prefecture, setPrefecture] = useState<PrefectureCode | ''>('')
@@ -48,18 +48,7 @@ const CreateUserOffer: React.FC = () => {
         setAlertMessageOpen(true)
       }
     } catch(e) {
-      if (Axios.isAxiosError(e) && e.response && e.response.status === 422) {
-        setAlertMessage(e.response.data.errors.fullMessages)
-        setAlertMessageOpen(true)
-        return
-      }
-      if (Axios.isAxiosError(e) && e.response && e.response.status === 401) {
-        navigate("/signin")
-        return
-      }
-      console.log(e)
-      setAlertMessage("An unexpected error has occurred")
-      setAlertMessageOpen(true)
+      detectAxiosErrors(e, setAlertMessage, setAlertMessageOpen)
     }
   }
 
