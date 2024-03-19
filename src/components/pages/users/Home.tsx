@@ -1,24 +1,76 @@
-import React, { useContext } from "react"
-import { Link as RouterLink} from 'react-router-dom'
-import Link from '@mui/material/Link'
+import React, { useContext, useState, useEffect } from "react"
+import Axios from 'axios'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
+
+import { Card, CardContent, Typography, Link, CircularProgress } from "@mui/material"
+
+import { signedInCookiesSetter } from "utils/client"
 import { AuthUserContext } from "components/models/user/AuthUserProvider"
+import { UserOffer } from "models/user_offer/type"
+import { getUserOfferList } from "models/user_offer/request"
+import { dateToYYYYMMDD } from "utils/formatConverter"
+import { USER_OFFER_REQUEST_TYPE_LIST } from "utils/constants"
 
 const Home: React.FC = () => {
-  const { isSignedIn, currentUser } = useContext(AuthUserContext)
+  const navigate = useNavigate()
+  const { currentUser } = useContext(AuthUserContext)
+  const [userOfferList, setUserOfferList] = useState<UserOffer[]>([])
+  const [homeLoading, setHomeLoading] = useState<boolean>(true)
+
+  const handleGetUserOfferList = async () => {
+    try{
+      const res = await getUserOfferList()
+
+      if (!res) { return navigate("/signup") }
+      signedInCookiesSetter(res)
+
+      if (res && res.status === 200) {
+        setUserOfferList(res!.data.data)
+      } else {
+        console.log("An unexpected error has occurred")
+        navigate("/Page404")
+      }
+    } catch(e) {
+      if (Axios.isAxiosError(e) && e.response && e.response.status === 404) {
+        navigate("/Page404")
+        return
+      }
+      if (Axios.isAxiosError(e) && e.response && e.response.status === 401) {
+        navigate("/signin")
+        return
+      }
+      console.log(e)
+    }
+    setHomeLoading(false)
+  }
+
+  useEffect(() => {handleGetUserOfferList()},[])
 
   return (
     <>
+      <h1>Home</h1>
+      <div><Link component={RouterLink} to="/user_offer/new" sx={{textDecoration: "none"}}>Create User Offer</Link></div>
+      <h2>Email: {currentUser?.email}</h2>
       {
-        isSignedIn && currentUser ? (
-          <>
-            <h1>Home</h1>
-            <div><Link component={RouterLink} to="/user_offer/new" sx={{textDecoration: "none"}}>Create User Offer</Link></div>
-            <div><Link component={RouterLink} to={"/user_offer/" + 1} sx={{textDecoration: "none"}}>Show User Offer 1</Link></div>
-            <h2>Email: {currentUser?.email}</h2>
-            <h2>Name: {currentUser?.name}</h2>
-          </>
+        homeLoading ? (
+          <CircularProgress />
         ) : (
-          <h1>Not signed in</h1>
+          userOfferList.map((offer) => (
+            <Card
+            key={"userOffer" + offer.id}
+            sx={{
+              padding: (theme) => theme.spacing(2),
+              mb: 1,
+              maxWidth: 400
+            }}>
+              <CardContent>
+                <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
+                <Link component={RouterLink} to={"/user_offer/" + offer.id} sx={{textDecoration: "none"}}>
+                  <Typography variant="h6" gutterBottom>{'【' + USER_OFFER_REQUEST_TYPE_LIST[offer.requestType] + '】' + offer.address}</Typography>
+                </Link>
+              </CardContent>
+            </Card>
+          ))
         )
       }
     </>
