@@ -5,3 +5,11 @@ export const stringToHalfWidth = (str: string): string => {
   });
   return str
 }
+
+// 日本時間に変換
+export const dateToYYYYMMDD = (d: Date): string => {
+  const converted = new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().split(/T|\./)
+  const date = converted[0]
+  const hour = converted[1]
+  return date +  ' ' + hour
+}
