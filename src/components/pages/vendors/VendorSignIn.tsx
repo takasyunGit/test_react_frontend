@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react"
 import { useNavigate, Link as RouterLink, useLocation} from "react-router-dom"
-import Cookies from "js-cookie"
 
 import { Typography } from "@mui/material"
 import TextField from "@mui/material/TextField"
@@ -11,10 +10,12 @@ import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
 import Link from '@mui/material/Link'
 
+import { signedInCookiesSetter } from "utils/client"
 import { AuthVendorUserContext } from "components/models/vendor_user/AuthVendorUserProvider"
 import AlertMessage from "components/ui/AlertMessage"
 import { signIn } from "models/vendor_user/auth"
 import { SignInParams } from "models/vendor_user/type"
+import { detectAxiosErrors } from "utils/detectErrors"
 
 type CustomLocation = {
   state: { from: { pathname: string } }
@@ -42,9 +43,7 @@ const SignIn: React.FC = () => {
       const res = await signIn(params)
 
       if (res.status === 200) {
-        Cookies.set("_access_token_v", res.headers["access-token"])
-        Cookies.set("_client_v", res.headers["client"])
-        Cookies.set("_uid_v", res.headers["uid"])
+        signedInCookiesSetter(res, "Vendor")
 
         setIsSignedInVendor(true)
         setCurrentVendorUser(res.data.data)
@@ -53,9 +52,8 @@ const SignIn: React.FC = () => {
       } else {
         setAlertMessageOpen(true)
       }
-    } catch(err) {
-      console.log(err)
-      setAlertMessageOpen(true)
+    } catch(e) {
+      detectAxiosErrors(e, setAlertMessageOpen)
     }
   }
 
