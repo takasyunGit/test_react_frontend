@@ -103,6 +103,10 @@ const SignIn: React.FC = () => {
                 Don't have an account? &nbsp;
                 <Link component={RouterLink} to="/signup" sx={{textDecoration: "none"}}>Sign up</Link>
               </Typography>
+              <Typography variant="body2">
+                Vendor &nbsp;
+                <Link component={RouterLink} to="/vendor/signin" sx={{textDecoration: "none"}}>Sign in</Link>
+              </Typography>
             </Box>
           </CardContent>
         </Card>
