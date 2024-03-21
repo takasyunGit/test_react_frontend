@@ -11,7 +11,11 @@ export const detectAxiosErrors = (e: any, setMessageOpen?: Function, setMessage?
     return
   }
   if (Axios.isAxiosError(e) && e.response && e.response.status === 401) {
-    window.location.href = "/signin"
+    if (e.config?.url?.match(/vendor/)) {
+      window.location.href = "/vendor/signin"
+    } else {
+      window.location.href = "/signin"
+    }
     return
   }
   console.log(e)
