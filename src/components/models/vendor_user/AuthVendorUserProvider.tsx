@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react"
-import { useLocation } from "react-router-dom"
 
+import { signedInCookiesSetter } from "utils/client"
 import { getCurrentVendorUser } from "models/vendor_user/auth"
 import { VendorUser, AuthVendorUserContextType } from "models/vendor_user/type"
 
@@ -18,6 +18,7 @@ export const AuthVendorUserProvider: React.FC<Props> = (props) =>{
       const res = await getCurrentVendorUser()
 
       if (res?.data.isLogin === true) {
+        signedInCookiesSetter(res, "Vendor")
         setIsSignedInVendor(true)
         setCurrentVendorUser(res?.data.data)
 
