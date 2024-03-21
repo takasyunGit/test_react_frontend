@@ -99,12 +99,6 @@ const SignIn: React.FC = () => {
             >
               Submit
             </Button>
-            <Box textAlign="center" sx={{marginTop: "2rem"}}>
-              <Typography variant="body2">
-                Don't have an account? &nbsp;
-                <Link component={RouterLink} to="/signup" sx={{textDecoration: "none"}}>Sign up</Link>
-              </Typography>
-            </Box>
           </CardContent>
         </Card>
       </form>
