@@ -21,7 +21,7 @@ export const signedInCookiesSetter = (res: AxiosResponse, userType: string = "Us
     return
   }
   if (userType === "Vendor"){
-    if (res.headers["access-token_v"]) { Cookies.set("_access_token", res.headers["access-token"]) }
+    if (res.headers["access-token"]) { Cookies.set("_access_token_v", res.headers["access-token"]) }
     Cookies.set("_client_v", res.headers["client"])
     Cookies.set("_uid_v", res.headers["uid"])
     return
