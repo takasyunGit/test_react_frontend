@@ -13,7 +13,7 @@ import ProgressCircle from "components/ui/ProgressCircle"
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
-  const { isSignedInVendor, currentVendorUser } = useContext(AuthVendorUserContext)
+  const { currentVendorUser } = useContext(AuthVendorUserContext)
   const [userOfferList, setUserOfferList] = useState<UserOffer[]>([])
   const [homeLoading, setHomeLoading] = useState<boolean>(true)
 
@@ -54,7 +54,7 @@ const Home: React.FC = () => {
           }}>
             <CardContent>
               <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
-              <Link component={RouterLink} to={"/vendor/vendor_offer/new"} state={{userOfferId: offer.id}} sx={{textDecoration: "none"}}>
+              <Link component={RouterLink} to={"/vendor/user_offer/" + offer.id + "/vendor_offer/new"} sx={{textDecoration: "none"}}>
                 <Typography variant="h6" gutterBottom>
                   {'【' + USER_OFFER_REQUEST_TYPE_LIST[offer.requestType] + '】' +
                   '【予算: ¥' + addComma.format(offer.budget) + '】' + offer.address}

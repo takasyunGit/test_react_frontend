@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import { useNavigate, useLocation } from "react-router-dom"
+import React, { useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
@@ -7,32 +7,25 @@ import CardHeader from "@mui/material/CardHeader"
 import Button from "@mui/material/Button"
 
 import { signedInCookiesSetter } from "utils/client"
-import { OptionalTextField, AmountForm, SelectForm } from "components/ui/TextField"
+import { OptionalTextField, AmountForm } from "components/ui/TextField"
 import AlertMessage from "components/ui/AlertMessage"
 import { CreateVendorOfferParams } from "models/vendor_offer/type"
 import { createVendorOffer } from "models/vendor_offer/request"
 import { detectAxiosErrors } from "utils/detectErrors"
 
-type State = {
-  userOfferId: number
-}
-
 const CreateVendorOffer: React.FC = () => {
   const [remark, setRemark] = useState<string>('')
   const [estimate, setEstimate] = useState<string>('')
-  const [userOfferId, setuserOfferId] = useState<number>(0)
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
   const [alertMessage, setAlertMessage] = useState<string | string[]>([""])
-  const state = useLocation().state as State
+  const userOfferId = useParams().id as string
   const navigate = useNavigate()
-
-  useEffect(()=>{setuserOfferId(state.userOfferId)}, [])
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
     const params: CreateVendorOfferParams = {
-      userOfferId: userOfferId,
+      userOfferId: +userOfferId,
       remark: remark,
       estimate: +estimate.replace(/,/g, ''),
     }
@@ -41,11 +34,11 @@ const CreateVendorOffer: React.FC = () => {
       const res = await createVendorOffer(params)
 
       if (!res) { return navigate("/vendor/signin") }
-      signedInCookiesSetter(res)
+      signedInCookiesSetter(res, "Vendor")
 
       if (res && res.status === 200) {
         const object = res!.data.data
-        navigate("/vendor/vendor_offer/" + object.id)
+        navigate("/vendor/user_offer/" + userOfferId + "/vendor_offer/" + object.id)
       } else {
         setAlertMessage("An unexpected error has occurred")
         setAlertMessageOpen(true)
