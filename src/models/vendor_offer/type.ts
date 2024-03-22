@@ -15,3 +15,5 @@ export type CreateVendorOfferParams = Pick<
     "estimate" |
     "remark"
   >
+
+export type ShowVendorOffer = VendorOffer & { name: string}
