@@ -11,3 +11,13 @@ export const createVendorOffer = (params: CreateVendorOfferParams) => {
     "uid": Cookies.get("_uid_v")
   }})
 }
+
+export const getVendorOffer = (params: string) => {
+  if (!Cookies.get("_access_token_v") || !Cookies.get("_client_v") || !Cookies.get("_uid_v")) return
+
+  return client.get("vendor_user/vendor_offers/" + params, { headers: {
+    "access-token": Cookies.get("_access_token_v"),
+    "client": Cookies.get("_client_v"),
+    "uid": Cookies.get("_uid_v")
+  }})
+}
