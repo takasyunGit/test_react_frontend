@@ -16,7 +16,7 @@ const ShowVednorOffer: React.FC = () => {
 
   const handleGetvendorOffer = async () => {
     try{
-      const res = await userGetVendorOffer(params.id as string)
+      const res = await userGetVendorOffer(params.vendor_offer_id as string)
 
       if (!res) { return navigate("/signin") }
       signedInCookiesSetter(res)
