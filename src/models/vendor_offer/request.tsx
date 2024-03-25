@@ -22,6 +22,21 @@ export const getVendorOffer = (params: string) => {
   }})
 }
 
+export const getVendorOfferList = (userOfferId: string) => {
+  if (!Cookies.get("_access_token_v") || !Cookies.get("_client_v") || !Cookies.get("_uid_v")) return
+
+  return client.get("vendor_user/vendor_offers/", {
+    headers: {
+      "access-token": Cookies.get("_access_token_v"),
+      "client": Cookies.get("_client_v"),
+      "uid": Cookies.get("_uid_v")
+    },
+    params: {
+      userOfferId: userOfferId
+    }
+  })
+}
+
 export const userGetVendorOffer = (params: string) => {
   if (!Cookies.get("_access_token") || !Cookies.get("_client") || !Cookies.get("_uid")) return
 
