@@ -22,11 +22,13 @@ export const Router = () => {
           <Route index element={<AuthRouteGuard component={<Home />} redirect="/signin" signInType="User" />} />
           <Route path="/user_offer/new" element={<AuthRouteGuard component={<CreateUserOffer />} redirect="/signin" signInType="User" />} />
           <Route path="/user_offer/:id" element={<AuthRouteGuard component={<ShowUserOffer />} redirect="/signin" signInType="User" />} />
+          <Route path="/user_offer/:offer_id/vendor_offer/:id" element={<AuthRouteGuard component={<ShowVendorOffer />} redirect="/signin" signInType="User" />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/vendor">
             <Route index element={<AuthRouteGuard component={<VendorHome />} redirect="/vendor/signin" signInType="Vendor" />} />
             <Route path="signin" element={<VendorSignIn />} />
+            <Route path="user_offer/:id" element={<AuthRouteGuard component={<ShowUserOffer />} redirect="/vendor/signin" signInType="Vendor" />} />
             <Route path="user_offer/:id/vendor_offer/new" element={<AuthRouteGuard component={<CreateVendorOffer />} redirect="/vendor/signin" signInType="Vendor" />} />
             <Route path="user_offer/:offer_id/vendor_offer/:id" element={<AuthRouteGuard component={<ShowVendorOffer />} redirect="/vendor/signin" signInType="Vendor" />} />
           </Route>
