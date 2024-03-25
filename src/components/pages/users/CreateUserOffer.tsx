@@ -38,7 +38,7 @@ const CreateUserOffer: React.FC = () => {
 
     try{
       const res = await createUserOffer(params)
-      if (!res) { return navigate("/signup") }
+      if (!res) { return navigate("/signin") }
       signedInCookiesSetter(res)
 
       if (res && res.status === 200) {

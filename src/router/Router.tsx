@@ -11,6 +11,7 @@ import VendorHome from "components/pages/vendors/VendorHome"
 import VendorSignIn from "components/pages/vendors/VendorSignIn"
 import CreateVendorOffer from "components/pages/vendors/CreateVendorOffer"
 import ShowVendorOffer from "components/pages/vendors/ShowVendorOffer"
+import ShowVendorOfferFromUser from "components/pages/vendors/ShowVendorOffer"
 
 import Page404 from "components/pages/Page404"
 import { AuthRouteGuard } from "components/ui/AuthRouteGuard"
@@ -23,6 +24,7 @@ export const Router = () => {
           <Route index element={<AuthRouteGuard component={<Home />} redirect="/signin" signInType="User" />} />
           <Route path="/user_offer/new" element={<AuthRouteGuard component={<CreateUserOffer />} redirect="/signin" signInType="User" />} />
           <Route path="/user_offer/:id" element={<AuthRouteGuard component={<ShowUserOffer />} redirect="/signin" signInType="User" />} />
+          <Route path="/user_offer/:offer_id/vendor_offer/:id" element={<AuthRouteGuard component={<ShowVendorOfferFromUser />} redirect="/signin" signInType="User" />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/vendor">

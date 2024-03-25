@@ -18,7 +18,7 @@ const ShowUserOffer: React.FC = () => {
   const handleGetUserOffer = async () => {
     try{
       const res = await getUserOffer(params.id as string)
-      if (!res) { return navigate("/signup") }
+      if (!res) { return navigate("/signin") }
       signedInCookiesSetter(res)
 
       if (res && res.status === 200) {
