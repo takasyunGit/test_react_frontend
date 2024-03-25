@@ -4,7 +4,7 @@ import { Card, CardContent, Typography, Link, CircularProgress } from "@mui/mate
 
 import { signedInCookiesSetter } from "utils/client"
 import { AuthVendorUserContext } from "components/models/vendor_user/AuthVendorUserProvider"
-import { UserOffer } from "models/user_offer/type"
+import { UserOfferType } from "models/user_offer/type"
 import { vendorGetUserOfferList } from "models/user_offer/request"
 import { dateToYYYYMMDD } from "utils/formatConverter"
 import { USER_OFFER_REQUEST_TYPE_LIST } from "utils/constants"
@@ -14,7 +14,7 @@ import ProgressCircle from "components/ui/ProgressCircle"
 const Home: React.FC = () => {
   const navigate = useNavigate()
   const { currentVendorUser } = useContext(AuthVendorUserContext)
-  const [userOfferList, setUserOfferList] = useState<UserOffer[]>([])
+  const [userOfferList, setUserOfferList] = useState<UserOfferType[]>([])
   const [homeLoading, setHomeLoading] = useState<boolean>(true)
 
   const handleGetUserOfferList = async () => {

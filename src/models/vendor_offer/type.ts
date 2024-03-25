@@ -1,5 +1,5 @@
 
-export type VendorOffer = {
+export type VendorOfferType = {
   id: number,
   vendorUserId: number,
   userOfferId: number,
@@ -9,11 +9,10 @@ export type VendorOffer = {
   updatedAt: string
 }
 
-export type CreateVendorOfferParams = Pick<
-    VendorOffer,
+export type CreateVendorOfferParams = Pick<VendorOfferType,
     "userOfferId" |
     "estimate" |
     "remark"
   >
 
-export type ShowVendorOffer = VendorOffer & { name: string}
+export type ShowVendorOfferType = VendorOfferType & { name: string}

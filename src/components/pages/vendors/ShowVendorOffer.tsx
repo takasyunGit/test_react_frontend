@@ -4,7 +4,7 @@ import { Card, CardHeader, Typography } from "@mui/material"
 
 import { signedInCookiesSetter } from "utils/client"
 import { getVendorOffer } from "models/vendor_offer/request"
-import { ShowVendorOffer } from "models/vendor_offer/type"
+import { ShowVendorOfferType } from "models/vendor_offer/type"
 import { detectAxiosErrors } from "utils/detectErrors"
 import ProgressCircle from "components/ui/ProgressCircle"
 import { dateToYYYYMMDD } from "utils/formatConverter"
@@ -15,7 +15,7 @@ const ShowVednorOffer: React.FC = () => {
   const params = useParams()
   const [offerLoading, setOfferLoading] = useState<boolean>(true)
   const [resStatus, setResStatus] = useState<number>()
-  const [vendorOffer, setVendorOffer] = useState<ShowVendorOffer | undefined>()
+  const [vendorOffer, setVendorOffer] = useState<ShowVendorOfferType | undefined>()
 
   const handleGetvendorOffer = async () => {
     try{
