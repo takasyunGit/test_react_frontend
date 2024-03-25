@@ -7,13 +7,14 @@ import CardHeader from "@mui/material/CardHeader"
 import Button from "@mui/material/Button"
 
 import { signedInCookiesSetter } from "utils/client"
-import { OptionalTextField, AmountForm } from "components/ui/TextField"
+import { OptionalTextField, AmountForm, RequiredTextField } from "components/ui/TextField"
 import AlertMessage from "components/ui/AlertMessage"
 import { CreateVendorOfferParams } from "models/vendor_offer/type"
 import { createVendorOffer } from "models/vendor_offer/request"
 import { detectAxiosErrors } from "utils/detectErrors"
 
 const CreateVendorOffer: React.FC = () => {
+  const [title, setTitle] = useState<string>('')
   const [remark, setRemark] = useState<string>('')
   const [estimate, setEstimate] = useState<string>('')
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
@@ -25,6 +26,7 @@ const CreateVendorOffer: React.FC = () => {
     e.preventDefault()
 
     const params: CreateVendorOfferParams = {
+      title: title,
       userOfferId: +userOfferId,
       remark: remark,
       estimate: +estimate.replace(/,/g, ''),
@@ -57,6 +59,11 @@ const CreateVendorOffer: React.FC = () => {
         }}>
           <CardHeader sx={{textAlign: "center"}} title="Create vendor offer" />
           <CardContent>
+            <RequiredTextField
+              label="Title"
+              value={title}
+              onChange={e=> setTitle(e)}
+            />
             <OptionalTextField
               label="Remark"
               value={remark}
@@ -72,7 +79,7 @@ const CreateVendorOffer: React.FC = () => {
               variant="contained"
               size="large"
               color="primary"
-              disabled={!remark || !estimate ? true : false}
+              disabled={!title || !estimate ? true : false}
               sx={{
                 marginTop: (theme) => theme.spacing(2),
                 flexGrow: 1,

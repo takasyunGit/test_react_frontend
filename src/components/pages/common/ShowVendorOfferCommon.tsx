@@ -27,6 +27,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
             <Typography variant="body1" gutterBottom>id: {vendorOffer?.id}</Typography>
             <Typography variant="body1" gutterBottom>UserOfferID: {vendorOffer?.userOfferId}</Typography>
             <Typography variant="body1" gutterBottom>VendorID: {vendorOffer?.vendorUserId}</Typography>
+            <Typography variant="body1" gutterBottom>タイトル: {vendorOffer?.title}</Typography>
             <Typography variant="body1" gutterBottom>見積もり: {vendorOffer?.estimate}</Typography>
             <Typography variant="body1" gutterBottom>備考: {vendorOffer?.remark}</Typography>
             <Typography variant="body1" gutterBottom>作成日: {vendorOffer && dateToYYYYMMDD(new Date(vendorOffer.createdAt))}</Typography>
