@@ -28,7 +28,6 @@ const ShowUserOffer: React.FC = () => {
         setRequestType(USER_OFFER_REQUEST_TYPE_LIST[object.requestType])
       } else {
         console.log("An unexpected error has occurred")
-        navigate("/Page404")
       }
     } catch(e) {
       detectAxiosErrors(e)

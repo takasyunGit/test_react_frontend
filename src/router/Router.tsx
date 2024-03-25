@@ -11,7 +11,7 @@ import VendorHome from "components/pages/vendors/VendorHome"
 import VendorSignIn from "components/pages/vendors/VendorSignIn"
 import CreateVendorOffer from "components/pages/vendors/CreateVendorOffer"
 import ShowVendorOffer from "components/pages/vendors/ShowVendorOffer"
-import ShowVendorOfferFromUser from "components/pages/vendors/ShowVendorOffer"
+import ShowVendorOfferFromUser from "components/pages/users/ShowVendorOffer"
 
 import Page404 from "components/pages/Page404"
 import { AuthRouteGuard } from "components/ui/AuthRouteGuard"
