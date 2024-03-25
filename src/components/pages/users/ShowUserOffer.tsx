@@ -65,12 +65,11 @@ const ShowUserOffer: React.FC = () => {
     handleGetUserOffer();
     handleGetVendorOfferList();
   }, [])
-
   return (
     <>
       <ShowUserOfferCommon userOffer={userOffer} offerLoading={userOfferLoading} prefecture={prefecture} requestType={requestType} />
       <ProgressCircle loading={vendorOfferLoading}>
-      {vendorOfferList.map((offer) => (
+      {vendorOfferList.length ? vendorOfferList.map((offer) => (
           <Card
           key={"userOffer" + offer.id}
           sx={{
@@ -87,7 +86,9 @@ const ShowUserOffer: React.FC = () => {
               </Link>
             </CardContent>
           </Card>
-        ))}
+        )) :
+        <Typography variant="body2" gutterBottom>まだ提案がなされていません。</Typography>
+      }
       </ProgressCircle>
     </>
 

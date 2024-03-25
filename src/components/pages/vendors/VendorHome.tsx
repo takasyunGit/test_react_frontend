@@ -53,7 +53,7 @@ const Home: React.FC = () => {
           }}>
             <CardContent>
               <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
-              <Link component={RouterLink} to={"/vendor/user_offer/" + offer.id + "/vendor_offer/new"} sx={{textDecoration: "none"}}>
+              <Link component={RouterLink} to={"/vendor/user_offer/" + offer.id} sx={{textDecoration: "none"}}>
                 <Typography variant="h6" gutterBottom>
                   {'【' + USER_OFFER_REQUEST_TYPE_LIST[offer.requestType] + '】' +
                   '【予算: ¥' + addComma(offer.budget) + '】' + offer.address}
