@@ -6,7 +6,7 @@ import { signedInCookiesSetter } from "utils/client"
 import { AuthVendorUserContext } from "components/models/vendor_user/AuthVendorUserProvider"
 import { UserOfferType } from "models/user_offer/type"
 import { vendorGetUserOfferList } from "models/user_offer/request"
-import { dateToYYYYMMDD } from "utils/formatConverter"
+import { dateToYYYYMMDD, addComma } from "utils/formatConverter"
 import { USER_OFFER_REQUEST_TYPE_LIST } from "utils/constants"
 import { detectAxiosErrors } from "utils/detectErrors"
 import ProgressCircle from "components/ui/ProgressCircle"
@@ -37,7 +37,6 @@ const Home: React.FC = () => {
   }
 
   useEffect(() => {handleGetUserOfferList()},[])
-  const addComma = new Intl.NumberFormat("ja-JP");
 
   return (
     <>
@@ -57,7 +56,7 @@ const Home: React.FC = () => {
               <Link component={RouterLink} to={"/vendor/user_offer/" + offer.id + "/vendor_offer/new"} sx={{textDecoration: "none"}}>
                 <Typography variant="h6" gutterBottom>
                   {'【' + USER_OFFER_REQUEST_TYPE_LIST[offer.requestType] + '】' +
-                  '【予算: ¥' + addComma.format(offer.budget) + '】' + offer.address}
+                  '【予算: ¥' + addComma(offer.budget) + '】' + offer.address}
                   </Typography>
               </Link>
             </CardContent>

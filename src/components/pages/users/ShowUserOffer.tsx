@@ -11,7 +11,7 @@ import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST } from "utils/const
 import { detectAxiosErrors } from "utils/detectErrors"
 import ShowUserOfferCommon from "components/pages/common/ShowUserOfferCommon"
 import ProgressCircle from "components/ui/ProgressCircle"
-import { dateToYYYYMMDD } from "utils/formatConverter"
+import { dateToYYYYMMDD, addComma } from "utils/formatConverter"
 
 
 const ShowUserOffer: React.FC = () => {
@@ -66,8 +66,6 @@ const ShowUserOffer: React.FC = () => {
     handleGetVendorOfferList();
   }, [])
 
-  const addComma = new Intl.NumberFormat("ja-JP");
-
   return (
     <>
       <ShowUserOfferCommon userOffer={userOffer} offerLoading={userOfferLoading} prefecture={prefecture} requestType={requestType} />
@@ -84,7 +82,7 @@ const ShowUserOffer: React.FC = () => {
               <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
               <Link component={RouterLink} to={"/user_offer/" + params.id + "/vendor_offer/" + offer.id} sx={{textDecoration: "none"}}>
                 <Typography variant="h6" gutterBottom>
-                  {'【見積もり: ¥' + addComma.format(offer.estimate) + '】' + offer.title}
+                  {'【見積もり: ¥' + addComma(offer.estimate) + '】' + offer.title}
                   </Typography>
               </Link>
             </CardContent>

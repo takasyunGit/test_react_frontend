@@ -13,3 +13,8 @@ export const dateToYYYYMMDD = (d: Date): string => {
   const hour = converted[1]
   return date +  ' ' + hour
 }
+
+// 数字にカンマを入れる
+export const addComma = (num: number) =>{
+  return new Intl.NumberFormat("ja-JP").format(num)
+}

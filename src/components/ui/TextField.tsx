@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { stringToHalfWidth } from "utils/formatConverter"
 import { NumberCodeListType } from "utils/type"
+import { addComma } from "utils/formatConverter"
 
 type ChildProps<T = string> = {
   label: string
@@ -49,10 +50,9 @@ export const OptionalTextField = (props: ChildProps) => {
 
 export const AmountForm = (props: ChildProps) => {
   // 全角は半角に変換し、3桁ごとにカンマを差し込む
-  const addComma = new Intl.NumberFormat("ja-JP");
   const formatter = (str: string): string => {
     const removed = str.replace(/,/g, '')
-    const result = isNaN(+stringToHalfWidth(removed)) ? "" : addComma.format(+stringToHalfWidth(removed))
+    const result = isNaN(+stringToHalfWidth(removed)) ? "" : addComma(+stringToHalfWidth(removed))
 
     return result
   }
