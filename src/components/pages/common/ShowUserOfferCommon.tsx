@@ -18,7 +18,8 @@ const ShowUserOfferCommon: React.FC<Props> = (props) => {
       <>
         <Card sx={{
           padding: (theme) => theme.spacing(2),
-          maxWidth: 400
+          maxWidth: 400,
+          mb: 1
         }}>
           <CardHeader sx={{textAlign: "center"}} title="Show user offer" />
           <CardContent>
