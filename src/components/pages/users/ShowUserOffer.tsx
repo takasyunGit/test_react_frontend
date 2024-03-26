@@ -12,7 +12,7 @@ import { detectAxiosErrors } from "utils/detectErrors"
 import ShowUserOfferCommon from "components/pages/common/ShowUserOfferCommon"
 import ProgressCircle from "components/ui/ProgressCircle"
 import { dateToYYYYMMDD, addComma } from "utils/formatConverter"
-
+import { DisplayErrors } from "components/ui/DisplayErrors"
 
 const ShowUserOffer: React.FC = () => {
   const navigate = useNavigate()
@@ -23,6 +23,9 @@ const ShowUserOffer: React.FC = () => {
   const [vendorOfferList, setVendorOfferList] = useState<ShowVendorOfferType[]>([])
   const [prefecture, setPrefecture] = useState<string>('-')
   const [requestType, setRequestType] = useState<string>('-')
+  const [userOffererrors, setUserOfferErrors] = useState<any>()
+  const [vendorOffererrors, setVendorOfferErrors] = useState<any>()
+
   const handleGetUserOffer = async () => {
     try{
       const res = await getUserOffer(params.id as string)
@@ -38,6 +41,7 @@ const ShowUserOffer: React.FC = () => {
         console.log("An unexpected error has occurred")
       }
     } catch(e) {
+      setUserOfferErrors(e)
       detectAxiosErrors(e)
     }
     setUserOfferLoading(false)
@@ -56,6 +60,7 @@ const ShowUserOffer: React.FC = () => {
         console.log("An unexpected error has occurred")
       }
     } catch(e) {
+      setVendorOfferErrors(e)
       detectAxiosErrors(e)
     }
     setVendorOfferLoading(false)
@@ -65,31 +70,36 @@ const ShowUserOffer: React.FC = () => {
     handleGetUserOffer();
     handleGetVendorOfferList();
   }, [])
+
   return (
     <>
-      <ShowUserOfferCommon userOffer={userOffer} offerLoading={userOfferLoading} prefecture={prefecture} requestType={requestType} />
-      <ProgressCircle loading={vendorOfferLoading}>
-      {vendorOfferList.length ? vendorOfferList.map((offer) => (
-          <Card
-          key={"userOffer" + offer.id}
-          sx={{
-            padding: (theme) => theme.spacing(2),
-            mb: 1,
-            maxWidth: 400
-          }}>
-            <CardContent>
-              <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
-              <Link component={RouterLink} to={"/user_offer/" + params.id + "/vendor_offer/" + offer.id} sx={{textDecoration: "none"}}>
-                <Typography variant="h6" gutterBottom>
-                  {'【見積もり: ¥' + addComma(offer.estimate) + '】' + offer.title}
-                  </Typography>
-              </Link>
-            </CardContent>
-          </Card>
-        )) :
-        <Typography variant="body2" gutterBottom>まだ提案がなされていません。</Typography>
-      }
-      </ProgressCircle>
+      <DisplayErrors errors={userOffererrors}>
+        <ShowUserOfferCommon userOffer={userOffer} offerLoading={userOfferLoading} prefecture={prefecture} requestType={requestType} />
+        <DisplayErrors errors={vendorOffererrors}>
+          <ProgressCircle loading={vendorOfferLoading}>
+            {vendorOfferList.length ? vendorOfferList.map((offer) => (
+                <Card
+                key={"userOffer" + offer.id}
+                sx={{
+                  padding: (theme) => theme.spacing(2),
+                  mb: 1,
+                  maxWidth: 400
+                }}>
+                  <CardContent>
+                    <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
+                    <Link component={RouterLink} to={"/user_offer/" + params.id + "/vendor_offer/" + offer.id} sx={{textDecoration: "none"}}>
+                      <Typography variant="h6" gutterBottom>
+                        {'【見積もり: ¥' + addComma(offer.estimate) + '】' + offer.title}
+                        </Typography>
+                    </Link>
+                  </CardContent>
+                </Card>
+            )) :
+              <Typography variant="body2" gutterBottom>まだ提案がなされていません。</Typography>
+            }
+          </ProgressCircle>
+        </DisplayErrors>
+      </DisplayErrors>
     </>
 
   )

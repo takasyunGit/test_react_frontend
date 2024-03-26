@@ -6,6 +6,7 @@ import { userGetVendorOffer } from "models/vendor_offer/request"
 import { ShowVendorOfferType } from "models/vendor_offer/type"
 import { detectAxiosErrors } from "utils/detectErrors"
 import ShowVendorOfferCommon from "components/pages/common/ShowVendorOfferCommon"
+import { DisplayErrors } from "components/ui/DisplayErrors"
 
 const ShowVednorOffer: React.FC = () => {
   const navigate = useNavigate()
@@ -13,6 +14,7 @@ const ShowVednorOffer: React.FC = () => {
   const [offerLoading, setOfferLoading] = useState<boolean>(true)
   const [resStatus, setResStatus] = useState<number>()
   const [vendorOffer, setVendorOffer] = useState<ShowVendorOfferType | undefined>()
+  const [errors, setErrors] = useState<any>()
 
   const handleGetvendorOffer = async () => {
     try{
@@ -28,6 +30,7 @@ const ShowVednorOffer: React.FC = () => {
         console.log("An unexpected error has occurred")
       }
     } catch(e) {
+      setErrors(e)
       detectAxiosErrors(e)
     }
     setOfferLoading(false)
@@ -36,7 +39,9 @@ const ShowVednorOffer: React.FC = () => {
   useEffect(() => {handleGetvendorOffer()}, [])
 
   return (
-    <ShowVendorOfferCommon vendorOffer={vendorOffer} offerLoading={offerLoading} resStatus={resStatus} />
+    <DisplayErrors errors={errors}>
+      <ShowVendorOfferCommon vendorOffer={vendorOffer} offerLoading={offerLoading} resStatus={resStatus} />
+    </DisplayErrors>
   )
 }
 
