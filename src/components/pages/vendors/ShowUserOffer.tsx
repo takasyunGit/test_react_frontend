@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams, Link as RouterLink } from "react-router-dom"
-import { Card, CardContent, Typography, Link, Pagination } from "@mui/material"
+import { Card, CardContent, Typography, Link } from "@mui/material"
 
 import { signedInCookiesSetter } from "utils/client"
 import { vendorGetUserOffer } from "models/user_offer/request"
@@ -10,6 +10,7 @@ import { ShowVendorOfferType } from "models/vendor_offer/type"
 import { detectAxiosErrors } from "utils/detectErrors"
 import ShowUserOfferCommon from "components/pages/common/ShowUserOfferCommon"
 import ProgressCircle from "components/ui/ProgressCircle"
+import Pagination from "components/ui/Pagination"
 import { dateToYYYYMMDD, addComma } from "utils/formatConverter"
 import { DisplayErrors } from "components/ui/DisplayErrors"
 import { NumberListType } from "utils/type"
@@ -26,6 +27,7 @@ const ShowUserOffer: React.FC = () => {
   const [vendorOfferLoading, setVendorOfferLoading] = useState<boolean>(true)
   const [userOffer, setUserOffer] = useState<ShowUserOfferType | undefined>()
   const [vendorOfferListWithPaginate, setVendorOfferListWithPaginate] = useState<VendorOfferWithPaginateType>()
+  const [page, setPage] = useState<number>(1)
   const [userOffererrors, setUserOfferErrors] = useState<any>()
   const [vendorOffererrors, setVendorOfferErrors] = useState<any>()
   const paginateNumberList = vendorOfferListWithPaginate?.paginate || {}
@@ -51,8 +53,14 @@ const ShowUserOffer: React.FC = () => {
   }
 
   const handleGetVendorOfferList = async (event?: React.ChangeEvent<unknown>, pageNum?: number) => {
-    const pageNumber = pageNum || 1
-    const keyId = paginateNumberList[pageNumber] || null
+    const url_string = window.location.href
+    const url = new URL(url_string)
+    const urlQuery = new URLSearchParams(url.search)
+    const pageNumber = pageNum || urlQuery.get("page") || 1
+    const keyId = paginateNumberList[+pageNumber] || null
+    url.search = "page=" + String(pageNumber)
+    // url pathにpageのクエリ追加
+    window.history.pushState({}, "", url.toString())
 
     try{
       const res = await getVendorOfferList(params.id as string, keyId)
@@ -61,6 +69,7 @@ const ShowUserOffer: React.FC = () => {
       signedInCookiesSetter(res, "Vendor")
 
       if (res && res.status === 200) {
+        setPage(+pageNumber)
         setVendorOfferListWithPaginate(res!.data.data)
       } else {
         console.log("An unexpected error has occurred")
@@ -72,11 +81,9 @@ const ShowUserOffer: React.FC = () => {
     setVendorOfferLoading(false)
   }
 
-  useEffect(() => {
-    handleGetUserOffer();
-    handleGetVendorOfferList();
-  }, [])
-console.log("s")
+  useEffect(() => {handleGetUserOffer()}, [])
+  useEffect(() =>{handleGetVendorOfferList()}, [page])
+
   return (
     <>
       <DisplayErrors errors={userOffererrors}>
@@ -87,10 +94,7 @@ console.log("s")
             <>
               <Pagination
                 count={Object.keys(paginateNumberList).length}
-                variant="outlined"
-                color="primary"
-                siblingCount={0}
-                boundaryCount={2}
+                page={page}
                 onChange={handleGetVendorOfferList}
               />
               {vendorOfferList.map((offer) => (
@@ -111,6 +115,11 @@ console.log("s")
                   </CardContent>
                 </Card>
               ))}
+              <Pagination
+                count={Object.keys(paginateNumberList).length}
+                page={page}
+                onChange={handleGetVendorOfferList}
+              />
             </> :
             <>
               <Typography variant="body2" gutterBottom>まだ提案がなされていません。</Typography>
