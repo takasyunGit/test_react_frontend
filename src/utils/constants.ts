@@ -60,5 +60,3 @@ export const PREFECTURES_NAME_LIST: NumberCodeListType = {
   46: '鹿児島県',
   47: '沖縄県',
 };
-
-export const DisplayPerPage = 10
