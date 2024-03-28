@@ -22,7 +22,7 @@ export const getVendorOffer = (params: string) => {
   }})
 }
 
-export const getVendorOfferList = (userOfferId: string) => {
+export const getVendorOfferList = (userOfferId: string, keyId: number | null = null) => {
   if (!Cookies.get("_access_token_v") || !Cookies.get("_client_v") || !Cookies.get("_uid_v")) return
 
   return client.get("vendor_user/vendor_offers/", {
@@ -32,7 +32,8 @@ export const getVendorOfferList = (userOfferId: string) => {
       "uid": Cookies.get("_uid_v")
     },
     params: {
-      userOfferId: userOfferId
+      userOfferId: userOfferId,
+      keyId: keyId
     }
   })
 }
@@ -47,7 +48,7 @@ export const userGetVendorOffer = (params: string) => {
   }})
 }
 
-export const userGetVendorOfferList = (userOfferId: string) => {
+export const userGetVendorOfferList = (userOfferId: string, keyId: number | null = null) => {
   if (!Cookies.get("_access_token") || !Cookies.get("_client") || !Cookies.get("_uid")) return
 
   return client.get("user/vendor_offers/", {
@@ -57,7 +58,8 @@ export const userGetVendorOfferList = (userOfferId: string) => {
       "uid": Cookies.get("_uid")
     },
     params: {
-      userOfferId: userOfferId
+      userOfferId: userOfferId,
+      keyId: keyId
     }
   })
 }
