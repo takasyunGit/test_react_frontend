@@ -11,3 +11,7 @@ export type UserOfferRequestTypeCode = 1 | 2 | 3
 export type NumberCodeListType = {
   [key: number]: string;
 }
+
+export type NumberListType = {
+  [key: number]: number
+}

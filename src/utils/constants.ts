@@ -4,12 +4,14 @@ import { NumberCodeListType } from 'utils/type'
 export const API_BASEURL = 'http://localhost:3010/'
 
 export const USER_OFFER_REQUEST_TYPE_LIST: NumberCodeListType = {
+  0: '-',
   1: '戸建住宅',
   2: 'リフォーム',
   3: 'リノベーション'
 }
 
 export const PREFECTURES_NAME_LIST: NumberCodeListType = {
+  0: '-',
   1: '北海道',
   2: '青森県',
   3: '岩手県',
@@ -58,3 +60,5 @@ export const PREFECTURES_NAME_LIST: NumberCodeListType = {
   46: '鹿児島県',
   47: '沖縄県',
 };
+
+export const DisplayPerPage = 10
