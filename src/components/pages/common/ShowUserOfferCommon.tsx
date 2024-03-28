@@ -11,8 +11,8 @@ type Props = {
 
 const ShowUserOfferCommon: React.FC<Props> = (props) => {
   const { userOffer, offerLoading } = props
-  const prefecture = PREFECTURES_NAME_LIST[userOffer?.prefecture || 0]
-  const requestType = USER_OFFER_REQUEST_TYPE_LIST[userOffer?.requestType || 0]
+  const prefecture = userOffer && PREFECTURES_NAME_LIST[userOffer.prefecture] || "-"
+  const requestType = userOffer && USER_OFFER_REQUEST_TYPE_LIST[userOffer.requestType] || "-"
 
   if (!offerLoading) {
     return(
