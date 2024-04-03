@@ -11,8 +11,7 @@ export type VendorOfferChatType = {
 
 export type CreateVendorOfferChatParamsType = Pick<VendorOfferChatType,
     "vendorOfferId" |
-    "message" |
-    "createdAt"
-  > & { signInType: "User" | "Vendor" }
+    "message"
+  >
 
 export type ShowVendorOfferChatType = VendorOfferChatType & { name: string}

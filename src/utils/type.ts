@@ -15,3 +15,5 @@ export type NumberCodeListType = {
 export type NumberListType = {
   [key: number]: number
 }
+
+export type SignInType = "User" | "Vendor"
