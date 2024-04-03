@@ -1,9 +1,7 @@
 import React from "react"
 import { Pagination } from "@mui/material"
 
-import { stringToHalfWidth } from "utils/formatConverter"
-import { NumberCodeListType } from "utils/type"
-import { addComma } from "utils/formatConverter"
+import { NumberListType } from "utils/type"
 
 type ChildProps = {
   count: number
@@ -26,5 +24,18 @@ export const DefaultPagination: React.FC<ChildProps> = (props) => {
     />
   )
 }
+
+export const initialPaginate = (pageNum?: number, paginateNumberList: NumberListType = []): [number | null, number] => {
+  const url_string = window.location.href
+  const url = new URL(url_string)
+  const urlQuery = new URLSearchParams(url.search)
+  const pageNumber = pageNum || urlQuery.get("page") || 1
+  const keyId = paginateNumberList[+pageNumber] || null
+  url.search = "page=" + String(pageNumber)
+  // url pathにpageのクエリ追加
+  window.history.pushState({}, "", url.toString())
+  return [keyId, +pageNumber]
+}
+
 
 export default DefaultPagination

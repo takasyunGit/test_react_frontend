@@ -8,7 +8,7 @@ import { ShowUserOfferType } from "models/user_offer/type"
 import { ShowVendorOfferType } from "models/vendor_offer/type"
 import ShowUserOfferCommon from "components/pages/common/ShowUserOfferCommon"
 import ProgressCircle from "components/ui/ProgressCircle"
-import Pagination from "components/ui/Pagination"
+import Pagination, { initialPaginate } from "components/ui/Pagination"
 import { DisplayErrors } from "components/ui/DisplayErrors"
 import { signedInCookiesSetter } from "utils/client"
 import { detectAxiosErrors } from "utils/detectErrors"
@@ -52,14 +52,7 @@ const ShowUserOffer: React.FC = () => {
   }
 
   const handleGetVendorOfferList = async (event?: React.ChangeEvent<unknown>, pageNum?: number) => {
-    const url_string = window.location.href
-    const url = new URL(url_string)
-    const urlQuery = new URLSearchParams(url.search)
-    const pageNumber = pageNum || urlQuery.get("page") || 1
-    const keyId = paginateNumberList[+pageNumber] || null
-    url.search = "page=" + String(pageNumber)
-    // url pathにpageのクエリ追加
-    window.history.pushState({}, "", url.toString())
+    const [keyId, pageNumber] = initialPaginate(pageNum, paginateNumberList)
 
     try{
       const res = await userGetVendorOfferList(params.id as string, keyId)

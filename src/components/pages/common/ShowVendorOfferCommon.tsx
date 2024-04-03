@@ -6,7 +6,7 @@ import { ShowVendorOfferType } from "models/vendor_offer/type"
 import { ShowVendorOfferChatType, CreateVendorOfferChatParamsType } from "models/vendor_offer_chat/type"
 import { createVendorOfferChat } from "models/vendor_offer_chat/request"
 import ProgressCircle from "components/ui/ProgressCircle"
-import Pagination from "components/ui/Pagination"
+import Pagination, { initialPaginate } from "components/ui/Pagination"
 import { SignInType } from "utils/type"
 import { dateToYYYYMMDD } from "utils/formatConverter"
 import { signedInCookiesSetter } from "utils/client"
@@ -63,14 +63,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
   }
 
   const handleGetVendorOfferChatListWithPaginate = async (event?: React.ChangeEvent<unknown>, pageNum?: number) => {
-    const url_string = window.location.href
-    const url = new URL(url_string)
-    const urlQuery = new URLSearchParams(url.search)
-    const pageNumber = pageNum || urlQuery.get("page") || 1
-    const keyId = paginateNumberList[+pageNumber] || null
-    url.search = "page=" + String(pageNumber)
-    // url pathにpageのクエリ追加
-    window.history.pushState({}, "", url.toString())
+    const [keyId, pageNumber] = initialPaginate(pageNum, paginateNumberList)
 
     try{
       const res = await getVendorOfferChat(params.vendor_offer_id as string, signInType, keyId)
