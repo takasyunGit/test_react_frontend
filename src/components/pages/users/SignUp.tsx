@@ -1,18 +1,9 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
-import Cookies from "js-cookie"
-import Axios from 'axios'
 
 import TextField from "@mui/material/TextField"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
-import IconButton from '@mui/material/IconButton';
-import FormControl from '@mui/material/FormControl';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import { signedInCookiesSetter } from "utils/client"
 import { AuthUserContext } from "components/models/user/AuthUserProvider"
@@ -21,6 +12,7 @@ import { signUp } from "models/user/auth"
 import { SignUpParams } from "models/user/type"
 import { detectAxiosErrors } from "utils/detectErrors"
 import { DefaultButton } from "components/ui/Button"
+import { PasswordForm } from "components/ui/TextField"
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate()
@@ -60,10 +52,6 @@ const SignUp: React.FC = () => {
     }
   }
 
-  const handleSetShowPassword = () => {
-    setShowPassword((show) => !show)
-  }
-
   return (
     <>
       <form noValidate autoComplete="off">
@@ -90,48 +78,22 @@ const SignUp: React.FC = () => {
               sx={{mb: 1}}
               onChange={event => setEmail(event.target.value)}
             />
-            <FormControl variant="outlined" sx={{mb: 1, width: '100%' }}>
-              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password"
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={event => setPassword(event.target.value)}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleSetShowPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-              />
-            </FormControl>
-            <FormControl variant="outlined" sx={{mb: 1, width: '100%' }}>
-              <InputLabel htmlFor="outlined-adornment-password">Password Confirmation</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password-confirmation"
-                type={showPassword ? 'text' : 'password'}
-                value={passwordConfirmation}
-                onChange={event => setPasswordConfirmation(event.target.value)}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleSetShowPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password Confirmation"
-              />
-            </FormControl>
+            <PasswordForm
+              id="outlined-adornment-password"
+              label="Password"
+              showPassword={showPassword}
+              value={password}
+              setPassword={setPassword}
+              setShowPassword={setShowPassword}
+            />
+            <PasswordForm
+              id="outlined-adornment-password-confirmation"
+              label="PasswordConfirmation"
+              showPassword={showPassword}
+              value={passwordConfirmation}
+              setPassword={setPasswordConfirmation}
+              setShowPassword={setShowPassword}
+            />
             <DefaultButton
               disabled={!name || !email || !password || !passwordConfirmation ? true : false}
               onClick={handleSubmit}

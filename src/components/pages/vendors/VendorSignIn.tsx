@@ -16,6 +16,7 @@ import { signIn } from "models/vendor_user/auth"
 import { SignInParams } from "models/vendor_user/type"
 import { detectAxiosErrors } from "utils/detectErrors"
 import { DefaultButton } from "components/ui/Button"
+import { PasswordForm } from "components/ui/TextField"
 
 type CustomLocation = {
   state: { from: { pathname: string } }
@@ -27,6 +28,7 @@ const SignIn: React.FC = () => {
   const { setAlertMessage, setAlertMessageOpen } = useContext(AlertMessageContext)
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
+  const [showPassword, setShowPassword] = useState<boolean>(false)
   const fromLocation: CustomLocation = useLocation() as CustomLocation
   // ログイン前にアクセスしようとしていたページ
   const fromPathName: string = fromLocation.state?.from?.pathname
@@ -77,14 +79,12 @@ const SignIn: React.FC = () => {
               margin="dense"
               onChange={event=> setEmail(event.target.value)}
             />
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
+            <PasswordForm
               label="Password"
+              showPassword={showPassword}
               value={password}
-              margin="dense"
-              onChange={event=> setPassword(event.target.value)}
+              setPassword={setPassword}
+              setShowPassword={setShowPassword}
             />
             <DefaultButton
               disabled={!email || !password ? true : false}

@@ -1,23 +1,22 @@
 import React, { useState, useContext } from "react"
 import { useNavigate, Link as RouterLink, useLocation} from "react-router-dom"
-import Cookies from "js-cookie"
 
 import { Typography } from "@mui/material"
 import TextField from "@mui/material/TextField"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardHeader from "@mui/material/CardHeader"
-import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
 import Link from '@mui/material/Link'
 
 import { signedInCookiesSetter } from "utils/client"
 import { AuthUserContext } from "components/models/user/AuthUserProvider"
-import { AlertMessage, AlertMessageContext } from "components/ui/AlertMessage"
+import { AlertMessageContext } from "components/ui/AlertMessage"
 import { signIn } from "models/user/auth"
 import { SignInParams } from "models/user/type"
 import { detectAxiosErrors } from "utils/detectErrors"
 import { DefaultButton } from "components/ui/Button"
+import { PasswordForm } from "components/ui/TextField"
 
 type CustomLocation = {
   state: { from: { pathname: string } }
@@ -28,6 +27,7 @@ const SignIn: React.FC = () => {
   const { setIsSignedIn, setCurrentUser } = useContext(AuthUserContext)
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
+  const [showPassword, setShowPassword] = useState<boolean>(false)
   const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
   const fromLocation: CustomLocation = useLocation() as CustomLocation
   // ログイン前にアクセスしようとしていたページ
@@ -77,14 +77,12 @@ const SignIn: React.FC = () => {
               margin="dense"
               onChange={event=> setEmail(event.target.value)}
             />
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
+            <PasswordForm
               label="Password"
+              showPassword={showPassword}
               value={password}
-              margin="dense"
-              onChange={event=> setPassword(event.target.value)}
+              setPassword={setPassword}
+              setShowPassword={setShowPassword}
             />
             <DefaultButton
               disabled={!email || !password ? true : false}

@@ -1,6 +1,7 @@
 import React from "react"
-import TextField from "@mui/material/TextField"
-import MenuItem from '@mui/material/MenuItem';
+import { TextField, MenuItem, IconButton, FormControl, OutlinedInput, InputLabel, InputAdornment } from "@mui/material"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 
 import { stringToHalfWidth } from "utils/formatConverter"
 import { NumberCodeListType } from "utils/type"
@@ -96,4 +97,44 @@ export const SelectForm = (props: SelectFormProps) => {
     </TextField>
   )
 
+}
+
+type PasswordProps = {
+  id?: string
+  label?: string
+  showPassword: boolean
+  value: string
+  setPassword: (value: string) => void
+  setShowPassword: (value: (show: boolean) => boolean) => void
+}
+
+export const PasswordForm: React.FC<PasswordProps> = (props) => {
+  const {id, label, showPassword, value, setPassword, setShowPassword} = props
+  const handleSetShowPassword = () => {
+    setShowPassword((show) => !show)
+  }
+
+  return (
+    <FormControl variant="outlined" sx={{mb: 1, width: '100%' }}>
+      <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+      <OutlinedInput
+        id={id}
+        type={showPassword ? 'text' : 'password'}
+        value={value}
+        onChange={e => setPassword(e.target.value)}
+        endAdornment={
+          <InputAdornment position="end">
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={e => handleSetShowPassword()}
+              edge="end"
+            >
+              {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            </IconButton>
+          </InputAdornment>
+        }
+        label={label}
+      />
+    </FormControl>
+  )
 }
