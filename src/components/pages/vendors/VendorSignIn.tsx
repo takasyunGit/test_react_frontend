@@ -12,7 +12,7 @@ import Link from '@mui/material/Link'
 
 import { signedInCookiesSetter } from "utils/client"
 import { AuthVendorUserContext } from "components/models/vendor_user/AuthVendorUserProvider"
-import AlertMessage from "components/ui/AlertMessage"
+import { AlertMessageContext } from "components/ui/AlertMessage"
 import { signIn } from "models/vendor_user/auth"
 import { SignInParams } from "models/vendor_user/type"
 import { detectAxiosErrors } from "utils/detectErrors"
@@ -24,9 +24,9 @@ type CustomLocation = {
 const SignIn: React.FC = () => {
   const navigate = useNavigate()
   const { setIsSignedInVendor, setCurrentVendorUser } = useContext(AuthVendorUserContext)
+  const { setAlertMessage, setAlertMessageOpen } = useContext(AlertMessageContext)
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
   const fromLocation: CustomLocation = useLocation() as CustomLocation
   // ログイン前にアクセスしようとしていたページ
   const fromPathName: string = fromLocation.state?.from?.pathname
@@ -54,6 +54,7 @@ const SignIn: React.FC = () => {
       }
     } catch(e) {
       detectAxiosErrors(e, setAlertMessageOpen)
+      setAlertMessage("Invalid emai or password")
     }
   }
 
@@ -108,12 +109,6 @@ const SignIn: React.FC = () => {
           </CardContent>
         </Card>
       </form>
-      <AlertMessage
-        open={alertMessageOpen}
-        setOpen={setAlertMessageOpen}
-        severity="error"
-        message="Invalid emai or password"
-      ></AlertMessage>
     </>
   )
 }

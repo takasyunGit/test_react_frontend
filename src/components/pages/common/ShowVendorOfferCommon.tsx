@@ -10,7 +10,7 @@ import Pagination, { initialPaginate } from "components/ui/Pagination"
 import { SignInType } from "utils/type"
 import { dateToYYYYMMDD } from "utils/formatConverter"
 import { signedInCookiesSetter } from "utils/client"
-import AlertMessage from "components/ui/AlertMessage"
+import { AlertMessageContext } from "components/ui/AlertMessage"
 import { RequiredTextField } from "components/ui/TextField"
 import { detectAxiosErrors } from "utils/detectErrors"
 import { getVendorOffer } from "models/vendor_offer/request"
@@ -32,8 +32,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
   const vendorOfferId = useParams().vendor_offer_id as string
   const navigate = useNavigate()
   const [message, setMessage] = useState<string>('')
-  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
-  const [alertMessage, setAlertMessage] = useState<string | string[]>([""])
+  const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
   const params = useParams()
   const [chatLoading, setChatLoading] = useState<boolean>(true)
   const [vendorOffer, setVendorOffer] = useState<ShowVendorOfferType | undefined>()
@@ -111,7 +110,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
       }
     } catch(e) {
       setChatErrors(e)
-      detectAxiosErrors(e, setAlertMessage, setAlertMessageOpen)
+      detectAxiosErrors(e, setAlertMessageOpen, setAlertMessage)
     }
   }
 
@@ -196,12 +195,6 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
           }
         </ProgressCircle>
       </DisplayErrors>
-      <AlertMessage
-        open={alertMessageOpen}
-        setOpen={setAlertMessageOpen}
-        severity="error"
-        message={alertMessage}
-      ></AlertMessage>
     </DisplayErrors>
   )
 }

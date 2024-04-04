@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
 import Card from "@mui/material/Card"
@@ -8,7 +8,7 @@ import Button from "@mui/material/Button"
 
 import { signedInCookiesSetter } from "utils/client"
 import { OptionalTextField, AmountForm, SelectForm } from "components/ui/TextField"
-import AlertMessage from "components/ui/AlertMessage"
+import { AlertMessageContext } from "components/ui/AlertMessage"
 import { CreateUserOfferParams } from "models/user_offer/type"
 import { createUserOffer } from "models/user_offer/request"
 import { PrefectureCode, UserOfferRequestTypeCode } from "utils/type"
@@ -21,8 +21,7 @@ const CreateUserOffer: React.FC = () => {
   const [budget, setBudget] = useState<string>('')
   const [remark, setRemark] = useState<string>('')
   const [requestType, setRequestType] = useState<UserOfferRequestTypeCode | ''>('')
-  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
-  const [alertMessage, setAlertMessage] = useState<string | string[]>([""])
+  const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -48,7 +47,7 @@ const CreateUserOffer: React.FC = () => {
         setAlertMessageOpen(true)
       }
     } catch(e) {
-      detectAxiosErrors(e, setAlertMessage, setAlertMessageOpen)
+      detectAxiosErrors(e, setAlertMessageOpen, setAlertMessage)
     }
   }
 
@@ -111,12 +110,6 @@ const CreateUserOffer: React.FC = () => {
           </CardContent>
         </Card>
       </form>
-      <AlertMessage
-        open={alertMessageOpen}
-        setOpen={setAlertMessageOpen}
-        severity="error"
-        message={alertMessage}
-      ></AlertMessage>
     </>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import Card from "@mui/material/Card"
@@ -8,7 +8,7 @@ import Button from "@mui/material/Button"
 
 import { signedInCookiesSetter } from "utils/client"
 import { OptionalTextField, AmountForm, RequiredTextField } from "components/ui/TextField"
-import AlertMessage from "components/ui/AlertMessage"
+import { AlertMessageContext } from "components/ui/AlertMessage"
 import { CreateVendorOfferParams } from "models/vendor_offer/type"
 import { createVendorOffer } from "models/vendor_offer/request"
 import { detectAxiosErrors } from "utils/detectErrors"
@@ -17,8 +17,7 @@ const CreateVendorOffer: React.FC = () => {
   const [title, setTitle] = useState<string>('')
   const [remark, setRemark] = useState<string>('')
   const [estimate, setEstimate] = useState<string>('')
-  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
-  const [alertMessage, setAlertMessage] = useState<string | string[]>([""])
+  const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
   const userOfferId = useParams().id as string
   const navigate = useNavigate()
 
@@ -46,7 +45,7 @@ const CreateVendorOffer: React.FC = () => {
         setAlertMessageOpen(true)
       }
     } catch(e) {
-      detectAxiosErrors(e, setAlertMessage, setAlertMessageOpen)
+      detectAxiosErrors(e, setAlertMessageOpen, setAlertMessage)
     }
   }
 
@@ -92,12 +91,6 @@ const CreateVendorOffer: React.FC = () => {
           </CardContent>
         </Card>
       </form>
-      <AlertMessage
-        open={alertMessageOpen}
-        setOpen={setAlertMessageOpen}
-        severity="error"
-        message={alertMessage}
-      ></AlertMessage>
     </>
   )
 }

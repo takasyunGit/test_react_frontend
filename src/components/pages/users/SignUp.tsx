@@ -17,7 +17,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import { signedInCookiesSetter } from "utils/client"
 import { AuthUserContext } from "components/models/user/AuthUserProvider"
-import AlertMessage from "components/ui/AlertMessage"
+import { AlertMessageContext } from "components/ui/AlertMessage"
 import { signUp } from "models/user/auth"
 import { SignUpParams } from "models/user/type"
 import { detectAxiosErrors } from "utils/detectErrors"
@@ -31,8 +31,7 @@ const SignUp: React.FC = () => {
   const [password, setPassword] = useState<string>("")
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("")
   const [showPassword, setShowPassword] = useState<boolean>(false)
-  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
-  const [alertMessage, setAlertMessage] = useState<string | string[]>([""])
+  const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -57,7 +56,7 @@ const SignUp: React.FC = () => {
         setAlertMessageOpen(true)
       }
     } catch(e) {
-      detectAxiosErrors(e, setAlertMessage, setAlertMessageOpen)
+      detectAxiosErrors(e, setAlertMessageOpen, setAlertMessage)
     }
   }
 
@@ -151,12 +150,6 @@ const SignUp: React.FC = () => {
           </CardContent>
         </Card>
       </form>
-      <AlertMessage
-        open={alertMessageOpen}
-        setOpen={setAlertMessageOpen}
-        severity="error"
-        message={alertMessage}
-      />
     </>
   )
 }

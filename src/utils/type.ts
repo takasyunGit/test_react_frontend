@@ -17,3 +17,14 @@ export type NumberListType = {
 }
 
 export type SignInType = "User" | "Vendor"
+
+export type AlertMessageContextType = {
+  alertMessageOpen: boolean
+  setAlertMessageOpen: React.Dispatch<React.SetStateAction<boolean>>
+  severity: AlertClassType
+  setSeverity: React.Dispatch<React.SetStateAction<AlertClassType>>
+  alertMessage: string | string[]
+  setAlertMessage: React.Dispatch<React.SetStateAction<string | string[]>>
+}
+
+export type AlertClassType = "error" | "success" | "info" | "warning"
