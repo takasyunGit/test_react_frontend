@@ -6,6 +6,7 @@ import { styled } from "@mui/material/styles"
 
 import UserHeader from "components/models/user/UserHeader"
 import VendorHeader from "components/models/vendor_user/VendorHeader"
+import {AlertMessage} from "components/ui/AlertMessage"
 
 const DivContainer = styled(Container)({
   marginTop: "3rem",
@@ -33,6 +34,7 @@ const CommonLayout = () => {
         <DivContainer>
           <Grid container sx={{"justify-content": "center"}}>
             <Grid item>
+              <AlertMessage/>
               <Outlet />
             </Grid>
           </Grid>

@@ -3,6 +3,7 @@ import React from "react"
 import Router from "router/Router"
 import { AuthUserProvider } from "components/models/user/AuthUserProvider"
 import { AuthVendorUserProvider } from "components/models/vendor_user/AuthVendorUserProvider"
+import { AlertMessageProvider } from "components/ui/AlertMessage"
 import ErrorBoundary from "components/ui/ErrorBoundary"
 
 const App: React.FC = () => {
@@ -10,7 +11,9 @@ const App: React.FC = () => {
     <ErrorBoundary>
       <AuthUserProvider>
         <AuthVendorUserProvider>
-          <Router />
+          <AlertMessageProvider>
+            <Router />
+          </AlertMessageProvider>
         </AuthVendorUserProvider>
       </AuthUserProvider>
     </ErrorBoundary>
