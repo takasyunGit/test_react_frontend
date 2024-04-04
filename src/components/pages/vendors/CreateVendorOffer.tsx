@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardHeader from "@mui/material/CardHeader"
-import Button from "@mui/material/Button"
 
 import { signedInCookiesSetter } from "utils/client"
 import { OptionalTextField, AmountForm, RequiredTextField } from "components/ui/TextField"
@@ -12,6 +11,7 @@ import { AlertMessageContext } from "components/ui/AlertMessage"
 import { CreateVendorOfferParams } from "models/vendor_offer/type"
 import { createVendorOffer } from "models/vendor_offer/request"
 import { detectAxiosErrors } from "utils/detectErrors"
+import { DefaultButton } from "components/ui/Button"
 
 const CreateVendorOffer: React.FC = () => {
   const [title, setTitle] = useState<string>('')
@@ -74,20 +74,12 @@ const CreateVendorOffer: React.FC = () => {
               required={true}
               onChange={e=> setEstimate(e)}
             />
-            <Button
-              variant="contained"
-              size="large"
-              color="primary"
+            <DefaultButton
               disabled={!title || !estimate ? true : false}
-              sx={{
-                marginTop: (theme) => theme.spacing(2),
-                flexGrow: 1,
-                textTransform: "none"
-              }}
               onClick={handleSubmit}
             >
               Submit
-            </Button>
+            </DefaultButton>
           </CardContent>
         </Card>
       </form>

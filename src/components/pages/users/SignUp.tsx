@@ -6,7 +6,6 @@ import Axios from 'axios'
 import TextField from "@mui/material/TextField"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
-import Button from "@mui/material/Button"
 import IconButton from '@mui/material/IconButton';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -21,6 +20,7 @@ import { AlertMessageContext } from "components/ui/AlertMessage"
 import { signUp } from "models/user/auth"
 import { SignUpParams } from "models/user/type"
 import { detectAxiosErrors } from "utils/detectErrors"
+import { DefaultButton } from "components/ui/Button"
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate()
@@ -132,21 +132,12 @@ const SignUp: React.FC = () => {
                 label="Password Confirmation"
               />
             </FormControl>
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              color="primary"
+            <DefaultButton
               disabled={!name || !email || !password || !passwordConfirmation ? true : false}
-              sx={{
-                marginTop: (theme) => theme.spacing(2),
-                flexGlow: 1,
-                textTransform: "none"
-              }}
               onClick={handleSubmit}
             >
               Submit
-            </Button>
+            </DefaultButton>
           </CardContent>
         </Card>
       </form>

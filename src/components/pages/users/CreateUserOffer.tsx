@@ -14,6 +14,7 @@ import { createUserOffer } from "models/user_offer/request"
 import { PrefectureCode, UserOfferRequestTypeCode } from "utils/type"
 import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST } from "utils/constants"
 import { detectAxiosErrors } from "utils/detectErrors"
+import { DefaultButton } from "components/ui/Button"
 
 const CreateUserOffer: React.FC = () => {
   const [prefecture, setPrefecture] = useState<PrefectureCode | ''>('')
@@ -93,20 +94,12 @@ const CreateUserOffer: React.FC = () => {
                 onChange={e=> setRequestType(e as UserOfferRequestTypeCode)}
               />
             </div>
-            <Button
-              variant="contained"
-              size="large"
-              color="primary"
+            <DefaultButton
               disabled={!prefecture || !budget  || !requestType ? true : false}
-              sx={{
-                marginTop: (theme) => theme.spacing(2),
-                flexGrow: 1,
-                textTransform: "none"
-              }}
               onClick={handleSubmit}
             >
               Submit
-            </Button>
+            </DefaultButton>
           </CardContent>
         </Card>
       </form>

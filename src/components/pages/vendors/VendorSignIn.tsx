@@ -6,7 +6,6 @@ import TextField from "@mui/material/TextField"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardHeader from "@mui/material/CardHeader"
-import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
 import Link from '@mui/material/Link'
 
@@ -16,6 +15,7 @@ import { AlertMessageContext } from "components/ui/AlertMessage"
 import { signIn } from "models/vendor_user/auth"
 import { SignInParams } from "models/vendor_user/type"
 import { detectAxiosErrors } from "utils/detectErrors"
+import { DefaultButton } from "components/ui/Button"
 
 type CustomLocation = {
   state: { from: { pathname: string } }
@@ -86,20 +86,12 @@ const SignIn: React.FC = () => {
               margin="dense"
               onChange={event=> setPassword(event.target.value)}
             />
-            <Button
-              variant="contained"
-              size="large"
-              color="primary"
+            <DefaultButton
               disabled={!email || !password ? true : false}
-              sx={{
-                marginTop: (theme) => theme.spacing(2),
-                flexGrow: 1,
-                textTransform: "none"
-              }}
               onClick={handleSubmit}
             >
               Submit
-            </Button>
+            </DefaultButton>
             <Box textAlign="center" sx={{marginTop: "2rem"}}>
               <Typography variant="body2">
                 User &nbsp;
