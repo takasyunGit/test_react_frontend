@@ -14,4 +14,9 @@ export type CreateVendorOfferChatParamsType = Pick<VendorOfferChatType,
     "message"
   >
 
-export type ShowVendorOfferChatType = VendorOfferChatType & { name: string}
+export type ShowVendorOfferChatType = VendorOfferChatType & {
+    name: string,
+    avatar: {
+      url: string
+    }
+  }

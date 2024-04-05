@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { Card, CardHeader, CardContent, Typography, Button } from "@mui/material"
+import { Card, CardHeader, CardContent, Typography, Button, Avatar, Box } from "@mui/material"
 
 import { ShowVendorOfferType } from "models/vendor_offer/type"
 import { ShowVendorOfferChatType, CreateVendorOfferChatParamsType } from "models/vendor_offer_chat/type"
@@ -117,6 +117,48 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
   useEffect(() => {handleGetvendorOffer()}, [])
   useEffect(() => {handleGetVendorOfferChatListWithPaginate()}, [page])
 
+  const activeColor = (chat: ShowVendorOfferChatType) => {
+    let colorCode
+
+    if (signInType == "User") {
+      colorCode = chat.userId ? "#fdf5e6" : "#fff"
+    } else {
+      colorCode = chat.vendorUserId ? "#fdf5e6" : "#fff"
+    }
+    return colorCode
+  }
+
+  const stringToColor = (string: string) => {
+    let hash = 0
+    let i
+
+    for (i = 0; i < string.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = '#'
+
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff
+      color += `00${value.toString(16)}`.slice(-2);
+    }
+
+    return color
+  }
+
+  const stringAvatar = (name: string | undefined) => {
+    if(!name) return
+
+    const initial = name.split(' ')[0][0] + (name.split(' ')[1]?.[0] || "")
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: initial,
+    };
+  }
+
+
   return(
     <DisplayErrors errors={offerErrors}>
       <Card sx={{
@@ -153,7 +195,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
           sx={{
             marginTop: (theme) => theme.spacing(2),
             flexGrow: 1,
-            textTransform: "none"
+            textTransform: "none",
           }}
           onClick={handleSubmit}
         >
@@ -175,13 +217,17 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
               sx={{
                 padding: (theme) => theme.spacing(2),
                 mb: 1,
-                maxWidth: 400
+                maxWidth: 400,
+                "background-color": activeColor(chat)
               }}>
-                <CardContent>
-                  <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(chat.createdAt))}</Typography>
-                    <Typography variant="h6" gutterBottom>
-                      {chat.message}
-                    </Typography>
+                <CardContent sx={{display: "flex"}}>
+                  <Box sx={{mr:2}}>
+                    {chat?.avatar?.url ? <Avatar src={chat?.avatar?.url}/> : <Avatar {...stringAvatar(chat.name)}/>}
+                  </Box>
+                  <Box>
+                    <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(chat.createdAt))}</Typography>
+                    <Typography variant="h6" gutterBottom>{chat.message}</Typography>
+                  </Box>
                 </CardContent>
               </Card>
             ))}
