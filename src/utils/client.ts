@@ -11,6 +11,13 @@ const client = applyCaseMiddleware(axios.create({
   baseURL: API_BASEURL + 'api/v1',
 }), options)
 
+export const clientWithFile = applyCaseMiddleware(axios.create({
+  baseURL: API_BASEURL + 'api/v1',
+  headers: {
+    "Content-Type": "multipart/form-data"
+  }
+}), options)
+
 export const signedInCookiesSetter = (res: AxiosResponse, userType: string = "User") => {
   if (userType === "User") {
     // device_token_authの設定で同時（5秒間）に送られてきたリクエストのうち最初のリクエストにはaccess-tokenを返すが
