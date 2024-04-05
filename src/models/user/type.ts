@@ -17,8 +17,12 @@ export type User = {
   provider: string
   email: string
   name: string
-  image?: string
+  avatar?: {
+    url: string
+  }
 }
+
+export type UpdateUserParams = Pick<User, "avatar">
 
 // 認証関係
 export type AuthUserContextType = {
