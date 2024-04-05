@@ -50,6 +50,7 @@ const Settings: React.FC = () => {
       if (res && res.status === 200) {
         setAvatar(undefined)
         setPreview("")
+        inputClear("input-user-avatar")
         setCurrentUser(res.data.data)
       } else {
         setAlertMessage("An unexpected error has occurred")
