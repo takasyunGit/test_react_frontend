@@ -77,6 +77,24 @@ const UserHeader: React.FC = () => {
     }
   }
 
+  const ItemsAfterSingedIn = () => {
+    if (!loading) {
+      if (isSignedIn) {
+        return (
+          <Button
+            component={RouterLink}
+            to="/settings"
+            sx={{textTransform: "none"}}
+            color="inherit"
+          >
+            Settings
+          </Button>
+        )
+      }
+    }
+    return (<></>)
+  }
+
   return (
     <>
       <AppBar position="static">
@@ -100,6 +118,7 @@ const UserHeader: React.FC = () => {
           >
             Sample
           </Typography>
+          <ItemsAfterSingedIn/>
           <AuthButton />
         </Toolbar>
       </AppBar>

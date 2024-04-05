@@ -12,6 +12,8 @@ import VendorSignIn from "components/pages/vendors/VendorSignIn"
 import CreateVendorOffer from "components/pages/vendors/CreateVendorOffer"
 import ShowVendorOffer from "components/pages/vendors/ShowVendorOffer"
 import ShowVendorOfferFromUser from "components/pages/users/ShowVendorOffer"
+import Settings from "components/pages/users/Settings"
+import VendorSettings from "components/pages/vendors/Settings"
 
 import Page404 from "components/pages/Page404"
 import { AuthRouteGuard } from "components/ui/AuthRouteGuard"
@@ -25,6 +27,7 @@ export const Router = () => {
           <Route path="/user_offer/new" element={<AuthRouteGuard component={<CreateUserOffer />} redirect="/signin" signInType="User" />} />
           <Route path="/user_offer/:id" element={<AuthRouteGuard component={<ShowUserOffer />} redirect="/signin" signInType="User" />} />
           <Route path="/user_offer/:user_offer_id/vendor_offer/:vendor_offer_id" element={<AuthRouteGuard component={<ShowVendorOfferFromUser />} redirect="/signin" signInType="User" />} />
+          <Route path="/settings" element={<AuthRouteGuard component={<Settings />} redirect="/signin" signInType="User" />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/vendor">
@@ -33,6 +36,7 @@ export const Router = () => {
             <Route path="user_offer/:id" element={<AuthRouteGuard component={<ShowUserOfferFromVendor />} redirect="/vendor/signin" signInType="Vendor" />} />
             <Route path="user_offer/:id/vendor_offer/new" element={<AuthRouteGuard component={<CreateVendorOffer />} redirect="/vendor/signin" signInType="Vendor" />} />
             <Route path="user_offer/:user_offer_id/vendor_offer/:vendor_offer_id" element={<AuthRouteGuard component={<ShowVendorOffer />} redirect="/vendor/signin" signInType="Vendor" />} />
+            <Route path="user_offer/settings" element={<AuthRouteGuard component={<VendorSettings />} redirect="/vendor/signin" signInType="Vendor" />} />
           </Route>
           <Route path='*' element={<Page404 />} />
         </Route>

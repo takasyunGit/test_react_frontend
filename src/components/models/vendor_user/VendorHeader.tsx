@@ -69,6 +69,24 @@ const VendorHeader: React.FC = () => {
     }
   }
 
+  const ItemsAfterSingedIn = () => {
+    if (!loadingVendor) {
+      if (isSignedInVendor) {
+        return (
+          <Button
+            component={RouterLink}
+            to="/vendors/settings"
+            sx={{textTransform: "none"}}
+            color="inherit"
+          >
+            Settings
+          </Button>
+        )
+      }
+    }
+    return (<></>)
+  }
+
   return (
     <>
       <AppBar position="static">
@@ -93,6 +111,7 @@ const VendorHeader: React.FC = () => {
             Sample
           </Typography>
           <AuthButton />
+          <ItemsAfterSingedIn />
         </Toolbar>
       </AppBar>
     </>
