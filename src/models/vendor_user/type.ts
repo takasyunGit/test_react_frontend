@@ -12,7 +12,9 @@ export type VendorUser = {
   provider: string
   email: string
   name: string
-  image?: string
+  avatar?: {
+    url: string
+  }
 }
 
 // 認証関係

@@ -36,7 +36,7 @@ export const Router = () => {
             <Route path="user_offer/:id" element={<AuthRouteGuard component={<ShowUserOfferFromVendor />} redirect="/vendor/signin" signInType="Vendor" />} />
             <Route path="user_offer/:id/vendor_offer/new" element={<AuthRouteGuard component={<CreateVendorOffer />} redirect="/vendor/signin" signInType="Vendor" />} />
             <Route path="user_offer/:user_offer_id/vendor_offer/:vendor_offer_id" element={<AuthRouteGuard component={<ShowVendorOffer />} redirect="/vendor/signin" signInType="Vendor" />} />
-            <Route path="user_offer/settings" element={<AuthRouteGuard component={<VendorSettings />} redirect="/vendor/signin" signInType="Vendor" />} />
+            <Route path="settings" element={<AuthRouteGuard component={<VendorSettings />} redirect="/vendor/signin" signInType="Vendor" />} />
           </Route>
           <Route path='*' element={<Page404 />} />
         </Route>

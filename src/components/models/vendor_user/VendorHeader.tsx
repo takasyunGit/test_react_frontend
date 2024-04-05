@@ -75,7 +75,7 @@ const VendorHeader: React.FC = () => {
         return (
           <Button
             component={RouterLink}
-            to="/vendors/settings"
+            to="/vendor/settings"
             sx={{textTransform: "none"}}
             color="inherit"
           >
