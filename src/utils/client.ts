@@ -7,9 +7,54 @@ import { API_BASEURL } from 'utils/constants'
 const options = {
   ignoreHeaders: true
 }
+
 const client = applyCaseMiddleware(axios.create({
   baseURL: API_BASEURL + 'api/v1',
 }), options)
+
+type SessionProps = {
+  accessToken: string | undefined
+  headerClient: string | undefined
+  uid: string | undefined
+}
+
+export const clientRequest = (method: string, path: string, parameters: {[key: string]: string | number | null}, sessions: SessionProps) => {
+  const { accessToken, headerClient, uid } = sessions
+  const params = parameters || {}
+
+  if (method === "get") {
+    return client.get(path, {
+      headers: {
+        "access-token": accessToken,
+        "client": headerClient,
+        "uid": uid
+      },
+      params: params
+    })
+  }
+  if (method === "post") {
+    return client.post(path, params, { headers: {
+      "access-token": accessToken,
+      "client": headerClient,
+      "uid": uid
+    }})
+  }
+  if (method === "patch") {
+    return client.patch(path, params, { headers: {
+      "access-token": accessToken,
+      "client": headerClient,
+      "uid": uid
+    }})
+  }
+  if (method === "delete") {
+    return client.delete(path, { headers: {
+        "access-token": accessToken,
+        "client": headerClient,
+        "uid": uid
+      }, params: params
+    })
+  }
+}
 
 export const clientWithFile = applyCaseMiddleware(axios.create({
   baseURL: API_BASEURL + 'api/v1',
