@@ -3,9 +3,9 @@
     "import"
   ],
   "settings": {
-    "import/internal-regex": "^@src/",
+    "import/internal-regex": "^@src/", //自作モジュールがexternalで読み込まれないように設定
     "import/resolver": {
-      "typescript": {}
+      "typescript": {} // TypeScriptファイルのインポートをESLintで解決するために設定
     }
   },
   "rules": {

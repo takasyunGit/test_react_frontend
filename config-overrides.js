@@ -1,5 +1,5 @@
 const path = require('path');
-
+// react-app-rewiredでエイリアスのpathを読み込ませるための設定
 module.exports = (config) => {
   config.resolve = {
     ...config.resolve,
