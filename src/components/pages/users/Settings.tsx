@@ -1,17 +1,17 @@
 import React, { useState, useContext, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { Card, CardContent, CardHeader, IconButton, Box, Typography, Avatar } from "@mui/material"
-import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
 import CancelIcon from '@mui/icons-material/Cancel'
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
+import { Card, CardContent, CardHeader, IconButton, Box, Typography, Avatar } from "@mui/material"
 
-import { signedInCookiesSetter } from "utils/client"
-import { AlertMessageContext } from "components/ui/AlertMessage"
-import { updateUser } from "models/user/request"
-import { detectAxiosErrors } from "utils/detectErrors"
-import { DefaultButton } from "components/ui/Button"
-import { AuthUserContext } from "components/models/user/AuthUserProvider"
-import { uploadImage, previewImage, inputClear } from "utils/imageUploaderProps"
+import { AuthUserContext } from "@src/components/models/user/AuthUserProvider"
+import { AlertMessageContext } from "@src/components/ui/AlertMessage"
+import { DefaultButton } from "@src/components/ui/Button"
+import { updateUser } from "@src/models/user/request"
+import { signedInCookiesSetter } from "@src/utils/client"
+import { detectAxiosErrors } from "@src/utils/detectErrors"
+import { uploadImage, previewImage, inputClear } from "@src/utils/imageUploaderProps"
 
 const Settings: React.FC = () => {
   const [avatar, setAvatar] = useState<File>()

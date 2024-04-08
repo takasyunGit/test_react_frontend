@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams, Link as RouterLink } from "react-router-dom"
+
 import { Card, CardContent, Typography, Link } from "@mui/material"
 
-import { signedInCookiesSetter } from "utils/client"
-import { vendorGetUserOffer } from "models/user_offer/request"
-import { getVendorOfferList } from "models/vendor_offer/request"
-import { ShowUserOfferType } from "models/user_offer/type"
-import { ShowVendorOfferType } from "models/vendor_offer/type"
-import { detectAxiosErrors } from "utils/detectErrors"
-import ShowUserOfferCommon from "components/pages/common/ShowUserOfferCommon"
-import ProgressCircle from "components/ui/ProgressCircle"
-import Pagination, { initialPaginate } from "components/ui/Pagination"
-import { dateToYYYYMMDD, addComma } from "utils/formatConverter"
-import { DisplayErrors } from "components/ui/DisplayErrors"
-import { NumberListType } from "utils/type"
+import ShowUserOfferCommon from "@src/components/pages/common/ShowUserOfferCommon"
+import { DisplayErrors } from "@src/components/ui/DisplayErrors"
+import Pagination, { initialPaginate } from "@src/components/ui/Pagination"
+import ProgressCircle from "@src/components/ui/ProgressCircle"
+import { vendorGetUserOffer } from "@src/models/user_offer/request"
+import { getVendorOfferList } from "@src/models/vendor_offer/request"
+import { signedInCookiesSetter } from "@src/utils/client"
+import { detectAxiosErrors } from "@src/utils/detectErrors"
+import { dateToYYYYMMDD, addComma } from "@src/utils/formatConverter"
+
+import type { ShowUserOfferType } from "@src/models/user_offer/type"
+import type { ShowVendorOfferType } from "@src/models/vendor_offer/type"
+import type { NumberListType } from "@src/utils/type"
 
 type VendorOfferWithPaginateType = {
   "records": ShowVendorOfferType[],

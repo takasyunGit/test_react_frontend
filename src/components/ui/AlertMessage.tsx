@@ -1,7 +1,9 @@
 import React, { useState, createContext, useContext } from "react"
-import { Snackbar } from "@mui/material"
+
 import MuiAlert, { AlertProps } from "@mui/lab/Alert"
-import { AlertClassType, AlertMessageContextType } from "utils/type"
+import { Snackbar } from "@mui/material"
+
+import type { AlertClassType, AlertMessageContextType } from "@src/utils/type"
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />

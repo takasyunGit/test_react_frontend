@@ -4,9 +4,9 @@ import { Outlet, useLocation } from "react-router-dom"
 import { Container, Grid } from "@mui/material"
 import { styled } from "@mui/material/styles"
 
-import UserHeader from "components/models/user/UserHeader"
-import VendorHeader from "components/models/vendor_user/VendorHeader"
-import {AlertMessage} from "components/ui/AlertMessage"
+import UserHeader from "@src/components/models/user/UserHeader"
+import VendorHeader from "@src/components/models/vendor_user/VendorHeader"
+import {AlertMessage} from "@src/components/ui/AlertMessage"
 
 const DivContainer = styled(Container)({
   marginTop: "3rem",

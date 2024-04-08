@@ -1,7 +1,8 @@
 import React from "react"
+
 import { Pagination } from "@mui/material"
 
-import { NumberListType } from "utils/type"
+import type { NumberListType } from "@src/utils/type"
 
 type ChildProps = {
   count: number

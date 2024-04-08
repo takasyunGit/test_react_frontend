@@ -1,8 +1,9 @@
 import React from "react"
+
 import { Card, CardContent, CardHeader, Typography } from "@mui/material"
 
-import { ShowUserOfferType } from "models/user_offer/type"
-import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST } from "utils/constants"
+import { ShowUserOfferType } from "@src/models/user_offer/type"
+import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST } from "@src/utils/constants"
 
 type Props = {
   userOffer: ShowUserOfferType| undefined,

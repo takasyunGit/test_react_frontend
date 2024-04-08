@@ -1,8 +1,8 @@
 import React, { useContext } from "react"
 import { Navigate, useLocation } from "react-router-dom";
 
-import { AuthUserContext } from "components/models/user/AuthUserProvider"
-import { AuthVendorUserContext } from "components/models/vendor_user/AuthVendorUserProvider"
+import { AuthUserContext } from "@src/components/models/user/AuthUserProvider"
+import { AuthVendorUserContext } from "@src/components/models/vendor_user/AuthVendorUserProvider"
 
 type Props = {
   component: React.ReactNode;

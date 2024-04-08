@@ -1,17 +1,17 @@
 import React, { useState, useContext, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { Card, CardContent, CardHeader, IconButton, Box, Typography, Avatar } from "@mui/material"
-import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
 import CancelIcon from '@mui/icons-material/Cancel'
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
+import { Card, CardContent, CardHeader, IconButton, Box, Typography, Avatar } from "@mui/material"
 
-import { signedInCookiesSetter } from "utils/client"
-import { AlertMessageContext } from "components/ui/AlertMessage"
-import { updateVendorUser } from "models/vendor_user/request"
-import { detectAxiosErrors } from "utils/detectErrors"
-import { DefaultButton } from "components/ui/Button"
-import { AuthVendorUserContext } from "components/models/vendor_user/AuthVendorUserProvider"
-import { uploadImage, previewImage, inputClear } from "utils/imageUploaderProps"
+import { AuthVendorUserContext } from "@src/components/models/vendor_user/AuthVendorUserProvider"
+import { AlertMessageContext } from "@src/components/ui/AlertMessage"
+import { DefaultButton } from "@src/components/ui/Button"
+import { updateVendorUser } from "@src/models/vendor_user/request"
+import { signedInCookiesSetter } from "@src/utils/client"
+import { detectAxiosErrors } from "@src/utils/detectErrors"
+import { uploadImage, previewImage, inputClear } from "@src/utils/imageUploaderProps"
 
 const Settings: React.FC = () => {
   const [avatar, setAvatar] = useState<File>()

@@ -1,6 +1,6 @@
 import React from "react"
 
-import ShowVendorOfferCommon from "components/pages/common/ShowVendorOfferCommon"
+import ShowVendorOfferCommon from "@src/components/pages/common/ShowVendorOfferCommon"
 
 const ShowVednorOffer: React.FC = () => {
   return (

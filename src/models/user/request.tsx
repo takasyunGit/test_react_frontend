@@ -1,5 +1,6 @@
-import { clientWithFile } from "utils/client"
 import Cookies from "js-cookie"
+
+import { clientWithFile } from "@src/utils/client"
 
 export const updateUser = (data: FormData) => {
   if (!Cookies.get("_access_token") || !Cookies.get("_client") || !Cookies.get("_uid")) return

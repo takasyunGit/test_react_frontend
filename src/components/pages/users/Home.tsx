@@ -3,13 +3,14 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
 import { Card, CardContent, Typography, Link, CircularProgress } from "@mui/material"
 
-import { signedInCookiesSetter } from "utils/client"
-import { AuthUserContext } from "components/models/user/AuthUserProvider"
-import { UserOfferType } from "models/user_offer/type"
-import { getUserOfferList } from "models/user_offer/request"
-import { dateToYYYYMMDD } from "utils/formatConverter"
-import { USER_OFFER_REQUEST_TYPE_LIST } from "utils/constants"
-import { detectAxiosErrors } from "utils/detectErrors"
+import { AuthUserContext } from "@src/components/models/user/AuthUserProvider"
+import { getUserOfferList } from "@src/models/user_offer/request"
+import { signedInCookiesSetter } from "@src/utils/client"
+import { USER_OFFER_REQUEST_TYPE_LIST } from "@src/utils/constants"
+import { detectAxiosErrors } from "@src/utils/detectErrors"
+import { dateToYYYYMMDD } from "@src/utils/formatConverter"
+
+import type { UserOfferType } from "@src/models/user_offer/type"
 
 const Home: React.FC = () => {
   const navigate = useNavigate()

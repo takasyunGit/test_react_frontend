@@ -1,6 +1,8 @@
 import Cookies from "js-cookie"
-import { CreateUserOfferParams } from "models/user_offer/type"
-import { clientRequest } from "utils/client"
+
+import { clientRequest } from "@src/utils/client"
+
+import type { CreateUserOfferParams } from "@src/models/user_offer/type"
 
 
 export const createUserOffer = (params: CreateUserOfferParams) => {

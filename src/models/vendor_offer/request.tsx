@@ -1,7 +1,9 @@
 import Cookies from "js-cookie"
-import { CreateVendorOfferParams } from "models/vendor_offer/type"
-import { SignInType } from "utils/type"
-import { clientRequest } from "utils/client"
+
+import { CreateVendorOfferParams } from "@src/models/vendor_offer/type"
+import { clientRequest } from "@src/utils/client"
+
+import type { SignInType } from "@src/utils/type"
 
 export const createVendorOffer = (params: CreateVendorOfferParams) => {
   if (!Cookies.get("_access_token_v") || !Cookies.get("_client_v") || !Cookies.get("_uid_v")) return

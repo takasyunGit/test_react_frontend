@@ -1,7 +1,10 @@
-import client from "utils/client"
 import Cookies from "js-cookie"
-import { SignInParams } from "models/vendor_user/type"
-import { clientRequest } from "utils/client"
+
+import client from "@src/utils/client"
+import { clientRequest } from "@src/utils/client"
+
+import type { SignInParams } from "@src/models/vendor_user/type"
+
 
 export const signIn = (params: SignInParams) => {
   return client.post("vendor_user/sign_in", params)

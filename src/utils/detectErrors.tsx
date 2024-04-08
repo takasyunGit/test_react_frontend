@@ -1,6 +1,3 @@
-import { useContext } from "react"
-import { AlertMessageContext } from "components/ui/AlertMessage"
-
 import Axios from 'axios'
 
 export const detectAxiosErrors = (e: any, setMessageOpen?: Function, setMessage?: Function) => {

@@ -5,13 +5,15 @@ import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardHeader from "@mui/material/CardHeader"
 
-import { signedInCookiesSetter } from "utils/client"
-import { OptionalTextField, AmountForm, RequiredTextField } from "components/ui/TextField"
-import { AlertMessageContext } from "components/ui/AlertMessage"
-import { CreateVendorOfferParams } from "models/vendor_offer/type"
-import { createVendorOffer } from "models/vendor_offer/request"
-import { detectAxiosErrors } from "utils/detectErrors"
-import { DefaultButton } from "components/ui/Button"
+import { AlertMessageContext } from "@src/components/ui/AlertMessage"
+import { DefaultButton } from "@src/components/ui/Button"
+import { OptionalTextField, AmountForm, RequiredTextField } from "@src/components/ui/TextField"
+import { createVendorOffer } from "@src/models/vendor_offer/request"
+import { signedInCookiesSetter } from "@src/utils/client"
+import { detectAxiosErrors } from "@src/utils/detectErrors"
+
+import type { CreateVendorOfferParams } from "@src/models/vendor_offer/type"
+
 
 const CreateVendorOffer: React.FC = () => {
   const [title, setTitle] = useState<string>('')

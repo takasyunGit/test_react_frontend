@@ -1,16 +1,16 @@
 import React, {useContext} from "react"
 import { useNavigate, Link as RouterLink} from "react-router-dom"
-import Cookies from "js-cookie"
 
+import MenuIcon from "@mui/icons-material/Menu"
 import AppBar from "@mui/material/AppBar"
-import Toolbar from "@mui/material/Toolbar"
-import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
-import MenuIcon from "@mui/icons-material/Menu"
+import Toolbar from "@mui/material/Toolbar"
+import Typography from "@mui/material/Typography"
+import Cookies from "js-cookie"
 
-import { signOut } from "models/vendor_user/auth"
-import { AuthVendorUserContext } from "components/models/vendor_user/AuthVendorUserProvider"
+import { AuthVendorUserContext } from "@src/components/models/vendor_user/AuthVendorUserProvider"
+import { signOut } from "@src/models/vendor_user/auth"
 
 const VendorHeader: React.FC = () => {
   const { loadingVendor, isSignedInVendor, setIsSignedInVendor } = useContext(AuthVendorUserContext)

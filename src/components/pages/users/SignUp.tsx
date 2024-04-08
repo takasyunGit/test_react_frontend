@@ -1,18 +1,19 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
-import TextField from "@mui/material/TextField"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
+import TextField from "@mui/material/TextField"
 
-import { signedInCookiesSetter } from "utils/client"
-import { AuthUserContext } from "components/models/user/AuthUserProvider"
-import { AlertMessageContext } from "components/ui/AlertMessage"
-import { signUp } from "models/user/auth"
-import { SignUpParams } from "models/user/type"
-import { detectAxiosErrors } from "utils/detectErrors"
-import { DefaultButton } from "components/ui/Button"
-import { PasswordForm } from "components/ui/TextField"
+import { AuthUserContext } from "@src/components/models/user/AuthUserProvider"
+import { AlertMessageContext } from "@src/components/ui/AlertMessage"
+import { DefaultButton } from "@src/components/ui/Button"
+import { PasswordForm } from "@src/components/ui/TextField"
+import { signUp } from "@src/models/user/auth"
+import { signedInCookiesSetter } from "@src/utils/client"
+import { detectAxiosErrors } from "@src/utils/detectErrors"
+
+import type { SignUpParams } from "@src/models/user/type"
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate()

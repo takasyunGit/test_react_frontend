@@ -1,7 +1,9 @@
 import Cookies from "js-cookie"
-import { CreateVendorOfferChatParamsType } from "models/vendor_offer_chat/type"
-import { SignInType } from "utils/type"
-import { clientRequest } from "utils/client"
+
+import { CreateVendorOfferChatParamsType } from "@src/models/vendor_offer_chat/type"
+import { clientRequest } from "@src/utils/client"
+
+import type { SignInType } from "@src/utils/type"
 
 export const createVendorOfferChat = (params: CreateVendorOfferChatParamsType, signInType: SignInType) => {
   let sessions: {

@@ -1,16 +1,16 @@
 import React, {useContext} from "react"
 import { useNavigate, Link as RouterLink} from "react-router-dom"
-import Cookies from "js-cookie"
 
+import MenuIcon from "@mui/icons-material/Menu"
 import AppBar from "@mui/material/AppBar"
-import Toolbar from "@mui/material/Toolbar"
-import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
-import MenuIcon from "@mui/icons-material/Menu"
+import Toolbar from "@mui/material/Toolbar"
+import Typography from "@mui/material/Typography"
+import Cookies from "js-cookie"
 
-import { signOut } from "models/user/auth"
-import { AuthUserContext } from "components/models/user/AuthUserProvider"
+import { AuthUserContext } from "@src/components/models/user/AuthUserProvider"
+import { signOut } from "@src/models/user/auth"
 
 const UserHeader: React.FC = () => {
   const { loading, isSignedIn, setIsSignedIn } = useContext(AuthUserContext)

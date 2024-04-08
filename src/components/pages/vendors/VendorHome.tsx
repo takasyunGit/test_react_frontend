@@ -1,15 +1,17 @@
 import React, { useContext, useState, useEffect } from "react"
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
+
 import { Card, CardContent, Typography, Link, CircularProgress } from "@mui/material"
 
-import { signedInCookiesSetter } from "utils/client"
-import { AuthVendorUserContext } from "components/models/vendor_user/AuthVendorUserProvider"
-import { UserOfferType } from "models/user_offer/type"
-import { vendorGetUserOfferList } from "models/user_offer/request"
-import { dateToYYYYMMDD, addComma } from "utils/formatConverter"
-import { USER_OFFER_REQUEST_TYPE_LIST } from "utils/constants"
-import { detectAxiosErrors } from "utils/detectErrors"
-import ProgressCircle from "components/ui/ProgressCircle"
+import { AuthVendorUserContext } from "@src/components/models/vendor_user/AuthVendorUserProvider"
+import ProgressCircle from "@src/components/ui/ProgressCircle"
+import { vendorGetUserOfferList } from "@src/models/user_offer/request"
+import { signedInCookiesSetter } from "@src/utils/client"
+import { USER_OFFER_REQUEST_TYPE_LIST } from "@src/utils/constants"
+import { detectAxiosErrors } from "@src/utils/detectErrors"
+import { dateToYYYYMMDD, addComma } from "@src/utils/formatConverter"
+
+import type { UserOfferType } from "@src/models/user_offer/type"
 
 const Home: React.FC = () => {
   const navigate = useNavigate()

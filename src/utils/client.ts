@@ -1,8 +1,8 @@
-import applyCaseMiddleware from "axios-case-converter"
 import axios, { AxiosResponse } from "axios"
+import applyCaseMiddleware from "axios-case-converter"
 import Cookies from "js-cookie"
 
-import { API_BASEURL } from 'utils/constants'
+import { API_BASEURL } from '@src/utils/constants'
 
 const options = {
   ignoreHeaders: true

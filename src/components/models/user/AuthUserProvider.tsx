@@ -1,8 +1,9 @@
 import React, { createContext, useState, useEffect } from "react"
 
-import { signedInCookiesSetter } from "utils/client"
-import { getCurrentUser } from "models/user/auth"
-import { User, AuthUserContextType } from "models/user/type"
+import { getCurrentUser } from "@src/models/user/auth"
+import { signedInCookiesSetter } from "@src/utils/client"
+
+import type { User, AuthUserContextType } from "@src/models/user/type"
 
 export const AuthUserContext = createContext({} as AuthUserContextType)
 

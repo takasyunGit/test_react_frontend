@@ -1,8 +1,8 @@
 import React, { createContext, useState, useEffect } from "react"
 
-import { signedInCookiesSetter } from "utils/client"
-import { getCurrentVendorUser } from "models/vendor_user/auth"
-import { VendorUser, AuthVendorUserContextType } from "models/vendor_user/type"
+import { getCurrentVendorUser } from "@src/models/vendor_user/auth"
+import { VendorUser, AuthVendorUserContextType } from "@src/models/vendor_user/type"
+import { signedInCookiesSetter } from "@src/utils/client"
 
 export const AuthVendorUserContext = createContext({} as AuthVendorUserContextType)
 

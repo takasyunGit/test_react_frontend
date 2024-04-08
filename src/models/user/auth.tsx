@@ -1,7 +1,8 @@
-import client from "utils/client"
 import Cookies from "js-cookie"
-import { SignUpParams, SignInParams } from "models/user/type"
-import { clientRequest } from "utils/client"
+
+import { SignUpParams, SignInParams } from "@src/models/user/type"
+import client from "@src/utils/client"
+import { clientRequest } from "@src/utils/client"
 
 export const signUp = (params: SignUpParams) => {
   return client.post("user", params)
