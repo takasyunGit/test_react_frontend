@@ -1,0 +1,47 @@
+{
+  "plugins": [
+    "import"
+  ],
+  "settings": {
+    "import/internal-regex": "^@src/"
+  },
+  "rules": {
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",  // 組み込みモジュール
+          "external", // npmでインストールした外部ライブラリ
+          "internal", // 自作モジュール
+          "object",
+          "type",
+          "index"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "{react,react-dom/,react-router-dom}",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
+            "pattern": "@src/**!/type",
+            "group": "internal"
+          }
+        ],
+        "newlines-between": "always", // グループ毎に改行を入れる
+        "pathGroupsExcludedImportTypes": [
+          "builtin"
+        ],
+        "alphabetize": { // アルファベット順でソート
+          "order": "asc",
+          "caseInsensitive": true // 小文字大文字を区別する
+        }
+      }
+    ]
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 13
+  }
+}
