@@ -3,7 +3,10 @@
     "import"
   ],
   "settings": {
-    "import/internal-regex": "^@src/"
+    "import/internal-regex": "^@src/",
+    "import/resolver": {
+      "typescript": {}
+    }
   },
   "rules": {
     "import/order": [
