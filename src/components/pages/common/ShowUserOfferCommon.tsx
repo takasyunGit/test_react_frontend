@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Card, CardContent, CardHeader, Typography } from "@mui/material"
+import { Card, CardContent, CardHeader, Typography, Link } from "@mui/material"
 
 import { ShowUserOfferType } from "@src/models/user_offer/type"
 import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST } from "@src/utils/constants"
@@ -30,9 +30,11 @@ const ShowUserOfferCommon: React.FC<Props> = (props) => {
             <Typography variant="body1" gutterBottom>ユーザーID: {userOffer?.userId}</Typography>
             <Typography variant="body1" gutterBottom>都道府県: {prefecture}</Typography>
             <Typography variant="body1" gutterBottom>住所: {userOffer?.address}</Typography>
+            <Link href={"https://www.google.com/maps/search/?api=1&query=" + prefecture + userOffer?.address} target="_blank">
+              <Typography variant="body1" gutterBottom>地図を表示する</Typography>
+            </Link>
             <Typography variant="body1" gutterBottom>予算: {userOffer?.budget}</Typography>
             <Typography variant="body1" gutterBottom>要望タイプ: {requestType}</Typography>
-            <Typography variant="body1" gutterBottom>id: {userOffer?.id}</Typography>
             <Typography variant="body1" gutterBottom>作成日: {userOffer?.id}</Typography>
             <Typography variant="body1" gutterBottom>更新日: {userOffer?.id}</Typography>
           </CardContent>
