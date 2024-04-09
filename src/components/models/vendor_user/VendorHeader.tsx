@@ -43,7 +43,7 @@ const VendorHeader: React.FC = () => {
           <>
             <Button
               color="inherit"
-              sx={{textTransform: "none"}}
+              sx={{textTransform: "none", marginLeft: "auto"}}
               onClick={handleSignOut}
             >
               Sign out
@@ -56,7 +56,7 @@ const VendorHeader: React.FC = () => {
             <Button
               component={RouterLink}
               to="/vendor/signin"
-              sx={{textTransform: "none"}}
+              sx={{textTransform: "none", marginLeft: "auto"}}
               color="inherit"
             >
               Sign in
@@ -110,8 +110,8 @@ const VendorHeader: React.FC = () => {
           >
             Sample
           </Typography>
-          <AuthButton />
           <ItemsAfterSingedIn />
+          <AuthButton />
         </Toolbar>
       </AppBar>
     </>

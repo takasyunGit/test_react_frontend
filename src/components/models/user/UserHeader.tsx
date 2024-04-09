@@ -40,15 +40,13 @@ const UserHeader: React.FC = () => {
     if (!loading) {
       if (isSignedIn) {
         return (
-          <>
-            <Button
-              color="inherit"
-              sx={{textTransform: "none"}}
-              onClick={handleSignOut}
-            >
-              Sign out
-            </Button>
-          </>
+          <Button
+            color="inherit"
+            sx={{textTransform: "none", marginLeft: "auto"}}
+            onClick={handleSignOut}
+          >
+            Sign out
+          </Button>
         )
       } else {
         return (
@@ -56,7 +54,7 @@ const UserHeader: React.FC = () => {
             <Button
               component={RouterLink}
               to="/signin"
-              sx={{textTransform: "none"}}
+              sx={{textTransform: "none", marginLeft: "auto"}}
               color="inherit"
             >
               Sign in
@@ -98,7 +96,7 @@ const UserHeader: React.FC = () => {
   return (
     <>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{display: "flex"}}>
           <IconButton
             edge="start"
             color="inherit"
