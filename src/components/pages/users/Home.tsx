@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react"
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
-import { Card, CardContent, Typography, Link, CircularProgress } from "@mui/material"
+import { Card, CardContent, Typography, Link, CircularProgress, Paper } from "@mui/material"
 
 import { AuthUserContext } from "@src/components/models/user/AuthUserProvider"
 import { getUserOfferList } from "@src/models/user_offer/request"
@@ -9,6 +9,7 @@ import { signedInCookiesSetter } from "@src/utils/client"
 import { USER_OFFER_REQUEST_TYPE_LIST } from "@src/utils/constants"
 import { detectAxiosErrors } from "@src/utils/detectErrors"
 import { dateToYYYYMMDD } from "@src/utils/formatConverter"
+import { addComma } from "@src/utils/formatConverter"
 
 import type { UserOfferType } from "@src/models/user_offer/type"
 
@@ -41,9 +42,19 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <h1>Home</h1>
-      <div><Link component={RouterLink} to="/user_offer/new" sx={{textDecoration: "none"}}>Create User Offer</Link></div>
-      <h2>Email: {currentUser?.email}</h2>
+      <Paper
+        elevation={3}
+        sx={{
+          mb: 1,
+          padding: 2
+      }}>
+        <Typography variant="h4" gutterBottom>Home</Typography>
+        <div>
+          <Link component={RouterLink} to="/user_offer/new" sx={{textDecoration: "none"}}>
+            <Typography variant="h6" gutterBottom>新しい提案を作成する</Typography>
+          </Link>
+        </div>
+      </Paper>
       {
         homeLoading ? (
           <CircularProgress />
@@ -53,13 +64,12 @@ const Home: React.FC = () => {
             key={"userOffer" + offer.id}
             sx={{
               padding: (theme) => theme.spacing(2),
-              mb: 1,
-              maxWidth: 400
+              mb: 1
             }}>
               <CardContent>
                 <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
                 <Link component={RouterLink} to={"/user_offer/" + offer.id} sx={{textDecoration: "none"}}>
-                  <Typography variant="h6" gutterBottom>{'【' + USER_OFFER_REQUEST_TYPE_LIST[offer.requestType] + '】' + offer.address}</Typography>
+                  <Typography variant="subtitle1" gutterBottom>{'【' + USER_OFFER_REQUEST_TYPE_LIST[offer.requestType] + '】' + '【予算¥' + addComma(offer.budget) + '】' + offer.address}</Typography>
                 </Link>
               </CardContent>
             </Card>

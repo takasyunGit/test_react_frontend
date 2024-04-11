@@ -2,11 +2,7 @@ import React, {useContext} from "react"
 import { useNavigate, Link as RouterLink} from "react-router-dom"
 
 import MenuIcon from "@mui/icons-material/Menu"
-import AppBar from "@mui/material/AppBar"
-import Button from "@mui/material/Button"
-import IconButton from "@mui/material/IconButton"
-import Toolbar from "@mui/material/Toolbar"
-import Typography from "@mui/material/Typography"
+import { Menu, MenuItem, AppBar, Button, IconButton, Toolbar, Typography, Link } from "@mui/material"
 import Cookies from "js-cookie"
 
 import { AuthUserContext } from "@src/components/models/user/AuthUserProvider"
@@ -15,6 +11,14 @@ import { signOut } from "@src/models/user/auth"
 const UserHeader: React.FC = () => {
   const { loading, isSignedIn, setIsSignedIn } = useContext(AuthUserContext)
   const navigate = useNavigate()
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   const handleSignOut = async(e: React.MouseEvent<HTMLButtonElement>) => {
     try{
@@ -101,9 +105,25 @@ const UserHeader: React.FC = () => {
             edge="start"
             color="inherit"
             sx={{marginRight: (theme) => theme.spacing(2)}}
+            onClick={handleMenuClick}
           >
-            <MenuIcon />
+            <MenuIcon/>
           </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+          >
+            <Link component={RouterLink} to="/settings" color="inherit" sx={{textDecoration: "none"}}>
+              <MenuItem onClick={handleClose}>
+                Settings
+              </MenuItem>
+            </Link>
+          </Menu>
           <Typography
             component={RouterLink}
             to="/"
