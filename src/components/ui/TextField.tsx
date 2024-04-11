@@ -14,13 +14,14 @@ type ChildProps<T = string> = {
   value: T,
   required?: boolean
   type?: string
-  minRows?: string
+  minRows?: number
+  maxRows?: number
   onChange: (targetValue: T) => void
   onBlur?: (targetValue: T) => void
 }
 
 export const RequiredTextField = (props: ChildProps) => {
-  const { label, value, required = true, type = "text", minRows = "", onChange, onBlur = () => {} } = props
+  const { label, value, required = true, type = "text", minRows = 1, maxRows = 1, onChange, onBlur = () => {} } = props
 
   return (
     <TextField
@@ -30,6 +31,7 @@ export const RequiredTextField = (props: ChildProps) => {
       fullWidth
       multiline
       minRows={minRows}
+      maxRows={maxRows}
       label={label}
       value={value}
       margin="dense"

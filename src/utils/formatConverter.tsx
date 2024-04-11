@@ -7,7 +7,8 @@ export const stringToHalfWidth = (str: string): string => {
 }
 
 // 日本時間に変換
-export const dateToYYYYMMDD = (d: Date): string => {
+export const dateToYYYYMMDD = (d: Date | undefined): string => {
+  if (!d) { return ""}
   const converted = new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().split(/T|\./)
   const date = converted[0]
   const hour = converted[1]
@@ -15,7 +16,8 @@ export const dateToYYYYMMDD = (d: Date): string => {
 }
 
 // 数字にカンマを入れる
-export const addComma = (num: number) => {
+export const addComma = (num: number | undefined) => {
+  if (!num) { return ""}
   return new Intl.NumberFormat("ja-JP").format(num)
 }
 

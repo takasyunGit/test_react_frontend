@@ -81,7 +81,7 @@ const CreateUserOffer: React.FC = () => {
             />
             <OptionalTextField
               label="Remark"
-              minRows="3"
+              minRows={3}
               value={remark}
               onChange={e=> setRemark(e)}
             />

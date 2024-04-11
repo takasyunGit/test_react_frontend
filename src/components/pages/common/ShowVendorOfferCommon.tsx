@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
-import { Card, CardHeader, CardContent, Typography, Button, Avatar, Box } from "@mui/material"
+import { Card, CardHeader, CardContent, Typography, Button, Avatar, Box, TextField, Grid } from "@mui/material"
 
 import { AlertMessageContext } from "@src/components/ui/AlertMessage"
 import { DisplayErrors } from "@src/components/ui/DisplayErrors"
@@ -16,6 +16,7 @@ import { ShowVendorOfferChatType, CreateVendorOfferChatParamsType } from "@src/m
 import { signedInCookiesSetter } from "@src/utils/client"
 import { detectAxiosErrors } from "@src/utils/detectErrors"
 import { dateToYYYYMMDD } from "@src/utils/formatConverter"
+import { addComma } from "@src/utils/formatConverter"
 
 import type { SignInType } from "@src/utils/type"
 import type { NumberListType } from "@src/utils/type"
@@ -159,34 +160,57 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
       children: initial,
     };
   }
-
+  const vendorOfferStyleCss = {mr: 2, width: "7%"}
 
   return(
     <DisplayErrors errors={offerErrors}>
       <Card sx={{
         padding: (theme) => theme.spacing(2),
-        maxWidth: 400
+        mb: 2
       }}>
-        <CardHeader sx={{textAlign: "center"}} title="Show Vendor offer" />
+        <CardHeader sx={{textAlign: "center"}} title={"【お見積り¥" + addComma(vendorOffer?.estimate) + "】" + vendorOffer?.title} />
         <CardContent>
-          <Typography variant="body1" gutterBottom>{vendorOffer?.name}様</Typography>
-          <Typography variant="body1" gutterBottom>id: {vendorOffer?.id}</Typography>
-          <Typography variant="body1" gutterBottom>UserOfferID: {vendorOffer?.userOfferId}</Typography>
-          <Typography variant="body1" gutterBottom>VendorID: {vendorOffer?.vendorUserId}</Typography>
-          <Typography variant="body1" gutterBottom>タイトル: {vendorOffer?.title}</Typography>
-          <Typography variant="body1" gutterBottom>見積もり: {vendorOffer?.estimate}</Typography>
-          <Typography variant="body1" gutterBottom>備考: {vendorOffer?.remark}</Typography>
-          <Typography variant="body1" gutterBottom>作成日: {vendorOffer && dateToYYYYMMDD(new Date(vendorOffer.createdAt))}</Typography>
-          <Typography variant="body1" gutterBottom>更新日: {vendorOffer && dateToYYYYMMDD(new Date(vendorOffer.updatedAt))}</Typography>
+          <Grid container>
+            <Grid item sx={vendorOfferStyleCss}>
+              <Typography variant="body1" gutterBottom>提案者:</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="body1" gutterBottom>{vendorOffer?.name}</Typography>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item sx={vendorOfferStyleCss}>
+              <Typography variant="body1" gutterBottom>見積もり:</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="body1" gutterBottom>{vendorOffer?.estimate}</Typography>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item sx={{mr: 2, flexShrink: 0, width: "7%"}}>
+              <Typography variant="body1" gutterBottom>備考:</Typography>
+            </Grid>
+            <Typography variant="body1" gutterBottom sx={{minWidth: 0, wordWrap: "break-word", maxWidth: "85%"}}>{"a".repeat(300)}</Typography>
+          </Grid>
+          <Grid container>
+            <Grid item sx={vendorOfferStyleCss}>
+              <Typography variant="body1" gutterBottom>更新日:</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="body1" gutterBottom>{vendorOffer && dateToYYYYMMDD(new Date(vendorOffer.updatedAt))}</Typography>
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
       <Card sx={{
         padding: (theme) => theme.spacing(2),
-        maxWidth: 400
+        mb: 1
       }}>
         <RequiredTextField
           label="message"
           value={message}
+          minRows={3}
+          maxRows={6}
           onChange={e=> setMessage(e)}
         />
         <Button
@@ -213,26 +237,27 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
               page={page}
               onChange={handleGetVendorOfferChatListWithPaginate}
             />
-            {vendorOfferChatList.map((chat) => (
-              <Card
-              key={"userOffer" + chat.id}
-              sx={{
-                padding: (theme) => theme.spacing(2),
-                mb: 1,
-                maxWidth: 400,
-                "background-color": activeColor(chat)
-              }}>
-                <CardContent sx={{display: "flex"}}>
-                  <Box sx={{mr:2}}>
-                    {chat?.avatar?.url ? <Avatar src={chat?.avatar?.url}/> : <Avatar {...stringAvatar(chat.name)}/>}
-                  </Box>
-                  <Box>
-                    <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(chat.createdAt))}</Typography>
-                    <Typography variant="h6" gutterBottom>{chat.message}</Typography>
-                  </Box>
-                </CardContent>
-              </Card>
-            ))}
+            <div style={{margin: "5px 5px"}}>
+              {vendorOfferChatList.map((chat) => (
+                <Card
+                key={"userOffer" + chat.id}
+                sx={{
+                  padding: (theme) => theme.spacing(2),
+                  mb: 1,
+                  "background-color": activeColor(chat)
+                }}>
+                  <CardContent sx={{display: "flex"}}>
+                    <Box sx={{mr:2}}>
+                      {chat?.avatar?.url ? <Avatar src={chat?.avatar?.url}/> : <Avatar {...stringAvatar(chat.name)}/>}
+                    </Box>
+                    <Box>
+                      <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(chat.createdAt))}</Typography>
+                      <Typography variant="h6" gutterBottom>{chat.message}</Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
             <Pagination
               count={Object.keys(paginateNumberList).length}
               page={page}
