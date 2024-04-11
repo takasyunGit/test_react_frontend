@@ -12,6 +12,7 @@ import { getVendorOfferList } from "@src/models/vendor_offer/request"
 import { signedInCookiesSetter } from "@src/utils/client"
 import { detectAxiosErrors } from "@src/utils/detectErrors"
 import { dateToYYYYMMDD, addComma } from "@src/utils/formatConverter"
+import { omitText } from "@src/utils/formatConverter"
 
 import type { ShowUserOfferType } from "@src/models/user_offer/type"
 import type { ShowVendorOfferType } from "@src/models/vendor_offer/type"
@@ -34,6 +35,7 @@ const ShowUserOffer: React.FC = () => {
   const [vendorOffererrors, setVendorOfferErrors] = useState<any>()
   const paginateNumberList = vendorOfferListWithPaginate?.paginate || {}
   const vendorOfferList = vendorOfferListWithPaginate?.records || []
+  const VENDOR_OFFER_TEXT_LIMIT = 300
 
   const handleGetUserOffer = async () => {
     try{
@@ -107,6 +109,7 @@ const ShowUserOffer: React.FC = () => {
                         {'【見積もり: ¥' + addComma(offer.estimate) + '】' + offer.title}
                       </Typography>
                     </Link>
+                    <Typography variant="body1" gutterBottom>{omitText(VENDOR_OFFER_TEXT_LIMIT, offer.remark)}</Typography>
                   </CardContent>
                 </Card>
               ))}

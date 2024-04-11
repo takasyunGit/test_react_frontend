@@ -15,6 +15,17 @@ export const dateToYYYYMMDD = (d: Date): string => {
 }
 
 // 数字にカンマを入れる
-export const addComma = (num: number) =>{
+export const addComma = (num: number) => {
   return new Intl.NumberFormat("ja-JP").format(num)
 }
+
+// 指定の文字数を超えたら省略する
+export const omitText = (limit: number, text: string) => {
+  let returnText = text
+
+  if (text.length > limit) {
+    returnText = text.substring(0, limit) + "..."
+  }
+  return returnText
+}
+
