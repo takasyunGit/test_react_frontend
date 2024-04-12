@@ -23,7 +23,6 @@ export const updateVendorOffer = (params: UpdateVendorOfferParams) => {
     headerClient: Cookies.get("_client_v"),
     uid: Cookies.get("_uid_v")
   }
-  console.log(params)
   return clientRequest("patch", "vendor_user/vendor_offers/" + params.id, params, sessions)
 }
 

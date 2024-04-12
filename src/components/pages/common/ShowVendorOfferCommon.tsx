@@ -49,7 +49,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
   const [chatErrors, setChatErrors] = useState<any>()
   const paginateNumberList = vendorOfferChatListWithPaginate?.paginate || {}
   const vendorOfferChatList = vendorOfferChatListWithPaginate?.records || []
-  const vendorOfferStyleCss = {mr: 2, width: "7%"}
+  const vendorOfferStyleCss = {mr: 2, width: "8%"}
 
   const handleGetvendorOffer = async () => {
     try{
@@ -233,7 +233,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
             </Grid>
           </Grid>
           <Grid container>
-            <Grid item sx={{mr: 2, flexShrink: 0, width: "7%"}}>
+            <Grid item sx={Object.assign(vendorOfferStyleCss, {flexShrink: 0})}>
               <Typography variant="body1" gutterBottom>備考:</Typography>
             </Grid>
             { editFlg ?
