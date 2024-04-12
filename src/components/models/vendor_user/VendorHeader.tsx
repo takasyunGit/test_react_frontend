@@ -2,19 +2,23 @@ import React, {useContext} from "react"
 import { useNavigate, Link as RouterLink} from "react-router-dom"
 
 import MenuIcon from "@mui/icons-material/Menu"
-import AppBar from "@mui/material/AppBar"
-import Button from "@mui/material/Button"
-import IconButton from "@mui/material/IconButton"
-import Toolbar from "@mui/material/Toolbar"
-import Typography from "@mui/material/Typography"
+import { AppBar, Button, Menu, IconButton, Toolbar, MenuItem, Typography, Link } from "@mui/material"
 import Cookies from "js-cookie"
 
 import { AuthVendorUserContext } from "@src/components/models/vendor_user/AuthVendorUserProvider"
 import { signOut } from "@src/models/vendor_user/auth"
 
 const VendorHeader: React.FC = () => {
-  const { loadingVendor, isSignedInVendor, setIsSignedInVendor } = useContext(AuthVendorUserContext)
+  const { currentVendorUser, loadingVendor, isSignedInVendor, setIsSignedInVendor, setCurrentVendorUser } = useContext(AuthVendorUserContext)
   const navigate = useNavigate()
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   const handleSignOut = async(e: React.MouseEvent<HTMLButtonElement>) => {
     try{
@@ -26,6 +30,7 @@ const VendorHeader: React.FC = () => {
         Cookies.remove("_uid_v")
 
         setIsSignedInVendor(false)
+        setCurrentVendorUser(undefined)
         navigate("/vendor/signin")
         console.log("Succeeded in sign out")
       } else {
@@ -91,13 +96,33 @@ const VendorHeader: React.FC = () => {
     <>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            sx={{marginRight: (theme) => theme.spacing(2)}}
-          >
-            <MenuIcon />
-          </IconButton>
+        {isSignedInVendor && currentVendorUser ?
+            <>
+              <IconButton
+                edge="start"
+                color="inherit"
+                sx={{marginRight: (theme) => theme.spacing(2)}}
+                onClick={handleMenuClick}
+              >
+                <MenuIcon/>
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+              >
+                <Link component={RouterLink} to="/vendor/settings" color="inherit" sx={{textDecoration: "none"}}>
+                  <MenuItem onClick={handleClose}>
+                    Settings
+                  </MenuItem>
+                </Link>
+              </Menu>
+            </> : null
+          }
           <Typography
             component={RouterLink}
             to="/vendor"
@@ -110,7 +135,6 @@ const VendorHeader: React.FC = () => {
           >
             Sample
           </Typography>
-          <ItemsAfterSingedIn />
           <AuthButton />
         </Toolbar>
       </AppBar>

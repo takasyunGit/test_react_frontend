@@ -9,7 +9,7 @@ import { AuthUserContext } from "@src/components/models/user/AuthUserProvider"
 import { signOut } from "@src/models/user/auth"
 
 const UserHeader: React.FC = () => {
-  const { loading, isSignedIn, setIsSignedIn } = useContext(AuthUserContext)
+  const { currentUser, loading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthUserContext)
   const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -30,6 +30,7 @@ const UserHeader: React.FC = () => {
         Cookies.remove("_uid")
 
         setIsSignedIn(false)
+        setCurrentUser(undefined)
         navigate("/signin")
         console.log("Succeeded in sign out")
       } else {
@@ -101,29 +102,33 @@ const UserHeader: React.FC = () => {
     <>
       <AppBar position="static">
         <Toolbar sx={{display: "flex"}}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            sx={{marginRight: (theme) => theme.spacing(2)}}
-            onClick={handleMenuClick}
-          >
-            <MenuIcon/>
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
-          >
-            <Link component={RouterLink} to="/settings" color="inherit" sx={{textDecoration: "none"}}>
-              <MenuItem onClick={handleClose}>
-                Settings
-              </MenuItem>
-            </Link>
-          </Menu>
+          {isSignedIn && currentUser ?
+            <>
+              <IconButton
+                edge="start"
+                color="inherit"
+                sx={{marginRight: (theme) => theme.spacing(2)}}
+                onClick={handleMenuClick}
+              >
+                <MenuIcon/>
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+              >
+                <Link component={RouterLink} to="/settings" color="inherit" sx={{textDecoration: "none"}}>
+                  <MenuItem onClick={handleClose}>
+                    Settings
+                  </MenuItem>
+                </Link>
+              </Menu>
+            </> : null
+          }
           <Typography
             component={RouterLink}
             to="/"
@@ -136,7 +141,6 @@ const UserHeader: React.FC = () => {
           >
             Sample
           </Typography>
-          <ItemsAfterSingedIn/>
           <AuthButton />
         </Toolbar>
       </AppBar>
