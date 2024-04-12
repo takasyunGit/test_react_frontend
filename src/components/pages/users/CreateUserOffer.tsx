@@ -1,9 +1,7 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
-import Card from "@mui/material/Card"
-import CardContent from "@mui/material/CardContent"
-import CardHeader from "@mui/material/CardHeader"
+import { Card, CardContent, CardHeader, Box } from "@mui/material"
 
 import { AlertMessageContext } from "@src/components/ui/AlertMessage"
 import { DefaultButton } from "@src/components/ui/Button"
@@ -25,7 +23,7 @@ const CreateUserOffer: React.FC = () => {
   const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
   const navigate = useNavigate()
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault()
 
     const params: CreateUserOfferParams = {
@@ -52,12 +50,17 @@ const CreateUserOffer: React.FC = () => {
     }
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.nativeEvent.isComposing || e.key !== 'Enter') return
+    if (!prefecture || !budget  || !requestType) return
+    handleSubmit(e)
+  }
+
   return (
-    <>
+    <Box sx={{display: "flex", justifyContent: "center"}}>
       <form noValidate autoComplete="off">
         <Card sx={{
           padding: (theme) => theme.spacing(2),
-          maxWidth: 400
         }}>
           <CardHeader sx={{textAlign: "center"}} title="Create user offer" />
           <CardContent>
@@ -72,18 +75,23 @@ const CreateUserOffer: React.FC = () => {
               label="Address"
               value={address}
               onChange={e=> setAddress(e)}
+              minRows={3}
+              onKeyDown={handleKeyDown}
             />
             <AmountForm
               label="Budget"
               value={budget}
               required={true}
               onChange={e=> setBudget(e)}
+              onKeyDown={handleKeyDown}
             />
             <OptionalTextField
               label="Remark"
-              minRows={3}
+              minRows={8}
+              maxRows={10}
               value={remark}
               onChange={e=> setRemark(e)}
+              onKeyDown={handleKeyDown}
             />
             <div>
               <SelectForm
@@ -103,7 +111,7 @@ const CreateUserOffer: React.FC = () => {
           </CardContent>
         </Card>
       </form>
-    </>
+    </Box>
   )
 }
 

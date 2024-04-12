@@ -32,10 +32,8 @@ const CommonLayout = () => {
       </header>
       <main>
         <DivContainer>
-          <Grid sx={{"justify-content": "center"}}>
-            <AlertMessage/>
-            <Outlet />
-          </Grid>
+          <AlertMessage/>
+          <Outlet />
         </DivContainer>
       </main>
     </>
