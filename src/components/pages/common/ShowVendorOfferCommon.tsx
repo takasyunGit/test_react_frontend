@@ -168,7 +168,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
         padding: (theme) => theme.spacing(2),
         mb: 2
       }}>
-        <CardHeader sx={{textAlign: "center"}} title={"【お見積り¥" + addComma(vendorOffer?.estimate) + "】" + vendorOffer?.title} />
+        <CardHeader sx={{textAlign: "center"}} title={vendorOffer?.title} />
         <CardContent>
           <Grid container>
             <Grid item sx={vendorOfferStyleCss}>
@@ -183,14 +183,14 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
               <Typography variant="body1" gutterBottom>見積もり:</Typography>
             </Grid>
             <Grid item>
-              <Typography variant="body1" gutterBottom>{vendorOffer?.estimate}</Typography>
+              <Typography variant="body1" gutterBottom>¥{vendorOffer?.estimate && addComma(vendorOffer?.estimate)}</Typography>
             </Grid>
           </Grid>
           <Grid container>
             <Grid item sx={{mr: 2, flexShrink: 0, width: "7%"}}>
               <Typography variant="body1" gutterBottom>備考:</Typography>
             </Grid>
-            <Typography variant="body1" gutterBottom sx={{minWidth: 0, wordWrap: "break-word", maxWidth: "85%"}}>{"a".repeat(300)}</Typography>
+            <Typography variant="body1" gutterBottom sx={{minWidth: 0, wordWrap: "break-word", maxWidth: "85%"}}>{vendorOffer?.remark}</Typography>
           </Grid>
           <Grid container>
             <Grid item sx={vendorOfferStyleCss}>
@@ -252,7 +252,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
                     </Box>
                     <Box>
                       <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(chat.createdAt))}</Typography>
-                      <Typography variant="h6" gutterBottom>{chat.message}</Typography>
+                      <Typography variant="body1" gutterBottom>{chat.message}</Typography>
                     </Box>
                   </CardContent>
                 </Card>

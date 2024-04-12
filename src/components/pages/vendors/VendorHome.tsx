@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react"
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
-import { Card, CardContent, Typography, Link, CircularProgress } from "@mui/material"
+import { Card, CardContent, Typography, Link } from "@mui/material"
 
 import { AuthVendorUserContext } from "@src/components/models/vendor_user/AuthVendorUserProvider"
 import ProgressCircle from "@src/components/ui/ProgressCircle"
@@ -42,8 +42,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Typography variant="h4" gutterBottom>Vendor</Typography>
-      <Typography variant="h5" gutterBottom>Email: {currentVendorUser?.email}</Typography>
+      <Typography variant="h4" gutterBottom>Vendor Home</Typography>
       <ProgressCircle loading={homeLoading}>
         {userOfferList.map((offer) => (
           <Card
@@ -51,7 +50,6 @@ const Home: React.FC = () => {
           sx={{
             padding: (theme) => theme.spacing(2),
             mb: 1,
-            maxWidth: 400
           }}>
             <CardContent>
               <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>

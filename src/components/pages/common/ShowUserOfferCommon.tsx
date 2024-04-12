@@ -4,7 +4,7 @@ import { Typography, Link, Paper, Grid } from "@mui/material"
 
 import { ShowUserOfferType } from "@src/models/user_offer/type"
 import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST } from "@src/utils/constants"
-import { addComma } from "@src/utils/formatConverter"
+import { addComma, dateToYYYYMMDD } from "@src/utils/formatConverter"
 
 type Props = {
   userOffer: ShowUserOfferType| undefined,
@@ -47,7 +47,7 @@ const ShowUserOfferCommon: React.FC<Props> = (props) => {
               <Typography variant="body1" gutterBottom>予算:</Typography>
             </Grid>
             <Grid item>
-              <Typography variant="body1" gutterBottom>{"¥" + userOffer?.budget && addComma(userOffer?.budget)}</Typography>
+              <Typography variant="body1" gutterBottom>{"¥" + (userOffer?.budget && addComma(userOffer?.budget))}</Typography>
             </Grid>
           </Grid>
           <Grid container>
@@ -71,7 +71,7 @@ const ShowUserOfferCommon: React.FC<Props> = (props) => {
               <Typography variant="body1" gutterBottom>更新日:</Typography>
             </Grid>
             <Grid item>
-              <Typography variant="body1" gutterBottom>{userOffer?.name}</Typography>
+              <Typography variant="body1" gutterBottom>{userOffer && dateToYYYYMMDD(new Date(userOffer.updatedAt))}</Typography>
             </Grid>
           </Grid>
         </Paper>

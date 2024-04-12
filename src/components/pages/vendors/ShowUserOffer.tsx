@@ -99,14 +99,13 @@ const ShowUserOffer: React.FC = () => {
                 key={"userOffer" + offer.id}
                 sx={{
                   padding: (theme) => theme.spacing(2),
-                  mb: 1,
-                  maxWidth: 400
+                  mb: 1
                 }}>
                   <CardContent>
                     <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
                     <Link component={RouterLink} to={"/vendor/user_offer/" + params.id + "/vendor_offer/" + offer.id} sx={{textDecoration: "none"}}>
                       <Typography variant="h6" gutterBottom>
-                        {'【見積もり: ¥' + addComma(offer.estimate) + '】' + offer.title}
+                        {'【お見積もり: ¥' + addComma(offer.estimate) + '】' + offer.title}
                       </Typography>
                     </Link>
                     <Typography variant="body1" gutterBottom>{omitText(VENDOR_OFFER_TEXT_LIMIT, offer.remark)}</Typography>

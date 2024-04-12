@@ -1,9 +1,7 @@
 import React, { useState, useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
-import Card from "@mui/material/Card"
-import CardContent from "@mui/material/CardContent"
-import CardHeader from "@mui/material/CardHeader"
+import { Card, CardContent, CardHeader,Box } from "@mui/material"
 
 import { AlertMessageContext } from "@src/components/ui/AlertMessage"
 import { DefaultButton } from "@src/components/ui/Button"
@@ -22,7 +20,7 @@ const CreateVendorOffer: React.FC = () => {
   const userOfferId = useParams().id as string
   const navigate = useNavigate()
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault()
 
     const params: CreateVendorOfferParams = {
@@ -50,8 +48,14 @@ const CreateVendorOffer: React.FC = () => {
     }
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.nativeEvent.isComposing || e.key !== 'Enter') return
+    if (!title || !estimate) return
+    handleSubmit(e)
+  }
+
   return (
-    <>
+    <Box sx={{display: "flex", justifyContent: "center"}}>
       <form noValidate>
         <Card sx={{
           padding: (theme) => theme.spacing(2),
@@ -63,17 +67,22 @@ const CreateVendorOffer: React.FC = () => {
               label="Title"
               value={title}
               onChange={e=> setTitle(e)}
+              onKeyDown={handleKeyDown}
             />
             <OptionalTextField
               label="Remark"
               value={remark}
+              minRows={8}
+              maxRows={10}
               onChange={e=> setRemark(e)}
+              onKeyDown={handleKeyDown}
             />
             <AmountForm
               label="Estimate"
               value={estimate}
               required={true}
               onChange={e=> setEstimate(e)}
+              onKeyDown={handleKeyDown}
             />
             <DefaultButton
               disabled={!title || !estimate ? true : false}
@@ -84,7 +93,7 @@ const CreateVendorOffer: React.FC = () => {
           </CardContent>
         </Card>
       </form>
-    </>
+    </Box>
   )
 }
 
