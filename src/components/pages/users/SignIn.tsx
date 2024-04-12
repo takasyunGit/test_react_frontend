@@ -62,7 +62,7 @@ const SignIn: React.FC = () => {
   }
 
   return (
-    <div>
+    <Box sx={{display: "flex", justifyContent: "center"}}>
       <form noValidate autoComplete="off">
         <Card sx={{
           padding: (theme) => theme.spacing(2),
@@ -103,7 +103,7 @@ const SignIn: React.FC = () => {
           </CardContent>
         </Card>
       </form>
-    </div>
+    </Box>
   )
 }
 

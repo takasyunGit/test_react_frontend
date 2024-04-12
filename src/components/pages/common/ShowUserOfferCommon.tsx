@@ -16,7 +16,6 @@ const ShowUserOfferCommon: React.FC<Props> = (props) => {
   const { userOffer, offerLoading } = props
   const prefecture = userOffer && PREFECTURES_NAME_LIST[userOffer.prefecture] || "-"
   const requestType = userOffer && USER_OFFER_REQUEST_TYPE_LIST[userOffer.requestType] || "-"
-  const VendorOfferTextLimit = 300
 
   if (!offerLoading) {
     return(

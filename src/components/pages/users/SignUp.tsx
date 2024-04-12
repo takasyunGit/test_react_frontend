@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { Card, CardHeader, CardContent, TextField } from "@mui/material"
+import { Card, CardHeader, CardContent, TextField, Box } from "@mui/material"
 
 import { AuthUserContext } from "@src/components/models/user/AuthUserProvider"
 import { AlertMessageContext } from "@src/components/ui/AlertMessage"
@@ -59,7 +59,7 @@ const SignUp: React.FC = () => {
   }
 
   return (
-    <>
+    <Box sx={{display: "flex", justifyContent: "center"}}>
       <form noValidate autoComplete="off">
         <Card sx={{
           padding: (theme) => theme.spacing(2),
@@ -108,7 +108,7 @@ const SignUp: React.FC = () => {
           </CardContent>
         </Card>
       </form>
-    </>
+    </Box>
   )
 }
 

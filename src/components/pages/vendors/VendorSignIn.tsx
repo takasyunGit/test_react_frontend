@@ -64,14 +64,13 @@ const SignIn: React.FC = () => {
   }
 
   return (
-    <>
-      <h1>Vendor</h1>
+    <Box sx={{display: "flex", justifyContent: "center"}}>
       <form noValidate autoComplete="off">
         <Card sx={{
           padding: (theme) => theme.spacing(2),
           maxWidth: 400
         }}>
-          <CardHeader sx={{textAlign: "center"}} title="Sign In" />
+          <CardHeader sx={{textAlign: "center"}} title="Vendor Sign In" />
           <CardContent>
             <RequiredTextField
               label="Email"
@@ -102,7 +101,7 @@ const SignIn: React.FC = () => {
           </CardContent>
         </Card>
       </form>
-    </>
+    </Box>
   )
 }
 
