@@ -18,12 +18,13 @@ type ChildProps<T = string> = {
   maxRows?: number
   sx?: {[key: string]: string | number}
   onChange: (targetValue: T) => void
+  onClick?: (targetValue: T) => void
   onBlur?: (targetValue: T) => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void
 }
 
 export const RequiredTextField = (props: ChildProps) => {
-  const { label, value, required = true, type = "text", minRows = 1, maxRows = 1, onChange, onBlur = () => {}, onKeyDown  = () => {}} = props
+  const { label, value, required = true, type = "text", minRows = 1, maxRows = 1, sx, onChange, onBlur = () => {}, onKeyDown  = () => {}, onClick = () => {}} = props
 
   return (
     <TextField
@@ -37,9 +38,12 @@ export const RequiredTextField = (props: ChildProps) => {
       label={label}
       value={value}
       margin="dense"
+      sx={sx}
       onChange={e => onChange(e.target.value)}
       onBlur={e => onBlur(e.target.value)}
-      onKeyDown={onKeyDown}
+      InputProps={{inputProps:{onClick: (e) => onClick(e.currentTarget.value)}}}
+      // onClick={e => onClick(e.currentTarget.value)}
+      // onKeyDown={onKeyDown}
     />
   )
 }
@@ -54,6 +58,7 @@ export const OptionalTextField = (props: ChildProps) => {
       value={props.value}
       minRows={props.minRows}
       maxRows={props.minRows}
+      sx={props.sx}
       onChange={e => props.onChange(e)}
       onKeyDown={e => onKeyDown(e)}
     />
@@ -69,6 +74,10 @@ export const AmountForm = (props: ChildProps) => {
 
     return result
   }
+  const replaceComma = (str: string): string => {
+    console.log("d")
+    return str.replace(/,/g, '')
+  }
 
   return (
     <RequiredTextField
@@ -78,6 +87,7 @@ export const AmountForm = (props: ChildProps) => {
       value={props.value}
       onChange={e => props.onChange(e)}
       onBlur={e => props.onChange(formatter(e))}
+      onClick={e => props.onChange(replaceComma(e))}
       onKeyDown={e => onKeyDown(e)}
     />
   )

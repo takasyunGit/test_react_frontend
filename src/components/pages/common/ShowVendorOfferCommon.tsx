@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
-import { Card, CardHeader, CardContent, Typography, Button, Avatar, Box, TextField, Grid } from "@mui/material"
+import { Card, CardHeader, CardContent, Typography, Button, Avatar, Box, Grid } from "@mui/material"
 
 import { AlertMessageContext } from "@src/components/ui/AlertMessage"
+import { DefaultButton } from "@src/components/ui/Button"
 import { DisplayErrors } from "@src/components/ui/DisplayErrors"
 import Pagination, { initialPaginate } from "@src/components/ui/Pagination"
 import ProgressCircle from "@src/components/ui/ProgressCircle"
-import { RequiredTextField } from "@src/components/ui/TextField"
-import { getVendorOffer } from "@src/models/vendor_offer/request"
-import { ShowVendorOfferType } from "@src/models/vendor_offer/type"
+import { AmountForm, OptionalTextField, RequiredTextField } from "@src/components/ui/TextField"
+import { updateVendorOffer, getVendorOffer } from "@src/models/vendor_offer/request"
+import { UpdateVendorOfferParams, ShowVendorOfferType } from "@src/models/vendor_offer/type"
 import { getVendorOfferChat } from "@src/models/vendor_offer_chat/request"
 import { createVendorOfferChat } from "@src/models/vendor_offer_chat/request"
 import { ShowVendorOfferChatType, CreateVendorOfferChatParamsType } from "@src/models/vendor_offer_chat/type"
@@ -40,11 +41,15 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
   const [chatLoading, setChatLoading] = useState<boolean>(true)
   const [vendorOffer, setVendorOffer] = useState<ShowVendorOfferType | undefined>()
   const [vendorOfferChatListWithPaginate, setVendorOfferChatListWithPaginate] = useState<VendorOfferWithPaginateType>()
+  const [editFlg, setEditFlg] = useState<boolean>(false)
   const [page, setPage] = useState<number>(1)
+  const [remark, setRemark] = useState<string>('')
+  const [estimate, setEstimate] = useState<string>('')
   const [offerErrors, setOfferErrors] = useState<any>()
   const [chatErrors, setChatErrors] = useState<any>()
   const paginateNumberList = vendorOfferChatListWithPaginate?.paginate || {}
   const vendorOfferChatList = vendorOfferChatListWithPaginate?.records || []
+  const vendorOfferStyleCss = {mr: 2, width: "7%"}
 
   const handleGetvendorOffer = async () => {
     try{
@@ -54,7 +59,9 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
       signedInCookiesSetter(res, signInType)
 
       if (res && res.status === 200) {
-        setVendorOffer(res!.data.data)
+        setVendorOffer(res.data.data)
+        setRemark(res.data.data.remark)
+        setEstimate(addComma(res.data.data.estimate))
       } else {
         console.log("An unexpected error has occurred")
       }
@@ -86,7 +93,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
     setChatLoading(false)
   }
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMessageSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
     const url_string = window.location.href
@@ -116,9 +123,6 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
       detectAxiosErrors(e, setAlertMessageOpen, setAlertMessage)
     }
   }
-
-  useEffect(() => {handleGetvendorOffer()}, [])
-  useEffect(() => {handleGetVendorOfferChatListWithPaginate()}, [page])
 
   const activeColor = (chat: ShowVendorOfferChatType) => {
     let colorCode
@@ -160,7 +164,41 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
       children: initial,
     };
   }
-  const vendorOfferStyleCss = {mr: 2, width: "7%"}
+
+  const editToggle = () => {
+    setEditFlg(editFlg=>!editFlg)
+  }
+
+  const handleOfferSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    const params: UpdateVendorOfferParams = {
+      id: +vendorOfferId,
+      remark: remark,
+      estimate: +estimate.replace(/,/g, ''),
+    }
+
+    try{
+      const res = await updateVendorOffer(params)
+
+      if (!res) { return navigate("/vendor/signin") }
+      signedInCookiesSetter(res, "Vendor")
+
+      if (res && res.status === 200) {
+        setVendorOffer(res.data.data)
+        setEditFlg(false)
+        handleGetVendorOfferChatListWithPaginate()
+      } else {
+        setAlertMessage("An unexpected error has occurred")
+        setAlertMessageOpen(true)
+      }
+    } catch(e) {
+      detectAxiosErrors(e, setAlertMessageOpen, setAlertMessage)
+    }
+  }
+
+  useEffect(() => {handleGetvendorOffer()}, [])
+  useEffect(() => {handleGetVendorOfferChatListWithPaginate()}, [page])
 
   return(
     <DisplayErrors errors={offerErrors}>
@@ -180,17 +218,35 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
           </Grid>
           <Grid container>
             <Grid item sx={vendorOfferStyleCss}>
-              <Typography variant="body1" gutterBottom>見積もり:</Typography>
+              <Typography variant="body1" gutterBottom>お見積もり:</Typography>
             </Grid>
             <Grid item>
+              {editFlg ?
+              <AmountForm
+                label="Estimate"
+                required={false}
+                value={estimate}
+                onChange={e=> setEstimate(e)}
+              /> :
               <Typography variant="body1" gutterBottom>¥{vendorOffer?.estimate && addComma(vendorOffer?.estimate)}</Typography>
+              }
             </Grid>
           </Grid>
           <Grid container>
             <Grid item sx={{mr: 2, flexShrink: 0, width: "7%"}}>
               <Typography variant="body1" gutterBottom>備考:</Typography>
             </Grid>
-            <Typography variant="body1" gutterBottom sx={{minWidth: 0, wordWrap: "break-word", maxWidth: "85%"}}>{vendorOffer?.remark}</Typography>
+            { editFlg ?
+              <OptionalTextField
+                label="Remark"
+                value={remark}
+                minRows={8}
+                maxRows={10}
+                sx={{maxWidth: "85%"}}
+                onChange={e=> setRemark(e)}
+              /> :
+              <Typography variant="body1" gutterBottom sx={{minWidth: 0, whiteSpace: "pre-wrap", wordWrap: "break-word", maxWidth: "85%"}}>{vendorOffer?.remark}</Typography>
+            }
           </Grid>
           <Grid container>
             <Grid item sx={vendorOfferStyleCss}>
@@ -200,6 +256,23 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
               <Typography variant="body1" gutterBottom>{vendorOffer && dateToYYYYMMDD(new Date(vendorOffer.updatedAt))}</Typography>
             </Grid>
           </Grid>
+          { editFlg ?
+            <DefaultButton onClick={handleOfferSubmit} sx={{mr:1, }}>
+              更新する
+            </DefaultButton> : null
+          }
+          {
+            signInType === "Vendor" ?
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              sx={{mt: 2}}
+              onClick={editToggle}
+            >
+              {editFlg ? "編集をやめる" : "編集する"}
+            </Button> : null
+          }
         </CardContent>
       </Card>
       <Card sx={{
@@ -223,7 +296,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
             flexGrow: 1,
             textTransform: "none",
           }}
-          onClick={handleSubmit}
+          onClick={handleMessageSubmit}
         >
           Submit
         </Button>
@@ -252,7 +325,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
                     </Box>
                     <Box>
                       <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(chat.createdAt))}</Typography>
-                      <Typography variant="body1" gutterBottom>{chat.message}</Typography>
+                      <Typography variant="body1" gutterBottom sx={{whiteSpace: "pre-wrap"}}>{chat.message}</Typography>
                     </Box>
                   </CardContent>
                 </Card>
