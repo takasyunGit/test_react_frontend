@@ -17,4 +17,10 @@ export type CreateVendorOfferParams = Pick<VendorOfferType,
     "remark"
   >
 
+export type UpdateVendorOfferParams = Pick<VendorOfferType,
+  "id" |
+  "estimate" |
+  "remark"
+>
+
 export type ShowVendorOfferType = VendorOfferType & { name: string}
