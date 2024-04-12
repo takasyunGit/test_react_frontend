@@ -3,13 +3,14 @@ import React, { ReactNode } from "react"
 import {Button} from "@mui/material"
 
 type ButtonProps = {
-  disabled: boolean
+  disabled?: boolean
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>
   children: React.ReactNode
+  sx?: {[key: string]: string | number}
 }
 
 export const DefaultButton: React.FC<ButtonProps> = (props) => {
-  const {disabled, onClick, children} = props
+  const { disabled = false, onClick, children, sx = {} } = props
 
   return (
     <Button
@@ -17,11 +18,11 @@ export const DefaultButton: React.FC<ButtonProps> = (props) => {
       size="large"
       color="primary"
       disabled={disabled}
-      sx={{
-        marginTop: (theme) => theme.spacing(2),
+      sx={Object.assign({
+        marginTop: 2,
         flexGrow: 1,
         textTransform: "none"
-      }}
+      }, sx)}
       onClick={onClick}
     >
       {children}
