@@ -1,14 +1,13 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
-import Card from "@mui/material/Card"
-import CardContent from "@mui/material/CardContent"
-import TextField from "@mui/material/TextField"
+import { Card, CardHeader, CardContent, TextField } from "@mui/material"
 
 import { AuthUserContext } from "@src/components/models/user/AuthUserProvider"
 import { AlertMessageContext } from "@src/components/ui/AlertMessage"
 import { DefaultButton } from "@src/components/ui/Button"
 import { PasswordForm } from "@src/components/ui/TextField"
+import { RequiredTextField } from "@src/components/ui/TextField"
 import { signUp } from "@src/models/user/auth"
 import { signedInCookiesSetter } from "@src/utils/client"
 import { detectAxiosErrors } from "@src/utils/detectErrors"
@@ -26,7 +25,7 @@ const SignUp: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault()
 
     const Params: SignUpParams = {
@@ -53,6 +52,12 @@ const SignUp: React.FC = () => {
     }
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.nativeEvent.isComposing || e.key !== 'Enter') return
+    if (!name || !email || !password || !passwordConfirmation) return
+    handleSubmit(e)
+  }
+
   return (
     <>
       <form noValidate autoComplete="off">
@@ -60,24 +65,21 @@ const SignUp: React.FC = () => {
           padding: (theme) => theme.spacing(2),
           maxWidth: 400
         }}>
+          <CardHeader sx={{textAlign: "center"}} title="Sign Up" />
           <CardContent>
-            <TextField
-              variant="outlined"
-              fullWidth
-              required
+            <RequiredTextField
               label="Name"
               sx={{mb: 1}}
               value={name}
-              onChange={event => setName(event.target.value)}
+              onChange={e => setName(e)}
+              onKeyDown={handleKeyDown}
             />
-            <TextField
-              variant="outlined"
-              fullWidth
-              required
+            <RequiredTextField
               label="Email"
               value={email}
               sx={{mb: 1}}
-              onChange={event => setEmail(event.target.value)}
+              onChange={e => setEmail(e)}
+              onKeyDown={handleKeyDown}
             />
             <PasswordForm
               id="outlined-adornment-password"
@@ -86,6 +88,7 @@ const SignUp: React.FC = () => {
               value={password}
               setPassword={setPassword}
               setShowPassword={setShowPassword}
+              onKeyDown={handleKeyDown}
             />
             <PasswordForm
               id="outlined-adornment-password-confirmation"
@@ -94,6 +97,7 @@ const SignUp: React.FC = () => {
               value={passwordConfirmation}
               setPassword={setPasswordConfirmation}
               setShowPassword={setShowPassword}
+              onKeyDown={handleKeyDown}
             />
             <DefaultButton
               disabled={!name || !email || !password || !passwordConfirmation ? true : false}

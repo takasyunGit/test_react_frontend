@@ -1,18 +1,13 @@
 import React, { useState, useContext } from "react"
 import { useNavigate, Link as RouterLink, useLocation} from "react-router-dom"
 
-import { Typography } from "@mui/material"
-import Box from "@mui/material/Box"
-import Card from "@mui/material/Card"
-import CardContent from "@mui/material/CardContent"
-import CardHeader from "@mui/material/CardHeader"
-import Link from '@mui/material/Link'
-import TextField from "@mui/material/TextField"
+import { Card, CardContent, CardHeader, Box, Link, Typography, TextField } from "@mui/material"
 
 import { AuthVendorUserContext } from "@src/components/models/vendor_user/AuthVendorUserProvider"
 import { AlertMessageContext } from "@src/components/ui/AlertMessage"
 import { DefaultButton } from "@src/components/ui/Button"
 import { PasswordForm } from "@src/components/ui/TextField"
+import { RequiredTextField } from "@src/components/ui/TextField"
 import { signIn } from "@src/models/vendor_user/auth"
 import { signedInCookiesSetter } from "@src/utils/client"
 import { detectAxiosErrors } from "@src/utils/detectErrors"
@@ -35,7 +30,7 @@ const SignIn: React.FC = () => {
   // ログイン前にアクセスしようとしていたページ
   const fromPathName: string = fromLocation.state?.from?.pathname
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault()
 
     const params: SignInParams = {
@@ -62,6 +57,12 @@ const SignIn: React.FC = () => {
     }
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.nativeEvent.isComposing || e.key !== 'Enter') return
+    if (!email || !password) return
+    handleSubmit(e)
+  }
+
   return (
     <>
       <h1>Vendor</h1>
@@ -72,14 +73,11 @@ const SignIn: React.FC = () => {
         }}>
           <CardHeader sx={{textAlign: "center"}} title="Sign In" />
           <CardContent>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
+            <RequiredTextField
               label="Email"
               value={email}
-              margin="dense"
-              onChange={event=> setEmail(event.target.value)}
+              onChange={e=> setEmail(e)}
+              onKeyDown={handleKeyDown}
             />
             <PasswordForm
               label="Password"
@@ -87,6 +85,7 @@ const SignIn: React.FC = () => {
               value={password}
               setPassword={setPassword}
               setShowPassword={setShowPassword}
+              onKeyDown={handleKeyDown}
             />
             <DefaultButton
               disabled={!email || !password ? true : false}

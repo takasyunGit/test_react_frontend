@@ -14,7 +14,6 @@ import { detectAxiosErrors } from "@src/utils/detectErrors"
 
 import type { CreateVendorOfferParams } from "@src/models/vendor_offer/type"
 
-
 const CreateVendorOffer: React.FC = () => {
   const [title, setTitle] = useState<string>('')
   const [remark, setRemark] = useState<string>('')

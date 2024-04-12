@@ -16,12 +16,14 @@ type ChildProps<T = string> = {
   type?: string
   minRows?: number
   maxRows?: number
+  sx?: {[key: string]: string | number}
   onChange: (targetValue: T) => void
   onBlur?: (targetValue: T) => void
+  onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void
 }
 
 export const RequiredTextField = (props: ChildProps) => {
-  const { label, value, required = true, type = "text", minRows = 1, maxRows = 1, onChange, onBlur = () => {} } = props
+  const { label, value, required = true, type = "text", minRows = 1, maxRows = 1, onChange, onBlur = () => {}, onKeyDown } = props
 
   return (
     <TextField
@@ -37,6 +39,7 @@ export const RequiredTextField = (props: ChildProps) => {
       margin="dense"
       onChange={e => onChange(e.target.value)}
       onBlur={e => onBlur(e.target.value)}
+      onKeyDown={onKeyDown}
     />
   )
 }
@@ -110,10 +113,11 @@ type PasswordProps = {
   value: string
   setPassword: (value: string) => void
   setShowPassword: (value: (show: boolean) => boolean) => void
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
 export const PasswordForm: React.FC<PasswordProps> = (props) => {
-  const {id, label, showPassword, value, setPassword, setShowPassword} = props
+  const {id, label, showPassword, value, setPassword, setShowPassword, onKeyDown} = props
   const handleSetShowPassword = () => {
     setShowPassword((show) => !show)
   }
@@ -126,6 +130,7 @@ export const PasswordForm: React.FC<PasswordProps> = (props) => {
         type={showPassword ? 'text' : 'password'}
         value={value}
         onChange={e => setPassword(e.target.value)}
+        onKeyDown={onKeyDown}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
