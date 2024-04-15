@@ -6,12 +6,9 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
 import { Card, CardContent, CardHeader, IconButton, Box, Typography, Avatar } from "@mui/material"
 
 import { AuthUserContext } from "@src/components/models/user/AuthUserProvider"
-import { AlertMessageContext } from "@src/components/ui/AlertMessage"
-import { DefaultButton } from "@src/components/ui/Button"
+import { AlertMessageContext, DefaultButton } from "@src/components/ui"
 import { updateUser } from "@src/models/user/request"
-import { signedInCookiesSetter } from "@src/utils/client"
-import { detectAxiosErrors } from "@src/utils/detectErrors"
-import { uploadImage, previewImage, inputClear } from "@src/utils/imageUploaderProps"
+import { uploadImage, previewImage, signedInCookiesSetter, inputClear, detectAxiosErrors } from "@src/utils"
 
 const Settings: React.FC = () => {
   const [avatar, setAvatar] = useState<File>()

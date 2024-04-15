@@ -6,11 +6,9 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
 import { Card, CardContent, CardHeader, IconButton, Box, Typography, Avatar } from "@mui/material"
 
 import { AuthVendorUserContext } from "@src/components/models/vendor_user/AuthVendorUserProvider"
-import { AlertMessageContext } from "@src/components/ui/AlertMessage"
-import { DefaultButton } from "@src/components/ui/Button"
+import { AlertMessageContext, DefaultButton } from "@src/components/ui"
 import { updateVendorUser } from "@src/models/vendor_user/request"
-import { signedInCookiesSetter } from "@src/utils/client"
-import { detectAxiosErrors } from "@src/utils/detectErrors"
+import { signedInCookiesSetter, detectAxiosErrors } from "@src/utils"
 import { uploadImage, previewImage, inputClear } from "@src/utils/imageUploaderProps"
 
 const Settings: React.FC = () => {

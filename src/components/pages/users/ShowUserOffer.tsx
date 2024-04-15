@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams, Link as RouterLink } from "react-router-dom"
 
-import { Card, CardContent, Typography, Link, Box } from "@mui/material"
+import { Card, CardContent, Typography, Link, Box, Pagination } from "@mui/material"
 
 import ShowUserOfferCommon from "@src/components/pages/common/ShowUserOfferCommon"
-import { DisplayErrors } from "@src/components/ui/DisplayErrors"
-import Pagination, { initialPaginate } from "@src/components/ui/Pagination"
-import ProgressCircle from "@src/components/ui/ProgressCircle"
+import { initialPaginate, DisplayErrors, ProgressCircle } from "@src/components/ui"
 import { getUserOffer } from "@src/models/user_offer/request"
 import { userGetVendorOfferList } from "@src/models/vendor_offer/request"
-import { signedInCookiesSetter } from "@src/utils/client"
-import { detectAxiosErrors } from "@src/utils/detectErrors"
-import { dateToYYYYMMDD, addComma } from "@src/utils/formatConverter"
-import { omitText } from "@src/utils/formatConverter"
+import { signedInCookiesSetter, detectAxiosErrors, dateToYYYYMMDD, addComma, omitText } from "@src/utils"
 
 import type { ShowUserOfferType } from "@src/models/user_offer/type"
 import type { ShowVendorOfferType } from "@src/models/vendor_offer/type"

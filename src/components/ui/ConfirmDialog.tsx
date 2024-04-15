@@ -12,7 +12,7 @@ type Props = {
   onClose?: (submit: boolean) => void
 }
 
-export const ConfirmDialog: React.FC<Props> = ({open, headerMessage, confirmMessage, buttonString, onClose}: Props) => {
+const ConfirmDialog: React.FC<Props> = ({open, headerMessage, confirmMessage, buttonString, onClose}: Props) => {
   const handleClose = useCallback(
     (submit: boolean) => {
       onClose?.(submit)

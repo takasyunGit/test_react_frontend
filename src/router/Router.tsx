@@ -1,21 +1,10 @@
-import React, {useContext} from "react"
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import React from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Page404 from "@src/components/pages/Page404"
-import CreateUserOffer from "@src/components/pages/users/CreateUserOffer"
-import Home from "@src/components/pages/users/Home"
-import Settings from "@src/components/pages/users/Settings"
-import ShowUserOffer from "@src/components/pages/users/ShowUserOffer"
-import ShowVendorOfferFromUser from "@src/components/pages/users/ShowVendorOffer"
-import SignIn from "@src/components/pages/users/SignIn"
-import SignUp from "@src/components/pages/users/SignUp"
-import CreateVendorOffer from "@src/components/pages/vendors/CreateVendorOffer"
-import VendorSettings from "@src/components/pages/vendors/Settings"
-import ShowUserOfferFromVendor from "@src/components/pages/vendors/ShowUserOffer"
-import ShowVendorOffer from "@src/components/pages/vendors/ShowVendorOffer"
-import VendorHome from "@src/components/pages/vendors/VendorHome"
-import VendorSignIn from "@src/components/pages/vendors/VendorSignIn"
-import { AuthRouteGuard } from "@src/components/ui/AuthRouteGuard"
+import { CreateUserOffer, Home, Settings, ShowUserOffer, ShowVendorOffer as ShowVendorOfferFromUser, SignIn, SignUp } from "@src/components/pages/users/index"
+import { CreateVendorOffer, VendorHome, Settings as VendorSettings, ShowUserOffer as ShowUserOfferFromVendor, ShowVendorOffer, VendorSignIn } from "@src/components/pages/vendors/index"
+import AuthRouteGuard from "@src/components/ui/AuthRouteGuard"
 import CommonLayout from "@src/components/ui/CommonLayout"
 
 export const Router = () => {

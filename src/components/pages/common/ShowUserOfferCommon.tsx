@@ -2,9 +2,9 @@ import React from "react"
 
 import { Typography, Link, Paper, Grid } from "@mui/material"
 
-import { ShowUserOfferType } from "@src/models/user_offer/type"
-import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST } from "@src/utils/constants"
-import { addComma, dateToYYYYMMDD } from "@src/utils/formatConverter"
+import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST, addComma, dateToYYYYMMDD } from "@src/utils"
+
+import type { ShowUserOfferType } from "@src/models/user_offer/type"
 
 type Props = {
   userOffer: ShowUserOfferType| undefined,

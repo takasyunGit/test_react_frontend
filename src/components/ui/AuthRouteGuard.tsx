@@ -10,7 +10,7 @@ type Props = {
   signInType: "User" | "Vendor"
 }
 
-export const AuthRouteGuard: React.FC<Props> = (props) => {
+const AuthRouteGuard: React.FC<Props> = (props) => {
   let { loading, isSignedIn, currentUser } = useContext(AuthUserContext)
   const { loadingVendor, isSignedInVendor, currentVendorUser } = useContext(AuthVendorUserContext)
   const location = useLocation()
@@ -32,3 +32,5 @@ export const AuthRouteGuard: React.FC<Props> = (props) => {
 
   return <>{props.component}</>;
 }
+
+export default AuthRouteGuard

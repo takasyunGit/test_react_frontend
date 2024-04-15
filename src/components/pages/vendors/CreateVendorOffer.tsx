@@ -4,19 +4,14 @@ import { useNavigate, useParams } from "react-router-dom"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Card, CardContent, CardHeader,Box, Accordion, AccordionSummary, AccordionDetails } from "@mui/material"
 
-import { AlertMessageContext } from "@src/components/ui/AlertMessage"
-import { DefaultButton } from "@src/components/ui/Button"
-import { DisplayErrors } from "@src/components/ui/DisplayErrors"
-import { OptionalTextField, AmountForm, RequiredTextField } from "@src/components/ui/TextField"
+import ShowUserOfferCommon from "@src/components/pages/common/ShowUserOfferCommon"
+import { AlertMessageContext, DisplayErrors, RequiredTextField, OptionalTextField, AmountForm, DefaultButton } from "@src/components/ui";
 import { vendorGetUserOffer } from "@src/models/user_offer/request"
-import { ShowUserOfferType } from "@src/models/user_offer/type"
 import { createVendorOffer } from "@src/models/vendor_offer/request"
-import { signedInCookiesSetter } from "@src/utils/client"
-import { detectAxiosErrors } from "@src/utils/detectErrors"
+import { signedInCookiesSetter, detectAxiosErrors } from "@src/utils";
 
+import type { ShowUserOfferType } from "@src/models/user_offer/type"
 import type { CreateVendorOfferParams } from "@src/models/vendor_offer/type"
-
-import ShowUserOfferCommon from "../common/ShowUserOfferCommon"
 
 const CreateVendorOffer: React.FC = () => {
   const [title, setTitle] = useState<string>('')

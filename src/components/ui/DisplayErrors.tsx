@@ -5,7 +5,7 @@ type Props = {
   children: React.ReactNode
  }
 
-export const DisplayErrors: React.FC<Props> = (props) => {
+const DisplayErrors: React.FC<Props> = (props) => {
   const { errors, children } = props
 
   if (!errors){
@@ -28,3 +28,5 @@ export const DisplayErrors: React.FC<Props> = (props) => {
     </>
   )
 }
+
+export default DisplayErrors

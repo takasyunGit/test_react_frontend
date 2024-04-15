@@ -1,26 +1,17 @@
 import React, { useState, useEffect, useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
-import { Card, CardHeader, CardContent, Typography, Button, Avatar, Box, Grid } from "@mui/material"
+import { Card, CardHeader, CardContent, Typography, Button, Avatar, Box, Grid, Pagination } from "@mui/material"
 
-import { AlertMessageContext } from "@src/components/ui/AlertMessage"
-import { DefaultButton } from "@src/components/ui/Button"
-import { DisplayErrors } from "@src/components/ui/DisplayErrors"
-import Pagination, { initialPaginate } from "@src/components/ui/Pagination"
-import ProgressCircle from "@src/components/ui/ProgressCircle"
-import { AmountForm, OptionalTextField, RequiredTextField } from "@src/components/ui/TextField"
+import { AlertMessageContext, AmountForm, DefaultButton, DisplayErrors, OptionalTextField, ProgressCircle, RequiredTextField, initialPaginate } from "@src/components/ui"
 import { updateVendorOffer, getVendorOffer } from "@src/models/vendor_offer/request"
-import { UpdateVendorOfferParams, ShowVendorOfferType } from "@src/models/vendor_offer/type"
 import { getVendorOfferChat } from "@src/models/vendor_offer_chat/request"
 import { createVendorOfferChat } from "@src/models/vendor_offer_chat/request"
-import { ShowVendorOfferChatType, CreateVendorOfferChatParamsType } from "@src/models/vendor_offer_chat/type"
-import { signedInCookiesSetter } from "@src/utils/client"
-import { detectAxiosErrors } from "@src/utils/detectErrors"
-import { dateToYYYYMMDD } from "@src/utils/formatConverter"
-import { addComma } from "@src/utils/formatConverter"
+import { signedInCookiesSetter, addComma, detectAxiosErrors, dateToYYYYMMDD } from "@src/utils"
 
-import type { SignInType } from "@src/utils/type"
-import type { NumberListType } from "@src/utils/type"
+import type { UpdateVendorOfferParams, ShowVendorOfferType } from "@src/models/vendor_offer/type"
+import type { ShowVendorOfferChatType, CreateVendorOfferChatParamsType } from "@src/models/vendor_offer_chat/type"
+import type { NumberListType, SignInType } from "@src/utils/type"
 
 type Props = {
   signInType: SignInType
