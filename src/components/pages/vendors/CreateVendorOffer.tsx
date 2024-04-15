@@ -1,21 +1,32 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
-import { Card, CardContent, CardHeader,Box } from "@mui/material"
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Card, CardContent, CardHeader,Box, Accordion, AccordionSummary, AccordionDetails } from "@mui/material"
 
 import { AlertMessageContext } from "@src/components/ui/AlertMessage"
 import { DefaultButton } from "@src/components/ui/Button"
+import { DisplayErrors } from "@src/components/ui/DisplayErrors"
 import { OptionalTextField, AmountForm, RequiredTextField } from "@src/components/ui/TextField"
+import { vendorGetUserOffer } from "@src/models/user_offer/request"
+import { ShowUserOfferType } from "@src/models/user_offer/type"
 import { createVendorOffer } from "@src/models/vendor_offer/request"
 import { signedInCookiesSetter } from "@src/utils/client"
 import { detectAxiosErrors } from "@src/utils/detectErrors"
 
 import type { CreateVendorOfferParams } from "@src/models/vendor_offer/type"
 
+import ShowUserOfferCommon from "../common/ShowUserOfferCommon"
+
 const CreateVendorOffer: React.FC = () => {
   const [title, setTitle] = useState<string>('')
   const [remark, setRemark] = useState<string>('')
   const [estimate, setEstimate] = useState<string>('')
+  const [userOfferLoading, setUserOfferLoading] = useState<boolean>(true)
+  const [userOffer, setUserOffer] = useState<ShowUserOfferType | undefined>()
+  const [userOffererrors, setUserOfferErrors] = useState<any>()
+  const params = useParams()
+  
   const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
   const userOfferId = useParams().id as string
   const navigate = useNavigate()
@@ -54,14 +65,48 @@ const CreateVendorOffer: React.FC = () => {
     handleSubmit(e)
   }
 
+  const handleGetUserOffer = async () => {
+    try{
+      const res = await vendorGetUserOffer(params.id as string)
+      if (!res) { return navigate("/vendor/signin") }
+      signedInCookiesSetter(res, "Vendor")
+
+      if (res && res.status === 200) {
+        setUserOffer(res.data.data)
+      } else {
+        console.log("An unexpected error has occurred")
+      }
+    } catch(e) {
+      setUserOfferErrors(e)
+      detectAxiosErrors(e)
+    }
+    setUserOfferLoading(false)
+  }
+
+  useEffect(() => {handleGetUserOffer()}, [])
+
   return (
-    <Box sx={{display: "flex", justifyContent: "center"}}>
+    <Box>
+      <DisplayErrors errors={userOffererrors}>
+        <Accordion sx={{mb:2}}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1-content"
+            sx={{backgroundColor: "whitesmoke"}}
+          >
+            {userOffer?.name}様の要望詳細
+          </AccordionSummary>
+          <AccordionDetails sx={{backgroundColor: "whitesmoke"}}>
+            <ShowUserOfferCommon userOffer={userOffer} offerLoading={userOfferLoading} />
+          </AccordionDetails>
+        </Accordion>
+      </DisplayErrors>
+
       <form noValidate>
         <Card sx={{
           padding: (theme) => theme.spacing(2),
-          maxWidth: 400
         }}>
-          <CardHeader sx={{textAlign: "center"}} title="Create vendor offer" />
+          <CardHeader sx={{textAlign: "center"}} title="提案の作成" />
           <CardContent>
             <RequiredTextField
               label="Title"
