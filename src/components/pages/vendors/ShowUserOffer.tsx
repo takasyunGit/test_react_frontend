@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef, useContext } from "react"
 import { useNavigate, useParams, Link as RouterLink } from "react-router-dom"
 
-import { Card, CardContent, Typography, Link } from "@mui/material"
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import { Card, CardContent, Typography, Link, IconButton, Box } from "@mui/material"
 
 import ShowUserOfferCommon from "@src/components/pages/common/ShowUserOfferCommon"
+import { AlertMessageContext } from "@src/components/ui/AlertMessage";
+import ConfirmDialog from "@src/components/ui/ConfirmDialog";
 import { DisplayErrors } from "@src/components/ui/DisplayErrors"
 import Pagination, { initialPaginate } from "@src/components/ui/Pagination"
 import ProgressCircle from "@src/components/ui/ProgressCircle"
 import { vendorGetUserOffer } from "@src/models/user_offer/request"
-import { getVendorOfferList } from "@src/models/vendor_offer/request"
+import { getVendorOfferList, deleteVendorOffer } from "@src/models/vendor_offer/request"
 import { signedInCookiesSetter } from "@src/utils/client"
 import { detectAxiosErrors } from "@src/utils/detectErrors"
 import { dateToYYYYMMDD, addComma } from "@src/utils/formatConverter"
@@ -28,11 +31,14 @@ const ShowUserOffer: React.FC = () => {
   const params = useParams()
   const [userOfferLoading, setUserOfferLoading] = useState<boolean>(true)
   const [vendorOfferLoading, setVendorOfferLoading] = useState<boolean>(true)
+  const [confirmDialogopen, setConfirmDialogopen] = useState<boolean>(false)
   const [userOffer, setUserOffer] = useState<ShowUserOfferType | undefined>()
   const [vendorOfferListWithPaginate, setVendorOfferListWithPaginate] = useState<VendorOfferWithPaginateType>()
   const [page, setPage] = useState<number>(1)
   const [userOffererrors, setUserOfferErrors] = useState<any>()
   const [vendorOffererrors, setVendorOfferErrors] = useState<any>()
+  const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
+  const deleteVendorOfferId = useRef<number>()
   const paginateNumberList = vendorOfferListWithPaginate?.paginate || {}
   const vendorOfferList = vendorOfferListWithPaginate?.records || []
   const VENDOR_OFFER_TEXT_LIMIT = 300
@@ -62,7 +68,7 @@ const ShowUserOffer: React.FC = () => {
     try{
       const res = await getVendorOfferList(params.id as string, keyId)
 
-      if (!res) { return navigate("/signin") }
+      if (!res) { return navigate("/vendor/signin") }
       signedInCookiesSetter(res, "Vendor")
 
       if (res && res.status === 200) {
@@ -76,6 +82,32 @@ const ShowUserOffer: React.FC = () => {
       detectAxiosErrors(e)
     }
     setVendorOfferLoading(false)
+  }
+
+  const handleClickDelete = async (offer_id: number) => {
+    if (!offer_id) return
+
+    try{
+      const res = await deleteVendorOffer(offer_id)
+
+      if (!res) { return navigate("/vendor/signin") }
+      signedInCookiesSetter(res, "Vendor")
+      if (res && res.status === 200) {
+        handleGetVendorOfferList()
+      } else {
+        console.log("An unexpected error has occurred")
+      }
+    } catch(e) {
+      detectAxiosErrors(e, setAlertMessageOpen, setAlertMessage)
+    }
+    setVendorOfferLoading(false)
+  }
+
+  const handleDialogClose = (submitFlg: boolean) => {
+    if (submitFlg) {
+      handleClickDelete(deleteVendorOfferId.current as number)
+    }
+    setConfirmDialogopen(false)
   }
 
   useEffect(() => {handleGetUserOffer()}, [])
@@ -101,14 +133,29 @@ const ShowUserOffer: React.FC = () => {
                   padding: (theme) => theme.spacing(2),
                   mb: 1
                 }}>
-                  <CardContent>
-                    <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
-                    <Link component={RouterLink} to={"/vendor/user_offer/" + params.id + "/vendor_offer/" + offer.id} sx={{textDecoration: "none"}}>
-                      <Typography variant="h6" gutterBottom>
-                        {'【お見積もり: ¥' + addComma(offer.estimate) + '】' + offer.title}
-                      </Typography>
-                    </Link>
-                    <Typography variant="body1" gutterBottom>{omitText(VENDOR_OFFER_TEXT_LIMIT, offer.remark)}</Typography>
+                  <CardContent sx={{display: "flex", justifyContent: "space-between"}}>
+                    <Box>
+                      <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
+                      <Link component={RouterLink} to={"/vendor/user_offer/" + params.id + "/vendor_offer/" + offer.id} sx={{textDecoration: "none"}}>
+                        <Typography variant="h6" gutterBottom>
+                          {'【お見積もり: ¥' + addComma(offer.estimate) + '】' + offer.title}
+                        </Typography>
+                      </Link>
+                      <Typography variant="body1" gutterBottom>{omitText(VENDOR_OFFER_TEXT_LIMIT, offer.remark)}</Typography>
+                    </Box>
+                    <Box sx={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
+                      <IconButton
+                        edge="start"
+                        color="inherit"
+                        sx={{marginRight: (theme) => theme.spacing(2), border: 1, borderColor: "lightgray", background: "#FAFAFA"}}
+                        onClick={() => {
+                          setConfirmDialogopen(true)
+                          deleteVendorOfferId.current = offer.id
+                        }}
+                      >
+                        <DeleteForeverRoundedIcon />
+                      </IconButton>
+                    </Box>
                   </CardContent>
                 </Card>
               ))}
@@ -128,6 +175,13 @@ const ShowUserOffer: React.FC = () => {
           </ProgressCircle>
         </DisplayErrors>
       </DisplayErrors>
+      <ConfirmDialog
+        open={confirmDialogopen}
+        headerMessage={"本当に削除しますか？"}
+        confirmMessage={"削除すると、リソースに紐づくすべての情報が削除されます。\nこの処理を取り消すことはできません。"}
+        buttonString={"削除する"}
+        onClose={handleDialogClose}
+      />
     </>
   )
 }
