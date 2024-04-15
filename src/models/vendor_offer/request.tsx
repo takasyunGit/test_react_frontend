@@ -26,6 +26,16 @@ export const updateVendorOffer = (params: UpdateVendorOfferParams) => {
   return clientRequest("patch", "vendor_user/vendor_offers/" + params.id, params, sessions)
 }
 
+export const deleteVendorOffer = (id: number | string) => {
+  if (!Cookies.get("_access_token_v") || !Cookies.get("_client_v") || !Cookies.get("_uid_v")) return
+  const sessions = {
+    accessToken: Cookies.get("_access_token_v"),
+    headerClient: Cookies.get("_client_v"),
+    uid: Cookies.get("_uid_v")
+  }
+  return clientRequest("delete", "vendor_user/vendor_offers/" + id, {}, sessions)
+}
+
 export const getVendorOfferList = (userOfferId: string, keyId: number | null = null) => {
   if (!Cookies.get("_access_token_v") || !Cookies.get("_client_v") || !Cookies.get("_uid_v")) return
   const sessions = {
