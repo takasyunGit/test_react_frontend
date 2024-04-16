@@ -21,7 +21,7 @@ const CreateVendorOffer: React.FC = () => {
   const [userOffer, setUserOffer] = useState<ShowUserOfferType | undefined>()
   const [userOffererrors, setUserOfferErrors] = useState<any>()
   const params = useParams()
-  
+
   const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
   const userOfferId = useParams().id as string
   const navigate = useNavigate()
