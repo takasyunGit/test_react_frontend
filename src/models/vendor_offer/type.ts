@@ -23,4 +23,12 @@ export type UpdateVendorOfferParams = Pick<VendorOfferType,
   "remark"
 >
 
-export type ShowVendorOfferType = VendorOfferType & { name: string}
+export type ShowVendorOfferType =
+  VendorOfferType & {
+    name: string,
+    vendorName: string,
+    vendorUserName: string,
+    avatar: {
+      url: string
+    }
+  }

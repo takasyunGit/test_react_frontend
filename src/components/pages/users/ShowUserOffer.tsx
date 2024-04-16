@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams, Link as RouterLink } from "react-router-dom"
 
-import { Card, CardContent, Typography, Link, Box, Pagination } from "@mui/material"
+import { Card, CardContent, Typography, Link, Box, Pagination, Avatar } from "@mui/material"
 
 import ShowUserOfferCommon from "@src/components/pages/common/ShowUserOfferCommon"
-import { initialPaginate, DisplayErrors, ProgressCircle } from "@src/components/ui"
+import { initialPaginate, DisplayErrors, ProgressCircle, stringAvatar } from "@src/components/ui"
 import { getUserOffer } from "@src/models/user_offer/request"
 import { userGetVendorOfferList } from "@src/models/vendor_offer/request"
 import { signedInCookiesSetter, detectAxiosErrors, dateToYYYYMMDD, addComma, omitText } from "@src/utils"
@@ -31,6 +31,7 @@ const ShowUserOffer: React.FC = () => {
   const paginateNumberList = vendorOfferListWithPaginate?.paginate || {}
   const vendorOfferList = vendorOfferListWithPaginate?.records || []
   const VENDOR_OFFER_TEXT_LIMIT = 300
+console.log( vendorOfferList)
 
   const handleGetUserOffer = async () => {
     try{
@@ -99,10 +100,14 @@ const ShowUserOffer: React.FC = () => {
                       <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
                       <Link component={RouterLink} to={"/user_offer/" + params.id + "/vendor_offer/" + offer.id} sx={{textDecoration: "none"}}>
                         <Typography variant="h6" gutterBottom>
-                          {'【お見積もり: ¥' + addComma(offer.estimate) + '】' + offer.title}
-                          </Typography>
+                          {'【' + offer.vendorName + '】' + '【お見積もり: ¥' + addComma(offer.estimate) + '】' + offer.title}
+                        </Typography>
                       </Link>
                       <Typography variant="body1" gutterBottom>{omitText(VENDOR_OFFER_TEXT_LIMIT, offer.remark)}</Typography>
+                      <Box sx={{display: "flex", justifyContent: "end"}}>
+                        {offer.avatar?.url ? <Avatar src={offer.avatar.url} sx={{ width: 24, height: 24, mr: 1}}/> : <Avatar {...stringAvatar(offer.vendorUserName)} sx={{ width: 24, height: 24, mr: 1 }}/>}
+                        <Typography variant="body1" gutterBottom>{offer.vendorUserName}</Typography>
+                      </Box>
                     </CardContent>
                   </Card>
               ))}
