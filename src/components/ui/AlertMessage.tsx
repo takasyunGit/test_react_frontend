@@ -13,7 +13,7 @@ type Props = { children: React.ReactNode }
 
 export const AlertMessageContext = createContext({} as AlertMessageContextType)
 
-export const AlertMessageProvider: React.FC<Props> = (props) =>{
+export const AlertMessageProvider: React.FC<Props> = (props) => {
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
   const [severity, setSeverity] = useState<AlertClassType>("error")
   const [alertMessage, setAlertMessage] = useState<string | string[]>("")

@@ -24,7 +24,7 @@ const ShowUserOffer: React.FC = () => {
   const params = useParams()
   const [userOfferLoading, setUserOfferLoading] = useState<boolean>(true)
   const [vendorOfferLoading, setVendorOfferLoading] = useState<boolean>(true)
-  const [confirmDialogopen, setConfirmDialogopen] = useState<boolean>(false)
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState<boolean>(false)
   const [userOffer, setUserOffer] = useState<ShowUserOfferType | undefined>()
   const [vendorOfferListWithPaginate, setVendorOfferListWithPaginate] = useState<VendorOfferWithPaginateType>()
   const [page, setPage] = useState<number>(1)
@@ -100,7 +100,7 @@ const ShowUserOffer: React.FC = () => {
     if (submitFlg) {
       handleClickDelete(deleteVendorOfferId.current as number)
     }
-    setConfirmDialogopen(false)
+    setConfirmDialogOpen(false)
   }
 
   useEffect(() => {handleGetUserOffer()}, [])
@@ -142,7 +142,7 @@ const ShowUserOffer: React.FC = () => {
                         color="inherit"
                         sx={{marginRight: (theme) => theme.spacing(2), border: 1, borderColor: "lightgray", background: "#FAFAFA"}}
                         onClick={() => {
-                          setConfirmDialogopen(true)
+                          setConfirmDialogOpen(true)
                           deleteVendorOfferId.current = offer.id
                         }}
                       >
@@ -169,7 +169,7 @@ const ShowUserOffer: React.FC = () => {
         </DisplayErrors>
       </DisplayErrors>
       <ConfirmDialog
-        open={confirmDialogopen}
+        open={confirmDialogOpen}
         headerMessage={"本当に削除しますか？"}
         confirmMessage={"削除すると、リソースに紐づくすべての情報が削除されます。\nこの処理を取り消すことはできません。"}
         buttonString={"削除する"}
