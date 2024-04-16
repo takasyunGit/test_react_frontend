@@ -63,7 +63,7 @@ export const getVendorOffer = (params: string, signInType: SignInType) => {
       uid: undefined
     }
 
-    if (signInType == "User") {
+  if (signInType == "User") {
     if (!Cookies.get("_access_token") || !Cookies.get("_client") || !Cookies.get("_uid")) return
 
     sessions["accessToken"] = Cookies.get("_access_token")
