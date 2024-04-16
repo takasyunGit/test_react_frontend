@@ -81,12 +81,14 @@ const SignIn: React.FC = () => {
               setShowPassword={setShowPassword}
               onKeyDown={handleKeyDown}
             />
-            <DefaultButton
-              disabled={!email || !password ? true : false}
-              onClick={handleSubmit}
-            >
-              Submit
-            </DefaultButton>
+            <Box sx={{display: "flex", justifyContent: "center"}}>
+              <DefaultButton
+                disabled={!email || !password ? true : false}
+                onClick={handleSubmit}
+              >
+                Submit
+              </DefaultButton>
+            </Box>
             <Box textAlign="center" sx={{marginTop: "2rem"}}>
               <Typography variant="body2">
                 User &nbsp;

@@ -95,12 +95,14 @@ const SignUp: React.FC = () => {
               setShowPassword={setShowPassword}
               onKeyDown={handleKeyDown}
             />
-            <DefaultButton
-              disabled={!name || !email || !password || !passwordConfirmation ? true : false}
-              onClick={handleSubmit}
-            >
-              Submit
-            </DefaultButton>
+            <Box sx={{display: "flex", justifyContent: "center"}}>
+              <DefaultButton
+                disabled={!name || !email || !password || !passwordConfirmation ? true : false}
+                onClick={handleSubmit}
+              >
+                Submit
+              </DefaultButton>
+            </Box>
           </CardContent>
         </Card>
       </form>

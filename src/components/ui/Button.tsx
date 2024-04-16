@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react"
+import React from "react"
 
 import {Button} from "@mui/material"
 
@@ -20,8 +20,8 @@ export const DefaultButton: React.FC<ButtonProps> = (props) => {
       disabled={disabled}
       sx={Object.assign({
         marginTop: 2,
-        flexGrow: 1,
-        textTransform: "none"
+        flexGrow: 0,
+        textTransform: "none",
       }, sx)}
       onClick={onClick}
     >
