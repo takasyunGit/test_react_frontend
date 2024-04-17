@@ -89,26 +89,26 @@ const ShowUserOffer: React.FC = () => {
             />
             <Box>
               {vendorOfferList.map((offer) => (
-                  <Card
-                  key={"userOffer" + offer.id}
-                  sx={{
-                    padding: (theme) => theme.spacing(2),
-                    mb: 1
-                  }}>
-                    <CardContent>
-                      <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
-                      <Link component={RouterLink} to={"/user_offer/" + params.id + "/vendor_offer/" + offer.id} sx={{textDecoration: "none"}}>
-                        <Typography variant="h6" gutterBottom>
-                          {'【' + offer.vendorName + '】' + '【お見積もり: ¥' + addComma(offer.estimate) + '】' + offer.title}
-                        </Typography>
-                      </Link>
-                      <Typography variant="body1" gutterBottom>{omitText(VENDOR_OFFER_TEXT_LIMIT, offer.remark)}</Typography>
-                      <Box sx={{display: "flex", justifyContent: "end"}}>
-                        {offer.avatar?.url ? <Avatar src={offer.avatar.url} sx={{ width: 24, height: 24, mr: 1}}/> : <Avatar {...stringAvatar(offer.vendorUserName)} sx={{ width: 24, height: 24, mr: 1 }}/>}
-                        <Typography variant="body1" gutterBottom>{offer.vendorUserName}</Typography>
-                      </Box>
-                    </CardContent>
-                  </Card>
+                <Card
+                key={"userOffer" + offer.id}
+                sx={{
+                  padding: (theme) => theme.spacing(2),
+                  mb: 1
+                }}>
+                  <CardContent>
+                    <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
+                    <Link component={RouterLink} to={"/user_offer/" + params.id + "/vendor_offer/" + offer.id} sx={{textDecoration: "none"}}>
+                      <Typography variant="h6" gutterBottom>
+                        {'【' + offer.vendorName + '】' + '【お見積もり: ¥' + addComma(offer.estimate) + '】' + offer.title}
+                      </Typography>
+                    </Link>
+                    <Typography variant="body1" gutterBottom>{omitText(VENDOR_OFFER_TEXT_LIMIT, offer.remark)}</Typography>
+                    <Box sx={{display: "flex", justifyContent: "end"}}>
+                      {offer.avatar?.url ? <Avatar src={offer.avatar.url} sx={{ width: 24, height: 24, mr: 1}}/> : <Avatar {...stringAvatar(offer.vendorUserName)} sx={{ width: 24, height: 24, mr: 1 }}/>}
+                      <Typography variant="body1" gutterBottom>{offer.vendorUserName}</Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
               ))}
             </Box>
             <Pagination
