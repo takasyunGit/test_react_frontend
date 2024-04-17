@@ -18,7 +18,7 @@ type SessionProps = {
   uid: string | undefined
 }
 
-export const clientRequest = (method: string, path: string, parameters: {[key: string]: string | number | null}, sessions: SessionProps) => {
+export const clientRequest = (method: string, path: string, parameters: {[key: string]: string | number | null} | FormData, sessions: SessionProps) => {
   const { accessToken, headerClient, uid } = sessions
   const params = parameters || {}
 

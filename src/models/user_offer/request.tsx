@@ -4,7 +4,7 @@ import { clientRequest } from "@src/utils/client"
 
 import type { CreateUserOfferParams } from "@src/models/user_offer/type"
 
-export const createUserOffer = (params: CreateUserOfferParams) => {
+export const createUserOffer = (data: FormData) => {
   if (!Cookies.get("_access_token") || !Cookies.get("_client") || !Cookies.get("_uid")) return
   const sessions = {
     accessToken: Cookies.get("_access_token"),
@@ -12,7 +12,7 @@ export const createUserOffer = (params: CreateUserOfferParams) => {
     uid: Cookies.get("_uid")
   }
 
-  return clientRequest("post", "user/user_offers", params, sessions)
+  return clientRequest("post", "user/user_offers", data, sessions)
 }
 
 export const getUserOffer = (params: string) => {

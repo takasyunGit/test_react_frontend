@@ -16,6 +16,6 @@ export type CreateUserOfferParams = Pick<UserOfferType,
   "budget" |
   "remark" |
   "requestType"
->
+> & { images: File[] }
 
 export type ShowUserOfferType = UserOfferType & { name: string}
