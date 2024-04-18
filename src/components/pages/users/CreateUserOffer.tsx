@@ -62,7 +62,8 @@ const CreateUserOffer: React.FC = () => {
       signedInCookiesSetter(res)
 
       if (res && res.status === 200) {
-        navigate("/")
+
+        navigate("/user_offer/" + res.data.data.id)
       } else {
         setAlertMessage("An unexpected error has occurred")
         setAlertMessageOpen(true)
