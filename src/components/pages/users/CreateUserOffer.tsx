@@ -73,12 +73,6 @@ const CreateUserOffer: React.FC = () => {
     }
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.nativeEvent.isComposing || e.key !== 'Enter') return
-    if (!prefecture || !budget  || !requestType) return
-    handleSubmit(e)
-  }
-
   return (
     <Box sx={{display: "flex", justifyContent: "center"}}>
       <form noValidate autoComplete="off">
@@ -99,14 +93,12 @@ const CreateUserOffer: React.FC = () => {
               value={address}
               onChange={e=> setAddress(e)}
               minRows={3}
-              onKeyDown={handleKeyDown}
             />
             <AmountForm
               label="Budget"
               value={budget}
               required={true}
               onChange={e=> setBudget(e)}
-              onKeyDown={handleKeyDown}
             />
             <OptionalTextField
               label="Remark"
@@ -114,7 +106,6 @@ const CreateUserOffer: React.FC = () => {
               maxRows={10}
               value={remark}
               onChange={e=> setRemark(e)}
-              onKeyDown={handleKeyDown}
             />
             <div>
               <SelectForm
