@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Typography, Link, Paper, Grid } from "@mui/material"
+import { Typography, Link, Paper, Grid, ImageList, ImageListItem } from "@mui/material"
 
 import { PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST, addComma, dateToYYYYMMDD } from "@src/utils"
 
@@ -74,6 +74,20 @@ const ShowUserOfferCommon: React.FC<Props> = (props) => {
               <Typography variant="body1" gutterBottom>{userOffer && dateToYYYYMMDD(new Date(userOffer.updatedAt))}</Typography>
             </Grid>
           </Grid>
+          {!!userOffer!.images.length &&
+            <ImageList sx={{ maxWidth: 1000, maxHeight: 700 }} cols={3} rowHeight={164}>
+              { userOffer!.images.map((image) => (
+                <ImageListItem key={image.url} sx={{mb: 1}}>
+                  <Link href={image.url} target="_blank">
+                  <img
+                    src={image.thumb.url}
+                    loading="lazy"
+                  />
+                  </Link>
+                </ImageListItem>
+              ))}
+            </ImageList>
+          }
         </Paper>
       </>
     )

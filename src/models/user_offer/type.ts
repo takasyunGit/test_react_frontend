@@ -18,4 +18,4 @@ export type CreateUserOfferParams = Pick<UserOfferType,
   "requestType"
 > & { images: File[] }
 
-export type ShowUserOfferType = UserOfferType & { name: string}
+export type ShowUserOfferType = UserOfferType & { name: string, images: {url: string, thumb: { url: string } }[] }
