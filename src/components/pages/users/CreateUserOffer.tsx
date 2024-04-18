@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, Box, IconButton, Typography, List, ListI
 
 import { AlertMessageContext, SelectForm, OptionalTextField, AmountForm, DefaultButton } from "@src/components/ui"
 import { createUserOffer } from "@src/models/user_offer/request"
-import { signedInCookiesSetter, detectAxiosErrors, PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST, setMultipleUploadAndPreviewImage } from "@src/utils"
+import { signedInCookiesSetter, detectAxiosErrors, PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST, setMultipleUploadAndPreviewImage, previewImage } from "@src/utils"
 
 import type { PrefectureCode, UserOfferRequestTypeCode } from "@src/utils/type"
 
@@ -23,9 +23,9 @@ const CreateUserOffer: React.FC = () => {
   const navigate = useNavigate()
 
   const curriedSetUploadAndPreviewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const func = setMultipleUploadAndPreviewImage(setImageHash, setPreviewHash, true)
+    const func = setMultipleUploadAndPreviewImage(setImageHash, setPreviewHash, imageHash, previewHash)
     return func(e)
-  }, [])
+  }, [imageHash])
 
   const createFormData = (): FormData => {
     const formData = new FormData()
@@ -124,6 +124,25 @@ const CreateUserOffer: React.FC = () => {
                 onChange={e=> setRequestType(e as UserOfferRequestTypeCode)}
               />
             </div>
+            <Box>
+              <label htmlFor="input-user-offer-image">
+                <span style={{display: "none"}}>
+                  <input
+                    accept="image/*"
+                    id="input-user-offer-image"
+                    type="file"
+                    multiple={true}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      curriedSetUploadAndPreviewImage(e)
+                    }}
+                  />
+                </span>
+                <IconButton color="inherit" component="span">
+                  <PhotoCameraIcon />
+                  <Typography variant="body1">画像をアップロード</Typography>
+                </IconButton>
+              </label>
+            </Box>
             { Object.keys(previewHash).length ?
               <List sx={{display: "flex", flexWrap: "wrap"}}>
                 {Object.keys(previewHash).map((key: string) => (
@@ -147,23 +166,6 @@ const CreateUserOffer: React.FC = () => {
                 ))}
               </List> : null
             }
-            <label htmlFor="input-user-offer-image">
-              <span style={{display: "none"}}>
-                <input
-                  accept="image/*"
-                  id="input-user-offer-image"
-                  type="file"
-                  multiple={true}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    curriedSetUploadAndPreviewImage(e)
-                  }}
-                />
-              </span>
-              <IconButton color="inherit" component="span">
-                <PhotoCameraIcon />
-                <Typography variant="body1">画像をアップロード</Typography>
-              </IconButton>
-            </label>
             <DefaultButton
               disabled={!prefecture || !budget  || !requestType ? true : false}
               onClick={handleSubmit}
