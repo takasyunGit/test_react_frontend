@@ -77,7 +77,7 @@ const ShowUserOfferCommon: React.FC<Props> = (props) => {
           {!!userOffer!.images.length &&
             <ImageList sx={{ maxWidth: 1000, maxHeight: 700 }} cols={3} rowHeight={164}>
               { userOffer!.images.map((image) => (
-                <ImageListItem key={image.url} sx={{mb: 1}}>
+                <ImageListItem key={image.url} sx={{mb: 1, height: "100%"}}>
                   <Link href={image.url} target="_blank">
                   <img
                     src={image.thumb.url}

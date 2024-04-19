@@ -1,17 +1,18 @@
-import React, { useState, useContext, useEffect } from "react"
+import React, { useState, useContext, useEffect, useCallback } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
+import CancelIcon from '@mui/icons-material/Cancel'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Card, CardContent, CardHeader,Box, Accordion, AccordionSummary, AccordionDetails } from "@mui/material"
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
+import { Card, CardContent, CardHeader,Box, Accordion, AccordionSummary, AccordionDetails, IconButton, List, ListItem, Typography } from "@mui/material"
 
 import ShowUserOfferCommon from "@src/components/pages/common/ShowUserOfferCommon"
 import { AlertMessageContext, DisplayErrors, RequiredTextField, OptionalTextField, AmountForm, DefaultButton } from "@src/components/ui";
 import { vendorGetUserOffer } from "@src/models/user_offer/request"
 import { createVendorOffer } from "@src/models/vendor_offer/request"
-import { signedInCookiesSetter, detectAxiosErrors } from "@src/utils";
+import { signedInCookiesSetter, detectAxiosErrors, setMultipleUploadAndPreviewImage } from "@src/utils";
 
 import type { ShowUserOfferType } from "@src/models/user_offer/type"
-import type { CreateVendorOfferParams } from "@src/models/vendor_offer/type"
 
 const CreateVendorOffer: React.FC = () => {
   const [title, setTitle] = useState<string>('')
@@ -20,24 +21,48 @@ const CreateVendorOffer: React.FC = () => {
   const [userOfferLoading, setUserOfferLoading] = useState<boolean>(true)
   const [userOffer, setUserOffer] = useState<ShowUserOfferType | undefined>()
   const [userOffererrors, setUserOfferErrors] = useState<any>()
+  const [imageHash, setImageHash] = useState<{[key: string]: File}>({})
+  const [previewHash, setPreviewHash] = useState<{[key: string]: string}>({})
   const params = useParams()
-
   const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
   const userOfferId = useParams().id as string
   const navigate = useNavigate()
 
+  const curriedSetUploadAndPreviewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const func = setMultipleUploadAndPreviewImage(setImageHash, setPreviewHash, imageHash, previewHash)
+    return func(e)
+  }, [imageHash])
+
+
+  const clearImage = (key: string) => {
+    let deleteImageHash = {...imageHash}
+    let deletePreviewHash = {...previewHash}
+    delete deleteImageHash[key]
+    delete deletePreviewHash[key]
+    setImageHash(deleteImageHash)
+    setPreviewHash(deletePreviewHash)
+  }
+
+  const createFormData = (): FormData => {
+    const formData = new FormData()
+    const formatImages = Object.values(imageHash)
+    formData.append("vendor_offer[title]", title)
+    formData.append("vendor_offer[user_offer_id]", userOfferId)
+    formData.append("vendor_offer[remark]", remark)
+    formData.append("vendor_offer[estimate]", estimate.replace(/,/g, ''))
+    formatImages.map((image) => {
+			formData.append("vendor_offer[images][]", image)
+		})
+
+    return formData
+  }
+
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault()
 
-    const params: CreateVendorOfferParams = {
-      title: title,
-      userOfferId: +userOfferId,
-      remark: remark,
-      estimate: +estimate.replace(/,/g, ''),
-    }
-
     try{
-      const res = await createVendorOffer(params)
+      const data = createFormData()
+      const res = await createVendorOffer(data)
 
       if (!res) { return navigate("/vendor/signin") }
       signedInCookiesSetter(res, "Vendor")
@@ -124,6 +149,48 @@ const CreateVendorOffer: React.FC = () => {
               onChange={e=> setEstimate(e)}
               onKeyDown={handleKeyDown}
             />
+            <Box>
+              <label htmlFor="input-user-offer-image">
+                <span style={{display: "none"}}>
+                  <input
+                    accept="image/*"
+                    id="input-user-offer-image"
+                    type="file"
+                    multiple={true}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      curriedSetUploadAndPreviewImage(e)
+                    }}
+                  />
+                </span>
+                <IconButton color="inherit" component="span">
+                  <PhotoCameraIcon />
+                  <Typography variant="body1">画像をアップロード</Typography>
+                </IconButton>
+              </label>
+            </Box>
+            { Object.keys(previewHash).length ?
+              <List sx={{display: "flex", flexWrap: "wrap"}}>
+                {Object.keys(previewHash).map((key: string) => (
+                  <ListItem key={key} sx={{flexDirection: "column", maxWidth: "30%"}}>
+                    <Box sx={{width: "100%"}}>
+                      <IconButton
+                        color="inherit"
+                        onClick={() => {clearImage(key)}}
+                      >
+                        <CancelIcon />
+                      </IconButton>
+                    </Box>
+                    <Box sx={{width: "100%", height: "200px"}}>
+                      <img
+                        src={previewHash[key]}
+                        alt="preview img"
+                        style={{maxWidth: "100%",maxHeight: "100%", boxSizing: "border-box"}}
+                      />
+                    </Box>
+                  </ListItem>
+                ))}
+              </List> : null
+            }
             <DefaultButton
               disabled={!title || !estimate ? true : false}
               onClick={handleSubmit}

@@ -117,16 +117,16 @@ const ShowUserOffer: React.FC = () => {
         <ShowUserOfferCommon userOffer={userOffer} offerLoading={userOfferLoading} />
         <DisplayErrors errors={vendorOffererrors}>
           <ProgressCircle loading={vendorOfferLoading}>
-            {vendorOfferList.length &&
+            {displayMakeOfferFlg &&
+              <Paper variant="outlined" sx={{bgcolor: "lightyellow", p: (theme) => theme.spacing(2), mb: 1}}>
+                <Typography variant="body1" gutterBottom>まだあなたは提案していません。</Typography>
+                <Link component={RouterLink} to={"/vendor/user_offer/" + params.id + "/vendor_offer/new"} sx={{textDecoration: "none"}}>
+                  提案する
+                </Link>
+              </Paper>
+            }
+            {!!vendorOfferList.length &&
               <>
-                {displayMakeOfferFlg &&
-                  <Paper variant="outlined" sx={{bgcolor: "lightyellow", p: (theme) => theme.spacing(2), mb: 1}}>
-                    <Typography variant="body1" gutterBottom>まだあなたは提案していません。</Typography>
-                    <Link component={RouterLink} to={"/vendor/user_offer/" + params.id + "/vendor_offer/new"} sx={{textDecoration: "none"}}>
-                      提案する
-                    </Link>
-                  </Paper>
-                }
                 <Pagination
                   count={Object.keys(paginateNumberList).length}
                   page={page}
