@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useCallback } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import CancelIcon from '@mui/icons-material/Cancel'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
 import { Card, CardContent, CardHeader,Box, Accordion, AccordionSummary, AccordionDetails, IconButton, List, ListItem, Typography } from "@mui/material"
 
@@ -51,7 +51,7 @@ const CreateVendorOffer: React.FC = () => {
     formData.append("vendor_offer[remark]", remark)
     formData.append("vendor_offer[estimate]", estimate.replace(/,/g, ''))
     formatImages.map((image) => {
-			formData.append("vendor_offer[images][]", image)
+			formData.append("vendor_offer_image[images][]", image)
 		})
 
     return formData
@@ -168,7 +168,7 @@ const CreateVendorOffer: React.FC = () => {
                 </IconButton>
               </label>
             </Box>
-            { Object.keys(previewHash).length ?
+            { !!Object.keys(previewHash).length &&
               <List sx={{display: "flex", flexWrap: "wrap"}}>
                 {Object.keys(previewHash).map((key: string) => (
                   <ListItem key={key} sx={{flexDirection: "column", maxWidth: "30%"}}>
@@ -189,7 +189,7 @@ const CreateVendorOffer: React.FC = () => {
                     </Box>
                   </ListItem>
                 ))}
-              </List> : null
+              </List>
             }
             <DefaultButton
               disabled={!title || !estimate ? true : false}
