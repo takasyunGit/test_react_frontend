@@ -46,7 +46,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
   const [imageHash, setImageHash] = useState<{[key: string]: File}>({})
   const [previewHash, setPreviewHash] = useState<{[key: string]: string}>({})
   const deleteImageIds = useRef<string[]>([])
-  const originalVendorOffer = useRef<{vendorOffer: ShowVendorOfferType, images: VendorOfferImageType[]}>()
+  const originalVendorOffer = useRef<VendorOfferWithImagesType>()
   const { currentVendorUser } = useContext(AuthVendorUserContext)
   const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
   const { signInType } = props
@@ -80,6 +80,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
       resPreviewHash[image.id] = image.content.thumb.url
     })
     originalVendorOffer.current = res
+    inputClear('input-vendor-offer-image')
     setPreviewHash(resPreviewHash)
   }
 
@@ -168,6 +169,8 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
   }
 
   const editToggle = () => {
+    initailShowVendorOffer(originalVendorOffer.current!)
+    deleteImageIds.current = []
     setEditFlg(editFlg=>!editFlg)
   }
 
@@ -200,7 +203,6 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
       if (res && res.status === 200) {
         setEditFlg(false)
         setImageHash({})
-        inputClear('input-vendor-offer-image')
         initailShowVendorOffer(res.data.data)
         handleGetVendorOfferChatListWithPaginate()
       } else {
