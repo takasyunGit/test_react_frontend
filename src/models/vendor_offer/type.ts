@@ -8,6 +8,10 @@ export type VendorOfferType = {
   remark: string,
   createdAt: string,
   updatedAt: string
+  images: {
+    url: string,
+    thumb: { url: string }
+  }[]
 }
 
 export type CreateVendorOfferParams = Pick<VendorOfferType,
