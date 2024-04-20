@@ -7,12 +7,18 @@ import { Card, CardContent, CardHeader, Box, IconButton, Typography, List, ListI
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs, { Dayjs } from "dayjs"
+import timezone from "dayjs/plugin/timezone"
+import utc from "dayjs/plugin/utc";
 
 import { AlertMessageContext, SelectForm, OptionalTextField, AmountForm, DefaultButton } from "@src/components/ui"
 import { createUserOffer } from "@src/models/user_offer/request"
 import { signedInCookiesSetter, detectAxiosErrors, PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST, setMultipleUploadAndPreviewImage, previewImage } from "@src/utils"
 
 import type { PrefectureCode, UserOfferRequestTypeCode } from "@src/utils/type"
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault("Asia/Tokyo")
 
 const CreateUserOffer: React.FC = () => {
   const [prefecture, setPrefecture] = useState<PrefectureCode | ''>('')
@@ -38,7 +44,7 @@ const CreateUserOffer: React.FC = () => {
     formData.append("user_offer[address]", address)
     formData.append("user_offer[budget]", budget.replace(/,/g, ''))
     formData.append("user_offer[remark]", remark)
-    formData.append("user_offer[deadline]", String(deadline))
+    formData.append("user_offer[deadline]", String(deadline!.tz().format()))
     formData.append("user_offer[requestType]", String(requestType))
     formatImages.map((image) => {
 			formData.append("user_offer[images][]", image)
@@ -122,7 +128,7 @@ const CreateUserOffer: React.FC = () => {
               />
             </Box>
             <Box sx={{mt: 1, mb: 1}}>
-              <InputLabel htmlFor="deadlin-date-picker">締切日</InputLabel>
+              <InputLabel htmlFor="deadline-date-picker">締切日</InputLabel>
               <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ja">
                 <DatePicker
                   value={deadline}
@@ -132,7 +138,7 @@ const CreateUserOffer: React.FC = () => {
                   slotProps={{
                     textField: {
                       required: true,
-                      id: "deadlin-date-picker"
+                      id: "deadline-date-picker"
                     },
                   }}
                 />
@@ -181,7 +187,7 @@ const CreateUserOffer: React.FC = () => {
               </List> : null
             }
             <DefaultButton
-              disabled={!prefecture || !budget  || !requestType ? true : false}
+              disabled={!prefecture || !budget  || !requestType || !deadline ? true : false}
               onClick={handleSubmit}
             >
               Submit
