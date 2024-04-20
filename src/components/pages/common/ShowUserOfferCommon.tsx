@@ -74,6 +74,14 @@ const ShowUserOfferCommon: React.FC<Props> = (props) => {
               <Typography variant="body1" gutterBottom>{userOffer && dateToYYYYMMDD(new Date(userOffer.updatedAt))}</Typography>
             </Grid>
           </Grid>
+          <Grid container>
+            <Grid item sx={ userOfferCss }>
+              <Typography variant="body1" gutterBottom>締切日:</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="body1" gutterBottom>{userOffer && userOffer.deadline}</Typography>
+            </Grid>
+          </Grid>
           {!!userOffer!.images.length &&
             <ImageList sx={{ maxWidth: 1000, maxHeight: 700 }} cols={3} rowHeight={164}>
               { userOffer!.images.map((image) => (

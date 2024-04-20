@@ -72,7 +72,7 @@ const ShowUserOffer: React.FC = () => {
   }
 
   useEffect(() => {handleGetUserOffer()}, [])
-  useEffect(() =>{handleGetVendorOfferList()}, [page])
+  useEffect(() => {handleGetVendorOfferList()}, [page])
 
   return (
     <>
