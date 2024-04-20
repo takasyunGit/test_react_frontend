@@ -6,6 +6,7 @@ export type UserOfferType = {
   budget: number,
   remark: string,
   requestType: number
+  deadline: string
   createdAt: string,
   updatedAt: string
 }

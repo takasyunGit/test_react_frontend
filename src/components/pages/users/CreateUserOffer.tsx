@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom"
 
 import CancelIcon from '@mui/icons-material/Cancel'
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
-import { Card, CardContent, CardHeader, Box, IconButton, Typography, List, ListItem } from "@mui/material"
+import { Card, CardContent, CardHeader, Box, IconButton, Typography, List, ListItem, InputLabel } from "@mui/material"
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import dayjs, { Dayjs } from "dayjs"
 
 import { AlertMessageContext, SelectForm, OptionalTextField, AmountForm, DefaultButton } from "@src/components/ui"
 import { createUserOffer } from "@src/models/user_offer/request"
@@ -19,6 +22,7 @@ const CreateUserOffer: React.FC = () => {
   const [requestType, setRequestType] = useState<UserOfferRequestTypeCode | ''>('')
   const [imageHash, setImageHash] = useState<{[key: string]: File}>({})
   const [previewHash, setPreviewHash] = useState<{[key: string]: string}>({})
+  const [deadline, setDeadline] = useState<Dayjs | undefined | null>(dayjs())
   const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
   const navigate = useNavigate()
 
@@ -34,6 +38,7 @@ const CreateUserOffer: React.FC = () => {
     formData.append("user_offer[address]", address)
     formData.append("user_offer[budget]", budget.replace(/,/g, ''))
     formData.append("user_offer[remark]", remark)
+    formData.append("user_offer[deadline]", String(deadline))
     formData.append("user_offer[requestType]", String(requestType))
     formatImages.map((image) => {
 			formData.append("user_offer[images][]", image)
@@ -107,7 +112,7 @@ const CreateUserOffer: React.FC = () => {
               value={remark}
               onChange={e=> setRemark(e)}
             />
-            <div>
+            <Box sx={{mt: 1, mb: 1}}>
               <SelectForm
                 label="Request type"
                 width="40%"
@@ -115,7 +120,24 @@ const CreateUserOffer: React.FC = () => {
                 list={USER_OFFER_REQUEST_TYPE_LIST}
                 onChange={e=> setRequestType(e as UserOfferRequestTypeCode)}
               />
-            </div>
+            </Box>
+            <Box sx={{mt: 1, mb: 1}}>
+              <InputLabel htmlFor="deadlin-date-picker">締切日</InputLabel>
+              <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ja">
+                <DatePicker
+                  value={deadline}
+                  onChange={(e) => setDeadline(e)}
+                  minDate={dayjs().endOf('day')}
+                  sx={{width: "40%"}}
+                  slotProps={{
+                    textField: {
+                      required: true,
+                      id: "deadlin-date-picker"
+                    },
+                  }}
+                />
+              </LocalizationProvider>
+            </Box>
             <Box>
               <label htmlFor="input-user-offer-image">
                 <span style={{display: "none"}}>
