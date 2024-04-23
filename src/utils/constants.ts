@@ -1,7 +1,6 @@
 import type { NumberCodeListType } from '@src/utils/type'
 
-// あとで環境変数にしておく
-export const API_BASEURL = 'http://localhost:3010/'
+export const API_BASEURL = process.env.REACT_APP_API_BASEURL
 
 export const USER_OFFER_REQUEST_TYPE_LIST: NumberCodeListType = {
   1: '戸建住宅',
