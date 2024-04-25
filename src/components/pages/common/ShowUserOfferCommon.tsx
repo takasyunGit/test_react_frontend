@@ -62,8 +62,8 @@ const ShowUserOfferCommon: React.FC<Props> = (props) => {
             <Grid item sx={ userOfferCss }>
               <Typography variant="body1" gutterBottom>備考・要望:</Typography>
             </Grid>
-            <Grid item>
-              <Typography variant="body1" gutterBottom sx={{ whiteSpace: "pre-wrap" }}>{userOffer?.remark}</Typography>
+            <Grid item sx={{width: "80%"}}>
+              <Typography variant="body1" gutterBottom sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>{userOffer?.remark}</Typography>
             </Grid>
           </Grid>
           <Grid container>
