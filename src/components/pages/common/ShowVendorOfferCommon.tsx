@@ -235,7 +235,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
           </Grid>
           <Grid container>
             <Grid item sx={vendorOfferStyleCss}>
-              <Typography variant="body1" gutterBottom>お見積もり:</Typography>
+              <Typography variant="body1" gutterBottom>お見積り:</Typography>
             </Grid>
             <Grid item>
               {editFlg ?
