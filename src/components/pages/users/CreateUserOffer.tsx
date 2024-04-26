@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from "react"
+import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
 import CancelIcon from '@mui/icons-material/Cancel'
@@ -32,10 +32,10 @@ const CreateUserOffer: React.FC = () => {
   const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
   const navigate = useNavigate()
 
-  const curriedSetUploadAndPreviewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const curriedSetUploadAndPreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const func = setMultipleUploadAndPreviewImage(setImageHash, setPreviewHash, imageHash, previewHash)
     return func(e)
-  }, [imageHash])
+  }
 
   const createFormData = (): FormData => {
     const formData = new FormData()

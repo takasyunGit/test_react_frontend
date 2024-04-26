@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import CancelIcon from '@mui/icons-material/Cancel'
@@ -28,10 +28,10 @@ const CreateVendorOffer: React.FC = () => {
   const userOfferId = useParams().id as string
   const navigate = useNavigate()
 
-  const curriedSetUploadAndPreviewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const curriedSetUploadAndPreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const func = setMultipleUploadAndPreviewImage(setImageHash, setPreviewHash, imageHash, previewHash)
     return func(e)
-  }, [imageHash])
+  }
 
 
   const clearImage = (key: string) => {
