@@ -24,4 +24,4 @@ yarn-error.log*
 
 .vscode
 .ssh
-.env
+.env.development

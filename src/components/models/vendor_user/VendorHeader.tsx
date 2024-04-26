@@ -74,24 +74,6 @@ const VendorHeader: React.FC = () => {
     }
   }
 
-  const ItemsAfterSingedIn = () => {
-    if (!loadingVendor) {
-      if (isSignedInVendor) {
-        return (
-          <Button
-            component={RouterLink}
-            to="/vendor/settings"
-            sx={{textTransform: "none"}}
-            color="inherit"
-          >
-            Settings
-          </Button>
-        )
-      }
-    }
-    return (<></>)
-  }
-
   return (
     <>
       <AppBar position="static">
