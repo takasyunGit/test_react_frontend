@@ -1,4 +1,4 @@
-import React, {useContext} from "react"
+import React, {useCallback, useContext} from "react"
 import { useNavigate, Link as RouterLink} from "react-router-dom"
 
 import MenuIcon from "@mui/icons-material/Menu"
@@ -20,7 +20,7 @@ const VendorHeader: React.FC = () => {
     setAnchorEl(null)
   }
 
-  const handleSignOut = async(e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSignOut = useCallback(async(e: React.MouseEvent<HTMLButtonElement>) => {
     try{
       const res = await signOut()
 
@@ -39,9 +39,9 @@ const VendorHeader: React.FC = () => {
     } catch(err) {
       console.log(err)
     }
-  }
+  }, [])
 
-  const AuthButton = () => {
+  const AuthButton = React.memo(() => {
     if (!loadingVendor) {
       if (isSignedInVendor) {
         return (
@@ -72,25 +72,7 @@ const VendorHeader: React.FC = () => {
     } else {
       return <></>
     }
-  }
-
-  const ItemsAfterSingedIn = () => {
-    if (!loadingVendor) {
-      if (isSignedInVendor) {
-        return (
-          <Button
-            component={RouterLink}
-            to="/vendor/settings"
-            sx={{textTransform: "none"}}
-            color="inherit"
-          >
-            Settings
-          </Button>
-        )
-      }
-    }
-    return (<></>)
-  }
+  })
 
   return (
     <>

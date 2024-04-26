@@ -1,8 +1,7 @@
 import React from 'react'
-import { useCallback } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close'
-import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, Typography, IconButton } from '@mui/material'
+import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton } from '@mui/material'
 
 type Props = {
   open: boolean
@@ -13,12 +12,9 @@ type Props = {
 }
 
 const ConfirmDialog: React.FC<Props> = ({open, headerMessage, confirmMessage, buttonString, onClose}: Props) => {
-  const handleClose = useCallback(
-    (submit: boolean) => {
-      onClose?.(submit)
-    },
-    [onClose]
-  )
+  const handleClose = (submit: boolean) => {
+    onClose?.(submit)
+  }
 
   return (
     <Dialog open={open} onClose={() => handleClose(false)}>
