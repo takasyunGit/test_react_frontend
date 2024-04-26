@@ -1,4 +1,4 @@
-import React, {useContext} from "react"
+import React, {useCallback, useContext} from "react"
 import { useNavigate, Link as RouterLink} from "react-router-dom"
 
 import MenuIcon from "@mui/icons-material/Menu"
@@ -20,7 +20,7 @@ const UserHeader: React.FC = () => {
     setAnchorEl(null)
   }
 
-  const handleSignOut = async(e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSignOut = useCallback(async(e: React.MouseEvent<HTMLButtonElement>) => {
     try{
       const res = await signOut()
 
@@ -39,9 +39,9 @@ const UserHeader: React.FC = () => {
     } catch(err) {
       console.log(err)
     }
-  }
+  }, [])
 
-  const AuthButton = () => {
+  const AuthButton = React.memo(() => {
     if (!loading) {
       if (isSignedIn) {
         return (
@@ -78,7 +78,7 @@ const UserHeader: React.FC = () => {
     } else {
       return <></>
     }
-  }
+  })
 
   return (
     <>
