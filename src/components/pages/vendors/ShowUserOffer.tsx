@@ -147,7 +147,7 @@ const ShowUserOffer: React.FC = () => {
                             {'【お見積もり: ¥' + addComma(offer.estimate) + '】' + offer.title}
                           </Typography>
                         </Link>
-                        <Typography variant="body1" gutterBottom>{omitText(VENDOR_OFFER_TEXT_LIMIT, offer.remark)}</Typography>
+                        <Typography variant="body1" gutterBottom sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>{omitText(VENDOR_OFFER_TEXT_LIMIT, offer.remark)}</Typography>
                         <Box sx={{display: "flex", justifyContent: "end"}}>
                           {offer.avatar?.url ? <Avatar src={offer.avatar.url} sx={{ width: 24, height: 24, mr: 1}}/> : <Avatar {...stringAvatar(offer.vendorUserName)} sx={{ width: 24, height: 24, mr: 1 }}/>}
                           <Typography variant="body1" gutterBottom>{offer.vendorUserName}</Typography>
