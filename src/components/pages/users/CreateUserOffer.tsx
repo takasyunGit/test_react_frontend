@@ -58,6 +58,7 @@ const CreateUserOffer: React.FC = () => {
     let deletePreviewHash = {...previewHash}
     delete deleteImageHash[key]
     delete deletePreviewHash[key]
+    URL.revokeObjectURL(key)
     setImageHash(deleteImageHash)
     setPreviewHash(deletePreviewHash)
   }

@@ -66,6 +66,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
     let deletePreviewHash = {...previewHash}
     delete deleteImageHash[key]
     delete deletePreviewHash[key]
+    URL.revokeObjectURL(key)
     deleteImageIds.current.push(key)
     setImageHash(deleteImageHash)
     setPreviewHash(deletePreviewHash)
