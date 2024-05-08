@@ -12,7 +12,7 @@ import utc from "dayjs/plugin/utc";
 
 import { AlertMessageContext, SelectForm, OptionalTextField, AmountForm, DefaultButton } from "@src/components/ui"
 import { createUserOffer } from "@src/models/user_offer/request"
-import { signedInCookiesSetter, detectAxiosErrors, PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST, setMultipleUploadAndPreviewImage, previewImage } from "@src/utils"
+import { signedInCookiesSetter, detectAxiosErrors, PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST, setMultipleUploadAndPreviewImage, previewImage, inputClear } from "@src/utils"
 
 import type { PrefectureCode, UserOfferRequestTypeCode } from "@src/utils/type"
 
@@ -58,6 +58,8 @@ const CreateUserOffer: React.FC = () => {
     let deletePreviewHash = {...previewHash}
     delete deleteImageHash[key]
     delete deletePreviewHash[key]
+    URL.revokeObjectURL(key)
+    inputClear("input-user-offer-image")
     setImageHash(deleteImageHash)
     setPreviewHash(deletePreviewHash)
   }

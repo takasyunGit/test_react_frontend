@@ -10,7 +10,7 @@ import ShowUserOfferCommon from "@src/components/pages/common/ShowUserOfferCommo
 import { AlertMessageContext, DisplayErrors, RequiredTextField, OptionalTextField, AmountForm, DefaultButton } from "@src/components/ui";
 import { vendorGetUserOffer } from "@src/models/user_offer/request"
 import { createVendorOffer } from "@src/models/vendor_offer/request"
-import { signedInCookiesSetter, detectAxiosErrors, setMultipleUploadAndPreviewImage } from "@src/utils";
+import { signedInCookiesSetter, detectAxiosErrors, setMultipleUploadAndPreviewImage, inputClear } from "@src/utils";
 
 import type { ShowUserOfferType } from "@src/models/user_offer/type"
 
@@ -39,6 +39,8 @@ const CreateVendorOffer: React.FC = () => {
     let deletePreviewHash = {...previewHash}
     delete deleteImageHash[key]
     delete deletePreviewHash[key]
+    URL.revokeObjectURL(key)
+    inputClear("input-vendor-offer-image")
     setImageHash(deleteImageHash)
     setPreviewHash(deletePreviewHash)
   }
@@ -150,11 +152,11 @@ const CreateVendorOffer: React.FC = () => {
               onKeyDown={handleKeyDown}
             />
             <Box>
-              <label htmlFor="input-user-offer-image">
+              <label htmlFor="input-vendor-offer-image">
                 <span style={{display: "none"}}>
                   <input
                     accept="image/*"
-                    id="input-user-offer-image"
+                    id="input-vendor-offer-image"
                     type="file"
                     multiple={true}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
