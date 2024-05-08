@@ -34,9 +34,8 @@ export const initialPaginate = (pageNum?: number, paginateNumberList: NumberList
   const keyId = paginateNumberList[+pageNumber] || null
   url.search = "page=" + String(pageNumber)
   // url pathにpageのクエリ追加
-  window.history.pushState({}, "", url.toString())
+  if (!!pageNum) { window.history.pushState({}, "", url.toString()) }
   return [keyId, +pageNumber]
 }
-
 
 export default DefaultPagination
