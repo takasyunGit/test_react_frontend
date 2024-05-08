@@ -67,6 +67,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
     delete deleteImageHash[key]
     delete deletePreviewHash[key]
     URL.revokeObjectURL(key)
+    inputClear("input-vendor-offer-image")
     deleteImageIds.current.push(key)
     setImageHash(deleteImageHash)
     setPreviewHash(deletePreviewHash)
