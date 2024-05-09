@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react"
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { Card, CardContent, Typography, Link, Accordion, AccordionDetails, AccordionProps, AccordionSummary } from "@mui/material"
+import { Card, CardContent, Typography, Link, Accordion, AccordionDetails, AccordionProps, AccordionSummary, Avatar, Box } from "@mui/material"
 
+import { stringAvatar } from "@src/components/ui"
 import ProgressCircle from "@src/components/ui/ProgressCircle"
 import { vendorGetUserOfferList } from "@src/models/user_offer/request"
 import { signedInCookiesSetter, detectAxiosErrors, dateToYYYYMMDD, USER_OFFER_REQUEST_TYPE_LIST, addComma } from "@src/utils"
 
-import type { UserOfferType } from "@src/models/user_offer/type"
+import type { ShowUserOfferType } from "@src/models/user_offer/type"
 
 type ShowUserOfferListType = {
-  [key in "proposal" | "notTouchedOffers"]: UserOfferType[]
+  [key in "proposal" | "notTouchedOffers"]: ShowUserOfferType[]
 }
 
 const Home: React.FC = () => {
@@ -41,7 +42,7 @@ const Home: React.FC = () => {
   useEffect(() => {handleGetUserOfferList()},[])
 
   type AccordionProps = {
-    userOfferList: UserOfferType[],
+    userOfferList: ShowUserOfferType[],
     title: string
   }
 
@@ -71,6 +72,10 @@ const Home: React.FC = () => {
                     '【予算: ¥' + addComma(offer.budget) + '】' + offer.address}
                     </Typography>
                 </Link>
+                <Box sx={{display: "flex", justifyContent: "end"}}>
+                  {offer.avatar?.url ? <Avatar src={offer.avatar.url} sx={{ width: 24, height: 24, mr: 1}}/> : <Avatar {...stringAvatar(offer.userName)} sx={{ width: 24, height: 24, mr: 1 }}/>}
+                  <Typography variant="body1" gutterBottom>{offer.userName}</Typography>
+                </Box>
               </CardContent>
             </Card>
           ))}
