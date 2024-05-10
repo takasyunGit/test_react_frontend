@@ -87,7 +87,7 @@ const Home: React.FC = () => {
         <Typography variant="h4" gutterBottom>Home</Typography>
         <div>
           <Link component={RouterLink} to="/user_offer/new" sx={{textDecoration: "none"}}>
-            <Typography variant="h6" gutterBottom>新しい提案を作成する</Typography>
+            <Typography variant="h6" gutterBottom>新しい要望書を作成する</Typography>
           </Link>
         </div>
       </Paper>
@@ -97,10 +97,10 @@ const Home: React.FC = () => {
             <OfferAccordion userOfferList={userOfferList.draft} title={"下書き中の提案"}/>
           } */}
           {!!userOfferList?.proposal.length &&
-            <OfferAccordion userOfferList={userOfferList.proposal} title={"検討中の提案"}/>
+            <OfferAccordion userOfferList={userOfferList.proposal} title={"検討中の要望書"}/>
           }
           {!!userOfferList?.proposal.length &&
-            <OfferAccordion userOfferList={userOfferList.finished} title={"完了した提案"}/>
+            <OfferAccordion userOfferList={userOfferList.finished} title={"完了した要望書"}/>
           }
         </>
       </ProgressCircle>

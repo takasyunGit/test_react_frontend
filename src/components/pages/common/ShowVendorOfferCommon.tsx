@@ -242,7 +242,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
             <Grid item>
               {editFlg ?
               <AmountForm
-                label="Estimate"
+                label="お見積り金額"
                 required={false}
                 value={estimate}
                 onChange={e=> setEstimate(e)}
@@ -257,7 +257,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
             </Grid>
             { editFlg ?
               <OptionalTextField
-                label="Remark"
+                label="備考"
                 value={remark}
                 minRows={8}
                 maxRows={10}
@@ -358,7 +358,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
         mb: 1
       }}>
         <RequiredTextField
-          label="message"
+          label="メッセージ"
           value={message}
           minRows={3}
           maxRows={6}
@@ -376,7 +376,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
           }}
           onClick={handleMessageSubmit}
         >
-          Submit
+          送信
         </Button>
       </Card>
       <DisplayErrors errors={chatErrors}>

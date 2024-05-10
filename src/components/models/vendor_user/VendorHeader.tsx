@@ -76,7 +76,7 @@ const VendorHeader: React.FC = () => {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="static" sx={{bgcolor: "darkorange"}}>
         <Toolbar>
         {isSignedInVendor && currentVendorUser ?
             <>
