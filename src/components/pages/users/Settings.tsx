@@ -59,13 +59,13 @@ const Settings: React.FC = () => {
   }
 
   return (
-    <>
-      <form noValidate autoComplete="off">
-        <Card sx={{
-          padding: (theme) => theme.spacing(2),
-          maxWidth: 400
-        }}>
-          <CardHeader sx={{textAlign: "center"}} title="Settings" />
+    <Box sx={{display: "flex", justifyContent: "center"}}>
+      <Card sx={{
+        padding: (theme) => theme.spacing(2),
+        maxWidth: 400
+      }}>
+        <CardHeader sx={{textAlign: "center"}} title="Settings" />
+        <form noValidate autoComplete="off">
           <CardContent>
             <Box sx={{display: "flex"}}>
               <Box sx={{pr: 2}}>
@@ -116,14 +116,14 @@ const Settings: React.FC = () => {
                   disabled={!avatar ? true : false}
                   onClick={handleSubmit}
                 >
-                  Submit
+                  プロフィールを更新する
                 </DefaultButton>
               </Box>
             </Box>
           </CardContent>
-        </Card>
-      </form>
-    </>
+        </form>
+      </Card>
+    </Box>
   )
 }
 

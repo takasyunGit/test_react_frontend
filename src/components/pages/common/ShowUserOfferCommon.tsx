@@ -68,14 +68,6 @@ const ShowUserOfferCommon: React.FC<Props> = (props) => {
           </Grid>
           <Grid container>
             <Grid item sx={ userOfferCss }>
-              <Typography variant="body1" gutterBottom>更新日:</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="body1" gutterBottom>{userOffer && dateToYYYYMMDD(new Date(userOffer.updatedAt))}</Typography>
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid item sx={ userOfferCss }>
               <Typography variant="body1" gutterBottom>締切日:</Typography>
             </Grid>
             <Grid item>

@@ -47,7 +47,7 @@ const SignIn: React.FC = () => {
       }
     } catch(e) {
       detectAxiosErrors(e, setAlertMessageOpen)
-      setAlertMessage("Invalid emai or password")
+      setAlertMessage("メールアドレスまたはパスワードが不正です")
     }
   }
 
@@ -85,17 +85,17 @@ const SignIn: React.FC = () => {
                 disabled={!email || !password ? true : false}
                 onClick={handleSubmit}
               >
-                Submit
+                ログイン
               </DefaultButton>
             </Box>
             <Box textAlign="center" sx={{marginTop: "2rem"}}>
               <Typography variant="body2">
-                Don't have an account? &nbsp;
+                アカウントをお持ちでない方はこちら &nbsp;
                 <Link component={RouterLink} to="/signup" sx={{textDecoration: "none"}}>Sign up</Link>
               </Typography>
               <Typography variant="body2">
-                Vendor &nbsp;
-                <Link component={RouterLink} to="/vendor/signin" sx={{textDecoration: "none"}}>Sign in</Link>
+                Vendorでサインイン &nbsp;
+                <Link component={RouterLink} to="/vendor/signin" sx={{textDecoration: "none"}}>Vendor sign in</Link>
               </Typography>
             </Box>
           </CardContent>

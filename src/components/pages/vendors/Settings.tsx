@@ -59,7 +59,7 @@ const Settings: React.FC = () => {
     }
   }
   return (
-    <>
+    <Box sx={{display: "flex", justifyContent: "center"}}>
       <form noValidate autoComplete="off">
         <Card sx={{
           padding: (theme) => theme.spacing(2),
@@ -123,7 +123,7 @@ const Settings: React.FC = () => {
           </CardContent>
         </Card>
       </form>
-    </>
+    </Box>
   )
 }
 

@@ -131,13 +131,13 @@ const CreateVendorOffer: React.FC = () => {
           <CardHeader sx={{textAlign: "center"}} title="提案の作成" />
           <CardContent>
             <RequiredTextField
-              label="Title"
+              label="タイトル"
               value={title}
               onChange={e=> setTitle(e)}
               onKeyDown={handleKeyDown}
             />
             <OptionalTextField
-              label="Remark"
+              label="提案の詳細"
               value={remark}
               minRows={8}
               maxRows={10}
@@ -145,7 +145,7 @@ const CreateVendorOffer: React.FC = () => {
               onKeyDown={handleKeyDown}
             />
             <AmountForm
-              label="Estimate"
+              label="お見積り金額"
               value={estimate}
               required={true}
               onChange={e=> setEstimate(e)}

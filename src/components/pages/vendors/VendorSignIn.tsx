@@ -86,12 +86,12 @@ const SignIn: React.FC = () => {
                 disabled={!email || !password ? true : false}
                 onClick={handleSubmit}
               >
-                Submit
+                ログイン
               </DefaultButton>
             </Box>
             <Box textAlign="center" sx={{marginTop: "2rem"}}>
               <Typography variant="body2">
-                User &nbsp;
+                ユーザーでサインイン &nbsp;
                 <Link component={RouterLink} to="/signin" sx={{textDecoration: "none"}}>Sign in</Link>
               </Typography>
             </Box>
