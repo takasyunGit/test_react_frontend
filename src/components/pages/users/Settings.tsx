@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from "react"
+import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
 import CancelIcon from '@mui/icons-material/Cancel'
@@ -17,15 +17,15 @@ const Settings: React.FC = () => {
   const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
   const navigate = useNavigate()
 
-  const curriedUploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const curriedUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const func = uploadImage(setAvatar)
     return func(e)
-  }, [])
+  }
 
-  const curriedPreviewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const curriedPreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const func = previewImage(setPreview)
     return func(e)
-  }, [])
+  }
 
   const createFormData = (): FormData => {
     const formData = new FormData()
@@ -59,13 +59,13 @@ const Settings: React.FC = () => {
   }
 
   return (
-    <>
-      <form noValidate autoComplete="off">
-        <Card sx={{
-          padding: (theme) => theme.spacing(2),
-          maxWidth: 400
-        }}>
-          <CardHeader sx={{textAlign: "center"}} title="Settings" />
+    <Box sx={{display: "flex", justifyContent: "center"}}>
+      <Card sx={{
+        padding: (theme) => theme.spacing(2),
+        maxWidth: 400
+      }}>
+        <CardHeader sx={{textAlign: "center"}} title="Settings" />
+        <form noValidate autoComplete="off">
           <CardContent>
             <Box sx={{display: "flex"}}>
               <Box sx={{pr: 2}}>
@@ -116,14 +116,14 @@ const Settings: React.FC = () => {
                   disabled={!avatar ? true : false}
                   onClick={handleSubmit}
                 >
-                  Submit
+                  プロフィールを更新する
                 </DefaultButton>
               </Box>
             </Box>
           </CardContent>
-        </Card>
-      </form>
-    </>
+        </form>
+      </Card>
+    </Box>
   )
 }
 

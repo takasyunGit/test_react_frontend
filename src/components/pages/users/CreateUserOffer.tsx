@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from "react"
+import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
 import CancelIcon from '@mui/icons-material/Cancel'
@@ -12,7 +12,7 @@ import utc from "dayjs/plugin/utc";
 
 import { AlertMessageContext, SelectForm, OptionalTextField, AmountForm, DefaultButton } from "@src/components/ui"
 import { createUserOffer } from "@src/models/user_offer/request"
-import { signedInCookiesSetter, detectAxiosErrors, PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST, setMultipleUploadAndPreviewImage, previewImage } from "@src/utils"
+import { signedInCookiesSetter, detectAxiosErrors, PREFECTURES_NAME_LIST, USER_OFFER_REQUEST_TYPE_LIST, setMultipleUploadAndPreviewImage, previewImage, inputClear } from "@src/utils"
 
 import type { PrefectureCode, UserOfferRequestTypeCode } from "@src/utils/type"
 
@@ -32,10 +32,10 @@ const CreateUserOffer: React.FC = () => {
   const { setAlertMessageOpen, setAlertMessage } = useContext(AlertMessageContext)
   const navigate = useNavigate()
 
-  const curriedSetUploadAndPreviewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const curriedSetUploadAndPreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const func = setMultipleUploadAndPreviewImage(setImageHash, setPreviewHash, imageHash, previewHash)
     return func(e)
-  }, [imageHash])
+  }
 
   const createFormData = (): FormData => {
     const formData = new FormData()
@@ -58,6 +58,8 @@ const CreateUserOffer: React.FC = () => {
     let deletePreviewHash = {...previewHash}
     delete deleteImageHash[key]
     delete deletePreviewHash[key]
+    URL.revokeObjectURL(key)
+    inputClear("input-user-offer-image")
     setImageHash(deleteImageHash)
     setPreviewHash(deletePreviewHash)
   }
@@ -90,29 +92,38 @@ const CreateUserOffer: React.FC = () => {
         <Card sx={{
           padding: (theme) => theme.spacing(2),
         }}>
-          <CardHeader sx={{textAlign: "center"}} title="Create user offer" />
+          <CardHeader sx={{textAlign: "center"}} title="要望書の作成" />
+          <CardContent>
+            <Typography variant="body1" sx={{ whiteSpace: "pre-wrap" }}>
+              {"お客様の希望に合った理想の住宅を建設するために、まずは建設予定地の場所や要望について詳しく記入をお願いいたします。\n敷地が決まっていない場合でも、ご希望の立地や周辺環境、アクセスの利便性などを記入いただければ、より具体的なプランをご提案することができます。"}
+            </Typography>
+          </CardContent>
           <CardContent>
             <SelectForm
-              label="Prefecture"
+              id="prefecture"
+              label="都道府県"
               width="35%"
               value={prefecture as PrefectureCode}
               list={PREFECTURES_NAME_LIST}
               onChange={e=> setPrefecture(e as PrefectureCode)}
             />
             <OptionalTextField
-              label="Address"
+              id="address"
+              label="住所"
               value={address}
               onChange={e=> setAddress(e)}
               minRows={3}
             />
             <AmountForm
-              label="Budget"
+              id="budget"
+              label="予算"
               value={budget}
               required={true}
               onChange={e=> setBudget(e)}
             />
             <OptionalTextField
-              label="Remark"
+              id="remark"
+              label="要望"
               minRows={8}
               maxRows={10}
               value={remark}
@@ -120,7 +131,8 @@ const CreateUserOffer: React.FC = () => {
             />
             <Box sx={{mt: 1, mb: 1}}>
               <SelectForm
-                label="Request type"
+                id="request-type"
+                label="要望の種類"
                 width="40%"
                 value={requestType as UserOfferRequestTypeCode}
                 list={USER_OFFER_REQUEST_TYPE_LIST}
@@ -190,7 +202,7 @@ const CreateUserOffer: React.FC = () => {
               disabled={!prefecture || !budget  || !requestType || !deadline ? true : false}
               onClick={handleSubmit}
             >
-              Submit
+              要望書を公開する
             </DefaultButton>
           </CardContent>
         </Card>

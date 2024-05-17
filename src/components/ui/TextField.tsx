@@ -10,6 +10,7 @@ import { addComma } from "@src/utils/formatConverter"
 import type { NumberCodeListType } from "@src/utils/type"
 
 type ChildProps<T = string> = {
+  id?: string
   label: string
   value: T,
   required?: boolean
@@ -24,10 +25,11 @@ type ChildProps<T = string> = {
 }
 
 export const RequiredTextField = (props: ChildProps) => {
-  const { label, value, required = true, type = "text", minRows = 1, maxRows = 1, sx, onChange, onBlur = () => {}, onKeyDown  = () => {}, onClick = () => {}} = props
+  const { id, label, value, required = true, type = "text", minRows = 1, maxRows = 1, sx, onChange, onBlur = () => {}, onKeyDown  = () => {}, onClick = () => {}} = props
 
   return (
     <TextField
+      id={id}
       variant="outlined"
       type={type}
       required={required}
@@ -53,6 +55,7 @@ export const OptionalTextField = (props: ChildProps) => {
 
   return (
     <RequiredTextField
+      id={props.id}
       required={false}
       label={props.label}
       value={props.value}
@@ -81,6 +84,7 @@ export const AmountForm = (props: ChildProps) => {
 
   return (
     <RequiredTextField
+      id={props.id}
       type ="tel"
       required={props.required}
       label={props.label}
@@ -109,6 +113,7 @@ export const SelectForm = (props: SelectFormProps) => {
 
   return (
     <TextField
+      id={props.id}
       label={props.label}
       required
       select
@@ -140,7 +145,7 @@ export const PasswordForm: React.FC<PasswordProps> = (props) => {
 
   return (
     <FormControl variant="outlined" sx={{mb: 1, width: '100%' }}>
-      <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+      <InputLabel htmlFor="outlined-adornment-password">{label}</InputLabel>
       <OutlinedInput
         id={id}
         type={showPassword ? 'text' : 'password'}

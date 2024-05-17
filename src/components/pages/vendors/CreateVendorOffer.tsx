@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import CancelIcon from '@mui/icons-material/Cancel'
@@ -10,7 +10,7 @@ import ShowUserOfferCommon from "@src/components/pages/common/ShowUserOfferCommo
 import { AlertMessageContext, DisplayErrors, RequiredTextField, OptionalTextField, AmountForm, DefaultButton } from "@src/components/ui";
 import { vendorGetUserOffer } from "@src/models/user_offer/request"
 import { createVendorOffer } from "@src/models/vendor_offer/request"
-import { signedInCookiesSetter, detectAxiosErrors, setMultipleUploadAndPreviewImage } from "@src/utils";
+import { signedInCookiesSetter, detectAxiosErrors, setMultipleUploadAndPreviewImage, inputClear } from "@src/utils";
 
 import type { ShowUserOfferType } from "@src/models/user_offer/type"
 
@@ -28,10 +28,10 @@ const CreateVendorOffer: React.FC = () => {
   const userOfferId = useParams().id as string
   const navigate = useNavigate()
 
-  const curriedSetUploadAndPreviewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const curriedSetUploadAndPreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const func = setMultipleUploadAndPreviewImage(setImageHash, setPreviewHash, imageHash, previewHash)
     return func(e)
-  }, [imageHash])
+  }
 
 
   const clearImage = (key: string) => {
@@ -39,6 +39,8 @@ const CreateVendorOffer: React.FC = () => {
     let deletePreviewHash = {...previewHash}
     delete deleteImageHash[key]
     delete deletePreviewHash[key]
+    URL.revokeObjectURL(key)
+    inputClear("input-vendor-offer-image")
     setImageHash(deleteImageHash)
     setPreviewHash(deletePreviewHash)
   }
@@ -129,13 +131,13 @@ const CreateVendorOffer: React.FC = () => {
           <CardHeader sx={{textAlign: "center"}} title="提案の作成" />
           <CardContent>
             <RequiredTextField
-              label="Title"
+              label="タイトル"
               value={title}
               onChange={e=> setTitle(e)}
               onKeyDown={handleKeyDown}
             />
             <OptionalTextField
-              label="Remark"
+              label="提案の詳細"
               value={remark}
               minRows={8}
               maxRows={10}
@@ -143,18 +145,18 @@ const CreateVendorOffer: React.FC = () => {
               onKeyDown={handleKeyDown}
             />
             <AmountForm
-              label="Estimate"
+              label="お見積り金額"
               value={estimate}
               required={true}
               onChange={e=> setEstimate(e)}
               onKeyDown={handleKeyDown}
             />
             <Box>
-              <label htmlFor="input-user-offer-image">
+              <label htmlFor="input-vendor-offer-image">
                 <span style={{display: "none"}}>
                   <input
                     accept="image/*"
-                    id="input-user-offer-image"
+                    id="input-vendor-offer-image"
                     type="file"
                     multiple={true}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

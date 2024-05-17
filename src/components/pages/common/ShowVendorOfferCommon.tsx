@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef, useCallback } from "react"
+import React, { useState, useEffect, useContext, useRef } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import CancelIcon from '@mui/icons-material/Cancel'
@@ -56,16 +56,18 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
   const vendorOfferChatList = vendorOfferChatListWithPaginate?.records || []
   const vendorOfferStyleCss = {mr: 2, width: "8%"}
 
-  const curriedSetUploadAndPreviewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const curriedSetUploadAndPreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const func = setMultipleUploadAndPreviewImage(setImageHash, setPreviewHash, imageHash, previewHash)
     return func(e)
-  }, [previewHash])
+  }
 
   const removeImage = (key: string) => {
     let deleteImageHash = {...imageHash}
     let deletePreviewHash = {...previewHash}
     delete deleteImageHash[key]
     delete deletePreviewHash[key]
+    URL.revokeObjectURL(key)
+    inputClear("input-vendor-offer-image")
     deleteImageIds.current.push(key)
     setImageHash(deleteImageHash)
     setPreviewHash(deletePreviewHash)
@@ -240,7 +242,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
             <Grid item>
               {editFlg ?
               <AmountForm
-                label="Estimate"
+                label="お見積り金額"
                 required={false}
                 value={estimate}
                 onChange={e=> setEstimate(e)}
@@ -255,7 +257,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
             </Grid>
             { editFlg ?
               <OptionalTextField
-                label="Remark"
+                label="備考"
                 value={remark}
                 minRows={8}
                 maxRows={10}
@@ -356,7 +358,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
         mb: 1
       }}>
         <RequiredTextField
-          label="message"
+          label="メッセージ"
           value={message}
           minRows={3}
           maxRows={6}
@@ -374,7 +376,7 @@ const ShowVednorOfferCommon: React.FC<Props> = (props) => {
           }}
           onClick={handleMessageSubmit}
         >
-          Submit
+          送信
         </Button>
       </Card>
       <DisplayErrors errors={chatErrors}>

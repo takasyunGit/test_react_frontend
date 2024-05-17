@@ -64,14 +64,14 @@ const SignUp: React.FC = () => {
           <CardHeader sx={{textAlign: "center"}} title="Sign Up" />
           <CardContent>
             <RequiredTextField
-              label="Name"
+              label="アカウント名"
               sx={{mb: 1}}
               value={name}
               onChange={e => setName(e)}
               onKeyDown={handleKeyDown}
             />
             <RequiredTextField
-              label="Email"
+              label="Eメールアドレス"
               value={email}
               sx={{mb: 1}}
               onChange={e => setEmail(e)}
@@ -79,7 +79,7 @@ const SignUp: React.FC = () => {
             />
             <PasswordForm
               id="outlined-adornment-password"
-              label="Password"
+              label="パスワード"
               showPassword={showPassword}
               value={password}
               setPassword={setPassword}
@@ -88,7 +88,7 @@ const SignUp: React.FC = () => {
             />
             <PasswordForm
               id="outlined-adornment-password-confirmation"
-              label="PasswordConfirmation"
+              label="確認用パスワード"
               showPassword={showPassword}
               value={passwordConfirmation}
               setPassword={setPasswordConfirmation}

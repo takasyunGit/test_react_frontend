@@ -1,18 +1,22 @@
-import React, { useContext, useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
-import { Card, CardContent, Typography, Link, CircularProgress, Paper } from "@mui/material"
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { Card, CardContent, Typography, Link, Paper, Accordion, AccordionDetails, AccordionSummary } from "@mui/material"
 
-import { AuthUserContext } from "@src/components/models/user/AuthUserProvider"
+import { ProgressCircle } from "@src/components/ui"
 import { getUserOfferList } from "@src/models/user_offer/request"
 import { signedInCookiesSetter, detectAxiosErrors, dateToYYYYMMDD, USER_OFFER_REQUEST_TYPE_LIST, addComma } from "@src/utils"
 
 import type { UserOfferType } from "@src/models/user_offer/type"
 
+type ShowUserOfferListType = {
+  [key in "draft" | "proposal" | "finished"]: UserOfferType[]
+}
+
 const Home: React.FC = () => {
   const navigate = useNavigate()
-  const { currentUser } = useContext(AuthUserContext)
-  const [userOfferList, setUserOfferList] = useState<UserOfferType[]>([])
+  const [userOfferList, setUserOfferList] = useState<ShowUserOfferListType>()
   const [homeLoading, setHomeLoading] = useState<boolean>(true)
 
   const handleGetUserOfferList = async () => {
@@ -36,6 +40,42 @@ const Home: React.FC = () => {
 
   useEffect(() => {handleGetUserOfferList()},[])
 
+  type AccordionProps = {
+    userOfferList: UserOfferType[],
+    title: string
+  }
+
+  const OfferAccordion: React.FC<AccordionProps> = (props) => {
+    return (
+      <Accordion sx={{mb:2}}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1-content"
+          sx={{backgroundColor: "whitesmoke"}}
+        >
+          {props.title}
+        </AccordionSummary>
+        <AccordionDetails sx={{backgroundColor: "whitesmoke"}}>
+          {props.userOfferList.map((offer) => (
+            <Card
+              key={"userOffer" + offer.id}
+              sx={{
+                padding: (theme) => theme.spacing(2),
+                mb: 1
+            }}>
+              <CardContent>
+                <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
+                <Link component={RouterLink} to={"/user_offer/" + offer.id} sx={{textDecoration: "none"}}>
+                  <Typography variant="subtitle1" gutterBottom>{'【' + USER_OFFER_REQUEST_TYPE_LIST[offer.requestType] + '】' + '【予算¥' + addComma(offer.budget) + '】' + offer.address}</Typography>
+                </Link>
+              </CardContent>
+            </Card>
+          ))}
+        </AccordionDetails>
+      </Accordion>
+    )
+  }
+
   return (
     <>
       <Paper
@@ -47,31 +87,23 @@ const Home: React.FC = () => {
         <Typography variant="h4" gutterBottom>Home</Typography>
         <div>
           <Link component={RouterLink} to="/user_offer/new" sx={{textDecoration: "none"}}>
-            <Typography variant="h6" gutterBottom>新しい提案を作成する</Typography>
+            <Typography variant="h6" gutterBottom>新しい要望書を作成する</Typography>
           </Link>
         </div>
       </Paper>
-      {
-        homeLoading ? (
-          <CircularProgress />
-        ) : (
-          userOfferList.map((offer) => (
-            <Card
-            key={"userOffer" + offer.id}
-            sx={{
-              padding: (theme) => theme.spacing(2),
-              mb: 1
-            }}>
-              <CardContent>
-                <Typography variant="body2" gutterBottom>{dateToYYYYMMDD(new Date(offer.createdAt))}</Typography>
-                <Link component={RouterLink} to={"/user_offer/" + offer.id} sx={{textDecoration: "none"}}>
-                  <Typography variant="subtitle1" gutterBottom>{'【' + USER_OFFER_REQUEST_TYPE_LIST[offer.requestType] + '】' + '【予算¥' + addComma(offer.budget) + '】' + offer.address}</Typography>
-                </Link>
-              </CardContent>
-            </Card>
-          ))
-        )
-      }
+      <ProgressCircle loading={homeLoading}>
+        <>
+          {/* {!!userOfferList?.draft.length &&
+            <OfferAccordion userOfferList={userOfferList.draft} title={"下書き中の提案"}/>
+          } */}
+          {!!userOfferList?.proposal.length &&
+            <OfferAccordion userOfferList={userOfferList.proposal} title={"検討中の要望書"}/>
+          }
+          {!!userOfferList?.proposal.length &&
+            <OfferAccordion userOfferList={userOfferList.finished} title={"完了した要望書"}/>
+          }
+        </>
+      </ProgressCircle>
     </>
   )
 }

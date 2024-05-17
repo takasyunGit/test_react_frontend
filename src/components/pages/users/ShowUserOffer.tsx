@@ -30,7 +30,7 @@ const ShowUserOffer: React.FC = () => {
   const [vendorOffererrors, setVendorOfferErrors] = useState<any>()
   const paginateNumberList = vendorOfferListWithPaginate?.paginate || {}
   const vendorOfferList = vendorOfferListWithPaginate?.records || []
-  const VENDOR_OFFER_TEXT_LIMIT = 300
+  const VENDOR_OFFER_TEXT_LIMIT = 330
 
   const handleGetUserOffer = async () => {
     try{
